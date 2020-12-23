@@ -67,7 +67,7 @@
   <TMPL_IF TextReplace>
   <table class="help-text-rule-table">
     <tr><th>記述</th><th>結果</th><th>説明</th></tr>
-    <TMPL_LOOP TextReplace><tr><th><TMPL_VAR BEFORE></th><td><TMPL_VAR AFTER></td><td><TMPL_VAR HELP></td></tr></TMPL_LOOP>
+    <TMPL_LOOP TextReplace><tr><th><TMPL_VAR BEFORE></th><td class="logs"><TMPL_VAR AFTER></td><td><TMPL_VAR HELP></td></tr></TMPL_LOOP>
   </table>
   </TMPL_IF>
 </details>
