@@ -65,6 +65,26 @@ body {
 #chat-area .chat.main {
   flex: 1 4 100%;
 }
+#chat-area dd table{
+    border-collapse: collapse;
+    margin: 0.5em;
+}
+#chat-area dd table, #chat-area dd table td{
+    border: solid 1px rgba(255,255,255,0.7);
+}
+#chat-area dd table td{
+    padding: 0.2em;
+    font-size: 80%;
+}
+#chat-area dd table tbody tr:first-child{
+    background-color: rgba(255,255,255,0.15);
+}
+#chat-area dd table tbody tr:first-child td{
+    text-align: center;
+}
+#chat-area dd table tbody tr td:first-child{
+    text-align: center;
+}
 #chat-closes-area {
   display: flex;
   justify-content: flex-end;
