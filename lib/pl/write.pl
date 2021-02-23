@@ -416,7 +416,7 @@ sub memberEdit {
 
 sub topicEdit {
   my $topic = shift;
-  $topic =~ s/\r\n?|\n/<br>/g;
+#  $topic =~ s/\r\n?|\n/<br>/g;
   
   my %data;
   sysopen(my $FH, $dir.'room.dat', O_RDWR) or error "room.datが開けません";

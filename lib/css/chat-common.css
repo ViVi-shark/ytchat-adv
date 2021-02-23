@@ -107,6 +107,17 @@ html,body {
   font-size: 1.2rem;
   line-height: 1.6rem;
 }
+#topic-value > p{
+  min-height: 1em;
+  margin: 0.25em 0;
+}
+#topic-value > p.img-container > .meta{
+  display: none;
+}
+#topic-value > p.img-container > img{
+  max-height: 6em;
+  cursor: pointer;
+}
 #topic .edit.button {
   position: absolute;
   top: .2rem;
