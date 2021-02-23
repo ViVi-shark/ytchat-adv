@@ -443,6 +443,7 @@ body {
   min-width: 8em;
   max-width: 13em;
   height: auto;
+  max-height: 6.5em;
   padding: .5rem 0 0;
   font-size: 0.9em;
   border-top-left-radius: 0;
