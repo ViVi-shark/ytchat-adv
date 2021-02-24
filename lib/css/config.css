@@ -67,8 +67,6 @@ body {
 }
 .box {
   background-color: var(--box-bg-color);
-  box-shadow: inset 0 0 1em rgba(255,255,255,0.15);
-  text-shadow: var(--box-text-shadow);
 }
 /* リンク */
 a { text-decoration: none; }
@@ -212,7 +210,6 @@ dd[data-stt*="侵蝕"] .gauge[data-signal="monster"] i::before { background: non
 
 /* チャットログ */
 .chat {
-  background-image: linear-gradient(to right, rgba(0,0,0, 0.4), transparent);
 }
 @media (max-width: 600px) {
   .chat {
