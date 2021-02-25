@@ -329,13 +329,25 @@
         <div id="bgm-set-preview-seekbar"></div>
       </div>
       <div id="bgm-yt-preview-area" style="display:none"><div id="bgm-yt-preview"></div></div>
-      <p>
-        タイトル・権利表記等：<br>
-        <input type="text" id="bgm-set-title" placeholder="XXX／(c)YYY..."><br>
-        ＵＲＬ：<small>※オーディオファイル、またはYoutubeのURL</small><br>
-        <input type="text" id="bgm-set-url" oninput="bgmPreview();" placeholder="http://..."><br>
-        音量：(<span id="bgm-set-volume-text">100</span>%)<br>
-        <input type="range" id="bgm-set-volume" oninput="bgmPreviewVol(this.value);" min="1" max="100" value="100" style="width: 80%;margin-left:10%">
+      <p class="form">
+        <label>
+          <span class="label">Summary</span>
+          <span class="control">
+            <input type="text" id="bgm-set-title" placeholder="タイトルやアーティスト名など">
+          </span>
+        </label>
+        <label>
+          <span class="label">ＵＲＬ</span>
+          <span class="control">
+            <input type="text" id="bgm-set-url" oninput="bgmPreview();" placeholder="http://...">
+          </span>
+        </label>
+        <label>
+          <span class="label">Volume (<span id="bgm-set-volume-text">100</span>%)</span>
+          <span class="control">
+            <input type="range" id="bgm-set-volume" oninput="bgmPreviewVol(this.value);" min="1" max="100" value="100">
+          </span>
+        </label>
       </p>
       <p class="center" style="margin-top:1em;">
         <button onclick="bgmSubmit();">変更する</button>
