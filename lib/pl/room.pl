@@ -150,7 +150,7 @@ $ROOM->param(RandomTable => \@random_table);
 my @bg_list;
 foreach (@set::bg_preset){
   next if !$_ || !@$_[0];
-  push(@bg_list, { 'URL' => @$_[0], 'TITLE' => @$_[1] });
+  push(@bg_list, { 'URL' => @$_[0], 'TITLE' => @$_[1], 'thumbnail_url' => @$_[2], 'thumbnail_width' => @$_[3], 'thumbnail_height' => @$_[4] });
 }
 $ROOM->param(bgPreset => \@bg_list);
 
