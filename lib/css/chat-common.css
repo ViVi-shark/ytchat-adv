@@ -205,7 +205,6 @@ html,body {
   transform: scaleY(1.2);
 }
 #status #status-body > dl > dt {
-  grid-column: 1 / -1;
   margin-left: -.5em;
   padding: 0 0 .1em 1em;
   overflow: hidden;
@@ -220,17 +219,38 @@ html,body {
   padding: 0 0 .2em .2em;
   display: grid;
 }
-#status #status-body > dl > dd[id*="stt-memo"] {
-  grid-column: 1 / -1;
-  margin-top: .2rem;
-  font-size: 86%;
-  line-height: 1.1;
+#status #status-body > dl[data-name] > dd[id*="stt-memo"], #status #status-body > dl[data-name][data-image-url] > dd[id*="stt-memo"]{
+  width: 100%;
+  height: 0;
+  padding: 0;
+  overflow-y: visible;
+  clear: left;
 }
-#status #status-body > dl > dd[id*="stt-memo"]:empty {
+#status #status-body > dl[data-name][data-image-url] > dd[id*="stt-memo"]{
+  position: relative;
+  top: -1.5em;
+}
+#status #status-body > dl[data-name] > dd[id*="stt-memo"] > .icon{
+  display: flex;
+  width: 1.5em;
+  height: 1.5em;
+  float: right;
+  justify-content: center;
+  align-items: center;
+}
+#status #status-body > dl[data-name] > dd[id*="stt-memo"] > .icon:before{
+  color: #7f7;
+  content: "\f249";
+  font-family: "Font Awesome 5 Free";
+  font-weight: bold;
+}
+#status #status-body > dl[data-name] > dd[id*="stt-memo"] > .icon:hover{
+  background-color: rgba(157, 255, 0, 0.226);
+}
+#status #status-body > dl[data-name] > dd[id*="stt-memo"][data-memo=""]{
   display: none;
 }
 #status #status-body > dl > dd[id*="stt-url"] {
-  grid-column: span 2;
   display: block;
 }
 #status #status-body > dl > dd[id*="stt-url"]:empty {
@@ -278,8 +298,7 @@ html,body {
   bottom: 0;
   width: calc(100% - .1rem);
   height: .5rem;
-  margin-top: -.4rem;
-  margin-bottom: -.1rem;
+  margin-top: -.5rem;
   background: #333;
   z-index: 1;
 }
@@ -306,6 +325,128 @@ html,body {
 }
 #status #status-body > dl > dd > dl dd .gauge.none i {
   display: none;
+}
+
+#status #status-body > dl[data-name]{
+  font-size: 1.4rem;
+  padding: 0 0.35em;
+  box-sizing: content-box;
+  margin-bottom: 0.7em;
+  height: calc((2em * 6) + 1.5em + 1.5em);
+}
+#status #status-body > dl[data-name][data-number-of-items="0"]{
+  height: calc((2em * 0) + 1.5em + 1.5em);
+}
+#status #status-body > dl[data-name][data-number-of-items="1"], #status #status-body > dl[data-name][data-number-of-items="2"]{
+  height: calc((2em * 1) + 1.5em + 1.5em);
+}
+#status #status-body > dl[data-name][data-number-of-items="3"], #status #status-body > dl[data-name][data-number-of-items="4"]{
+  height: calc((2em * 2) + 1.5em + 1.5em);
+}
+#status #status-body > dl[data-name][data-number-of-items="5"], #status #status-body > dl[data-name][data-number-of-items="6"]{
+  height: calc((2em * 3) + 1.5em + 1.5em);
+}
+#status #status-body > dl[data-name][data-number-of-items="7"], #status #status-body > dl[data-name][data-number-of-items="8"]{
+  height: calc((2em * 4) + 1.5em + 1.5em);
+}
+#status #status-body > dl[data-name][data-number-of-items="9"], #status #status-body > dl[data-name][data-number-of-items="10"]{
+  height: calc((2em * 5) + 1.5em + 1.5em);
+}
+#status #status-body > dl[data-name][data-image-url]:before{
+  content: "";
+  display: block;
+  float: left;
+  width: 35%;
+  height: 100%;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+}
+#status #status-body > dl[data-name] > .dummy{
+  display: none;
+}
+#status #status-body > dl[data-name] > dt{
+  width: 100%;
+  height: 1.5em;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+  display: block;
+  font-size: inherit;
+}
+#status #status-body > dl[data-name][data-image-url] > dt{
+  width: calc(100% - 35%);
+}
+#status #status-body > dl[data-name] > dt > .name{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: start;
+  align-items: center;
+  float: left;
+  position: relative;
+}
+#status #status-body > dl[data-name] > dt > a{
+  display: flex;
+  width: 1.5em;
+  height: 1.5em;
+  float: right;
+  justify-content: flex-end;
+  align-items: flex-start;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  top: -1.5em;
+  text-decoration: none;
+  background: none;
+}
+#status #status-body > dl[data-name] > dt > a[href^="http"]:after{
+  content: "\f35d";
+  font-family: "Font Awesome 5 Free";
+  font-weight: bold;
+}
+#status #status-body > dl[data-name] > dd{
+  width: calc(100% / 2);
+  height: 2em;
+  display: block;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0.55em 0 0 0.30em;
+}
+#status #status-body > dl[data-name][data-image-url] > dd{
+  width: calc((100% - 35%) / 2);
+}
+#status #status-body > dl[data-name] > dd > dl{
+  width: 100%;
+  height: 100%;
+  position: static;
+}
+#status #status-body > dl[data-name] > dd > dl > *{
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+#status #status-body > dl[data-name] > dd > dl > dt{
+  font-size: 80%;
+}
+#status #status-body > dl[data-name] > dd > dl > dd{
+  position: relative;
+  top: -100%;
+  justify-content: flex-end;
+  align-items: flex-end;
+  font-size: 90%;
+  font-weight: normal;
+  text-shadow: -1px 1px 1px #000;
+  padding-right: 0.2em;
+}
+[data-layout="row"] #status #status-body > dl[data-name]{
+  width: 11em;
+  margin-right: 0.7em;
+}
+[data-layout="row"] #status #status-body > dl[data-name]:before{
+  background-size: auto 100%;
 }
 
 #status .add.button {
@@ -1380,6 +1521,31 @@ body.rom .input-form { display: none !important; }
 .mem-signal.green::before  { content: "\f012"; color: #0f0; }
 .mem-signal.yellow::before { content: "\f071"; color: #ff0; }
 .mem-signal.red::before    { content: "\f057"; color: #f00; }
+
+.tooltip{
+  display: flex;
+  position: absolute;
+  background-color: rgba(119, 255, 119, 0.37);
+  color: black;
+  width: auto;
+  height: auto;
+  z-index: 100;
+  padding: 0.7em;
+  border-width: 0;
+  border-radius: 1.1em;
+}
+.tooltip.hidden{
+  display: none;
+}
+.tooltip > div{
+  width: auto;
+  max-width: 20vw;
+  height: auto;
+  max-height: 20vh;
+  padding: 0.5em;
+  border-radius: 0.7em;
+  background-color: rgba(255, 255, 255, 0.767);
+}
 
 /* // その他
 ---------------------------------------------------------------------------------------------------- */
