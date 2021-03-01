@@ -946,11 +946,14 @@ body {
   line-height: 1.6;
 }
 #help-window {
-  width: 50em;
+  width: 80vw;
   height: 80%;
 }
 #help-window .box-body {
   overflow: auto;
   padding-bottom: 2em;
+}
+#help-window details > table tbody tr th{
+  text-align: left;
 }
 
