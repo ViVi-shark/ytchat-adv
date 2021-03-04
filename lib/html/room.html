@@ -30,6 +30,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="./lib/js/lib/jquery.selection.js" defer></script>
   <script src='./lib/js/lib/spectrum.js' defer></script>
+  <script src="./lib/js/lib/rx.all.js?<TMPL_VAR ver>" defer></script>
+  <script src="./lib/js/lib/rxx.js?<TMPL_VAR ver>" defer></script>
   <script src="./lib/js/ui.js?<TMPL_VAR ver>" defer></script>
   <script src="./lib/js/ui-sp.js?<TMPL_VAR ver>" defer></script>
   <script src="./lib/js/chat.js?<TMPL_VAR ver>" defer></script>
@@ -146,6 +148,8 @@
             <button onclick="unitCommandSubmit('check')">✔</button><button onclick="unitCommandSubmit('uncheck')">×</button>
           </div>
         </div>
+        <div class="open-message-templates" data-source="<TMPL_VAR messageTemplates>">発言テンプレート</div>
+        <script src="./lib/js/message_template.js?<TMPL_VAR ver>" defer></script>
         <div class="form-dice" id="form-dice-1">
           <span class="del edit button" onclick="diceDel(1);" title="ダイス欄を削除">－</span>
           <span class="add edit button" onclick="diceAdd(1);" title="ダイス欄を追加">＋</span>

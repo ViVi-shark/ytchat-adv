@@ -1788,6 +1788,95 @@ body.rom .input-form { display: none !important; }
 .mem-signal.yellow::before { content: "\f071"; color: #ff0; }
 .mem-signal.red::before    { content: "\f057"; color: #f00; }
 
+.message-templates{
+  display: flex;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  font-size: 10pt;
+  font-weight: normal;
+  text-shadow: none;
+}
+.message-templates > .inner{
+  display: block;
+  width: 60em;
+  height: 70vh;
+  background-color: rgb(31, 31, 56);
+  border-radius: 2.5em;
+  padding: 2.5em;
+}
+.message-templates > .inner > .list{
+  overflow-y: scroll;
+  width: 100%;
+  height: 100%;
+  padding-right: 1.2em;
+}
+.message-templates > .inner > .list::-webkit-scrollbar{
+  width: .4rem;
+  height: .4rem;
+  background-color: rgba(255, 255, 255, 0.315);
+}
+.message-templates > .inner > .list::-webkit-scrollbar-thumb{
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.message-templates .template{
+  display: block;
+  width: 100%;
+  height: 2.2em;
+  float: left;
+  clear: left;
+  padding: 0.3em 0.6em;
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 0.3em;
+  margin-top: 1.2em;
+}
+.message-templates .template:first-child{
+  margin-top: 0;
+}
+.message-templates .template > .actions{
+  display: flex;
+  width: 4.3em;
+  height: 100%;
+  margin-left: 0.7em;
+  float: left;
+  justify-content: center;
+  align-items: center;
+}
+.message-templates .template > .format{
+  display: flex;
+  width: calc(100% - (4.3em + 0.7em));
+  height: 100%;
+  float: left;
+  justify-content: start;
+  align-items: center;
+}
+.message-templates .template > .actions > .button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  background: none;
+  background-color: rgb(205, 228, 172);
+  color: rgb(43, 43, 73);
+  border: 1px solid rgb(24, 22, 29);
+  border-radius: 0.3em;
+  padding: 0.4em;
+  font-size: 80%;
+}
+.message-templates .template > .actions > .button:hover{
+  background-color: rgb(230, 203, 116);
+}
+.message-templates .template > .actions > .button.disabled{
+  pointer-events: none;
+  opacity: 0.35;
+}
+
 .tooltip{
   display: flex;
   position: absolute;

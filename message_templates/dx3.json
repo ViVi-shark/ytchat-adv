@@ -1,0 +1,35 @@
+[
+    {
+        "format": "# [[phase]]",
+        "args": {
+            "phase": ["Pre-play", "Opening Phase", "Middle Phase", "Climax Phase", "Ending Phase", "After-play"]
+        }
+    },
+    {
+        "format": "## Scene: [[...シーンタイトル]]",
+        "args": {
+        }
+    },
+    {
+        "format": "### ラウンド[[round]]",
+        "args": {
+            "round": ["１", "２", "３", "４", "５", "６"]
+        }
+    },
+    {
+        "format": "#### [[process]]",
+        "args": {
+            "process": ["セットアッププロセス", "イニシアチブプロセス", "クリンナッププロセス"]
+        }
+    },
+    {
+        "format": "#### メインプロセス： [[&unit]]",
+        "args": {
+        }
+    },
+    {
+        "format": "## バックトラック",
+        "args": {
+        }
+    }
+]

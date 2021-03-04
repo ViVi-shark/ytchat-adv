@@ -170,6 +170,13 @@ $ROOM->param(customCSS => $set::custom_css);
 
 $ROOM->param(userRoomFlag => exists($set::rooms{$id}) ? 0 : 1);
 
+my @message_templates;
+if (sysopen(my $FH, './message_templates/dx3.json', O_RDONLY)) {
+  @message_templates = join('', <$FH>);
+  close($FH);
+}
+$ROOM->param(messageTemplates => uri_escape_utf8(@message_templates));
+
 ###################
 ### 出力
 print "Content-Type: text/html\n\n";
