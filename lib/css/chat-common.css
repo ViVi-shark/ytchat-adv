@@ -1095,11 +1095,12 @@ body.rom .input-form { display: none !important; }
   padding-left: .2em;
   padding-right: 7em;
   border-top: .1rem solid var(--border-color-input);
+  height: calc(2rem + 0.1rem);
 }
 .decoration-buttons .button {
   position: relative;
   width: 2.5rem;
-  height: 2rem;
+  height: 100%;
   padding: 0;
   background: transparent;
   font-size: 1.2rem;
