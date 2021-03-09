@@ -77,9 +77,9 @@ our $rtable_dir = './rtable/'; # txtファイルを入れるディレクトリ
 ## ●テキスト置換定義
 our %replace_rule = (
   # SW2の魔法の武器、刃武器、打撃武器アイコン（いらない場合は消してよい）
-  '[魔]' => '<img alt="[魔]" class="icon" src="./lib/img/icon/sw-wp-magic.png">',
-  '[刃]' => '<img alt="[刃]" class="icon" src="./lib/img/icon/sw-wp-edge.png">',
-  '[打]' => '<img alt="[打]" class="icon" src="./lib/img/icon/sw-wp-blow.png">',
+  '[魔]' => '<img alt="[魔]" class="icon" loading="lazy" src="./lib/img/icon/sw-wp-magic.png">',
+  '[刃]' => '<img alt="[刃]" class="icon" loading="lazy" src="./lib/img/icon/sw-wp-edge.png">',
+  '[打]' => '<img alt="[打]" class="icon" loading="lazy" src="./lib/img/icon/sw-wp-blow.png">',
   
   # '置換前の文字列' => '置換後の文字列',
 );
