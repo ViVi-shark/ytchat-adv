@@ -14,9 +14,13 @@
   <link rel="stylesheet" media="all" href="./lib/css/base.css?<TMPL_VAR ver>">
   <link rel="stylesheet" media="all" href="./lib/css/config.css?<TMPL_VAR ver>">
   <link rel="stylesheet" media="all" href="./lib/css/logs.css?<TMPL_VAR ver>">
+  <link rel="stylesheet" media="all" href="./lib/css/log_index.css?<TMPL_VAR ver>" />
+  <link rel="stylesheet" media="all and (max-width: 900px)" href="./lib/css/log_index-sp.css?<TMPL_VAR ver>" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
   <TMPL_IF customCSS><link rel="stylesheet" media="all" href="<TMPL_VAR customCSS>"></TMPL_IF>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="./lib/js/logs.js?<TMPL_VAR ver>" defer></script>
+  <script src="./lib/js/log_index.js?<TMPL_VAR ver>" defer></script>
 </head>
 <body id="logviewer">
   <div class="bg-image bg-front"></div>

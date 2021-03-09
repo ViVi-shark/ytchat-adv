@@ -1,0 +1,94 @@
+div.table-of-contents{
+    min-width: 16em;
+    max-width: 19em;
+    max-height: 85%;
+    position: fixed;
+    left: 1em;
+    top: 1em;
+}
+div.table-of-contents > h2{
+    margin: 1rem .8rem;
+}
+div.table-of-contents > ul.headlines > li{
+    margin: .5em 0;
+    padding: 0 .5em;
+    font-size: 80%;
+}
+div.table-of-contents > ul.headlines > li[data-level^="h3"]{
+    margin-left: 0;
+}
+div.table-of-contents > ul.headlines > li[data-level^="h4"]{
+    margin-left: 1em;
+}
+div.table-of-contents > ul.headlines > li[data-level^="h5"]{
+    margin-left: 2em;
+}
+div.table-of-contents > ul.headlines > li[data-level^="h6"]{
+    margin-left: 3em;
+}
+div.table-of-contents > ul.headlines > li > a{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 0.2em 0.5em 1em;
+}
+div.table-of-contents > ul.headlines > li[data-level^="h3"] > a{
+    border-bottom: 1px solid rgba(255,255,255,0.22);
+}
+div.table-of-contents > ul.headlines > li[data-level^="h4"] > a{
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+div.table-of-contents > ul.headlines > li[data-level^="h5"] > a{
+    border-bottom: 1px dashed rgba(255,255,255,0.13);
+}
+div.table-of-contents > ul.headlines > li[data-level^="h6"] > a{
+    border-bottom: 1px dotted rgba(255,255,255,0.11);
+}
+div.table-of-contents > ul.headlines > li > a:before{
+    content: "+";
+    position: relative;
+    left: -1em;
+}
+div.table-of-contents > ul.headlines > li > a[href]:link{
+    background: transparent;
+}
+
+div.table-of-contents > ul.memo{
+    margin-top: 1.2em;
+}
+div.table-of-contents > ul.memo > li{
+    background-color: rgba(255,255,255,0.1);
+    padding: 0.3em;
+    margin: 2px 0;
+    border: 1px dotted #ccccff;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 80%;
+}
+div.table-of-contents > ul.memo > li:before{
+    color: #7f7;
+    content: "\f249";
+    font-family: "Font Awesome 5 Free";
+    font-size: 1.2em;
+    margin-right: 0.2em;
+}
+div.table-of-contents > ul.memo > li > .details{
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 2em;
+    background-color: rgba(72,72,64,0.6);
+    border-radius: 2em;
+    cursor: default;
+}
+div.table-of-contents > ul.memo > li > .details > .details-body{
+    min-width: 32vw;
+    max-width: 48vw;
+    min-height: 18vw;
+    max-height: 80vw;
+    border-radius: 1.3em;
+    background-color: rgba(32,40,32,0.77);
+    padding: 0.7em;
+    font-size: 1.3em;
+    line-height: 170%;
+}
