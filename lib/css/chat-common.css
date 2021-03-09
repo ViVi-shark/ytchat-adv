@@ -360,6 +360,7 @@ html,body {
   height: 100%;
   background-size: 100% auto;
   background-repeat: no-repeat;
+  background-position: center center;
 }
 #status #status-body > dl[data-name] > .dummy{
   display: none;
