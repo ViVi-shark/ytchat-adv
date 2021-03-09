@@ -4,6 +4,10 @@ class UrlMissingException extends Exception
 {
 }
 
+class UnexpectedUrlException extends Exception
+{
+}
+
 const KEY_OF_URL = 'sheet';
 
 function getFromYtsheet2($sheetUrl){
@@ -21,10 +25,34 @@ function getFromCharacterSheetSouko($sheetUrl){
     return 'data:image/png;base64,'.$encoded;
 }
 
+function getFromYtsheetOld($sheetUrl){
+    $content = file_get_contents($sheetUrl);
+    $document = DOMDocument::loadHTML($content, LIBXML_NOWARNING | LIBXML_NOERROR);
+
+    foreach ($document->getElementsByTagName('img') as $img) {
+        if ($img->attributes != null) {
+            $alt = $img->attributes->getNamedItem('alt');
+            $src = $img->attributes->getNamedItem('src');
+
+            if ($alt = "キャラクタ画像" && $src != null && $src->textContent != null && $src->textContent != '') {
+                return $src->textContent;
+            }
+        }
+        
+    }
+
+    return null;
+}
+
 function getImageUrl($sheetUrl){
     if (preg_match('/\/\/character-sheets\.appspot\.com\//', $sheetUrl)) {
         return getFromCharacterSheetSouko($sheetUrl);
+    } elseif (preg_match('/\/ytsheet2?\//', $sheetUrl)) {
+        return getFromYtsheet2($sheetUrl);
+    } elseif (preg_match('/\/\/www\.unhappy\.jp\/trpg\/dx_character\/data\/\d+\.html$/', $sheetUrl)) {
+        return getFromYtsheetOld($sheetUrl);
     } else {
+        throw new UnexpectedUrlException();
         return getFromYtsheet2($sheetUrl);
     }
 }
@@ -43,5 +71,9 @@ try
 }
 catch (UrlMissingException $e) {
     http_response_code(404);
+    exit;
+}
+catch (UnexpectedUrlException $e) {
+    http_response_code(400);
     exit;
 }
