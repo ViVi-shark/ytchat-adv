@@ -8,6 +8,7 @@ use HTML::Template;
 use Encode qw/encode decode/;
 use JSON::PP;
 use CGI::Cookie;
+use URI::Escape;
 
 ###################
 ### ログ成形
@@ -213,7 +214,17 @@ foreach (<$FH>){
   $comm =~ s#(―+)#<span class="dash">$1</span>#g;
   $info =~ s#(―+)#<span class="dash">$1</span>#g;
   
-  if($system =~ /^memo/){ $info = '<details open><summary>詳細</summary>'.$info.'</details>'; }
+  if ($system =~ /^memo/) {
+    if ($info eq '') {
+      $info = '<details open><summary>詳細</summary>'.$info.'</details>';
+    } else {
+      my $unescapedMemo = uri_unescape($info);
+      my $utf8Memo = decode('utf8', $unescapedMemo);
+      my $decodedMemo = decode_json($unescapedMemo);
+      my $htmlMemo = $decodedMemo->[1];
+      $info = '<details open><summary>詳細</summary>'.$htmlMemo.'</details>';
+    }
+  }
   
   my $class  = ($name eq '!SYSTEM') ? 'system '    : '';
      $class .= ($system =~ /^(topic|memo|bgm?|ready|round|enter|exit)/) ? "$1 " : '';

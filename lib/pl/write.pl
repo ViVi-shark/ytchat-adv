@@ -6,6 +6,7 @@ use open ":std";
 use Fcntl;
 use Encode qw/encode decode/;
 use JSON::PP;
+use URI::Escape;
 
 ###################
 ### 書き込み処理
@@ -22,6 +23,7 @@ if(!$::in{'system'}){
   if($::in{'comm'} eq ''){ error "発言がありません"; }
 }
 
+my $originalComm = $::in{'comm'} eq '' ? '' : decode('utf8', $::in{'comm'});
 foreach (%::in) {
   $::in{$_} = decode('utf8', $::in{$_});
   $::in{$_} =~ s/</&lt;/g;
@@ -79,11 +81,11 @@ else {
   elsif($::in{'comm'} =~ s<^/memo([0-9]*)(\s|$)><>i){
     my $new = $1 eq '' ? 1 : 0;
     error('メモの内容がありません。') if ($new && !$::in{'comm'});
-    my $num = memoEdit($1, $::in{'comm'});
+    my ($num, $serializedMemo) = memoEdit($1, $::in{'comm'}, $originalComm);
     $::in{'tab'} = '1';
     $::in{'system'} = 'memo:'.$num;
     $::in{'name'} = "!SYSTEM";
-    $::in{'info'} = "$::in{'comm'}";
+    $::in{'info'} = $serializedMemo;
     $::in{'comm'} = "共有メモ".($num+1).'を'. ($new ? '追加' : ($::in{'info'} ? '更新' : "削除")) ." by $::in{'player'}";
     delete $::in{'address'};
   }
@@ -432,8 +434,22 @@ sub topicEdit {
 }
 sub memoEdit {
   my $num  = shift;
-  my $memo = shift;
-  $memo =~ s/<br>/\n/g;
+  my $memoSource = shift;
+  my $memoOriginal = shift;
+
+  $memoOriginal =~ s/^\/memo([0-9]*)(\s|$)//i;
+
+  my $memoWorking = "$memoSource";
+  $memoWorking =~ s/</&lt;/g;
+  $memoWorking =~ s/>/&gt;/g;
+  $memoWorking =~ s/\\/&#92;/g;
+
+  my $memoHtml = tagConvert($memoWorking) ;
+  $memoHtml =~ s/\r\n?|\n/<br>/g;
+
+  my $memoStructure = [$memoOriginal, $memoHtml];
+  my $memoStructureJson = encode_json $memoStructure;
+  my $serializedMemoStructure = $memoSource eq '' ? '' : uri_escape($memoStructureJson);
   
   my %data;
   sysopen(my $FH, $dir.'room.dat', O_RDWR) or error "room.datが開けません";
@@ -441,14 +457,14 @@ sub memoEdit {
   my %data = %{ decode_json(encode('utf8', (join '', <$FH>))) };
   seek($FH, 0, 0);
   
-  if($num eq ''){ push(@{$data{'memo'}}, $memo); $num = $#{$data{'memo'}}; }
-  else{ $data{'memo'}[$num] = $memo; }
+  if($num eq ''){ push(@{$data{'memo'}}, $serializedMemoStructure); $num = $#{$data{'memo'}}; }
+  else{ $data{'memo'}[$num] = $serializedMemoStructure; }
   
   print $FH decode('utf8', encode_json \%data);
   truncate($FH, tell($FH));
   close($FH);
   
-  return $num;
+  return ($num, $serializedMemoStructure);
 }
 sub bgEdit {
   my $url = shift;

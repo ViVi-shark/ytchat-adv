@@ -24,6 +24,7 @@
   <meta name="theme-color" content="#ffffff">
   <link rel="stylesheet" media="all" href="./lib/css/config.css?<TMPL_VAR ver>">
   <link rel='stylesheet' media="all" href='./lib/js/lib/spectrum.css'>
+  <link rel="stylesheet" media="all" href="./lib/css/memo.css?<TMPL_VAR ver>">
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
   <TMPL_IF customCSS><link rel="stylesheet" media="all" href="<TMPL_VAR customCSS>"></TMPL_IF>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -35,6 +36,7 @@
   <script src="./lib/js/ui.js?<TMPL_VAR ver>" defer></script>
   <script src="./lib/js/ui-sp.js?<TMPL_VAR ver>" defer></script>
   <script src="./lib/js/chat.js?<TMPL_VAR ver>" defer></script>
+  <script src="./lib/js/memo.js?<TMPL_VAR ver>" defer></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous">
   <script>
     const roomId = '<TMPL_VAR roomId>';
@@ -177,7 +179,7 @@
       </div>
       <div class="box memo" id="memo" data-num="0">
         <ul id="memo-list" class="bold"></ul>
-        <span class="add button" onclick="memoSelect('')">+</span>
+        <span class="add button" onclick="memoSelect('', 'add')">+</span>
       </div>
     </div>
     <!-- / SIDE-AREA -->
@@ -215,9 +217,18 @@
     </div>
     <div id="sheet-unit-memo" class="box sheet">
       <h2>共有メモ</h2>
-      <div class="sheet-memo-body">
-        <div class="sheet-memo-outline"><textarea id="sheet-memo-value" class="autosize"></textarea></div>
-        <button onclick="memoSubmit();">追加／更新</button>
+      <div class="sheet-memo-body" data-mode="view">
+        <div class="memo-tabs">
+          <span class="memo-tab" data-mode-name="view">閲覧</span>
+          <span class="memo-tab" data-mode-name="edit">編集</span>
+        </div>
+        <div class="memo-view">
+          <div id="sheet-memo-pretty"></div>
+        </div>
+        <div class="memo-edit">
+          <textarea id="sheet-memo-value"></textarea>
+          <button onclick="memoSubmit();">送信</button>
+        </div>
       </div>
       <span class="close button" onclick="sheetClose();">×</span>
     </div>

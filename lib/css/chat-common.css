@@ -468,6 +468,13 @@ html,body {
 .memo ul#memo-list li[onclick]:hover {
   background: rgba(255,150,0,0.3);
 }
+#memo-list > li[data-memo-index]:before{
+  content: "#" attr(data-memo-index);
+  opacity: 0.7;
+  font-size: 85%;
+  font-weight: normal;
+  margin-right: 0.25em;
+}
 .memo .add.button {
   position: absolute;
   bottom: .1em;
@@ -475,20 +482,10 @@ html,body {
 }
 
 .sheet .sheet-memo-body {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr auto max-content 1fr;
-  grid-gap: 1rem;
+  display: block;
   text-align: right;
   overflow-y: hidden;
-}
-.sheet .sheet-memo-body .sheet-memo-outline {
-  grid-row: 2;
-  margin-top: 1em;
-  padding: 0;
-  border: .1rem solid var(--border-color);
-  border-radius: .5rem;
-  overflow-y: auto;
+  padding: 0.8em;
 }
 .sheet #sheet-memo-value {
   border: .1rem solid transparent;
@@ -496,13 +493,66 @@ html,body {
   font-size:80%;
   padding: .4rem;
 }
-.sheet .sheet-memo-body > button {
-  margin: 0 calc(50% - 5em);
-  grid-row: 3;
+.sheet .sheet-memo-body > .memo-tabs{
+  width: 100%;
+  height: 1.8em;
+  display: flex;
+}
+.sheet .sheet-memo-body > .memo-tabs > .memo-tab{
+  display: flex;
+  width: calc((100% - 0.25em) / 2);
+  height: 100%;
+  margin-right: 0.25em;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(102, 102, 190, 0.2);
+  border: 1px dashed rgba(102, 102, 153, 0.5);
+  border-radius: 0.3em;
+  opacity: 0.4;
+  cursor: pointer;
+}
+.sheet .sheet-memo-body[data-mode="view"] > .memo-tabs > .memo-tab[data-mode-name="view"]{
+  opacity: 1;
+  cursor: default;
+}
+.sheet .sheet-memo-body[data-mode="edit"] > .memo-tabs > .memo-tab[data-mode-name="edit"]{
+  opacity: 1;
+  cursor: default;
+}
+.sheet .sheet-memo-body[data-mode="add"] > .memo-tabs{
+  display: none;
+}
+.sheet .sheet-memo-body > .memo-tabs > .memo-tab:last-child{
+  margin-right: 0;
+}
+.sheet .sheet-memo-body > .memo-view, .sheet .sheet-memo-body > .memo-edit{
+  width: 100%;
+  height: calc(100% - (1.8em + 0.65em));
+  display: none;
+}
+.sheet .sheet-memo-body[data-mode="view"] > .memo-view{
+  display: block;
+}
+.sheet .sheet-memo-body[data-mode="edit"] > .memo-edit, .sheet .sheet-memo-body[data-mode="add"] > .memo-edit{
+  display: block;
+}
+.sheet .sheet-memo-body > .memo-view{
+  padding: 1em;
+  text-align: left;
+  overflow-y: scroll;
+}
+.sheet .sheet-memo-body > .memo-view > div{
+  width: 100%;
+  height: auto;
+  cursor: zoom-in;
+}
+.sheet .sheet-memo-body > .memo-edit textarea{
+  height: calc(100% - 2em - 0.3em);
+  margin-top: 0.3em;
+  border: .1rem solid var(--border-color);
+  border-radius: .5rem;
 }
 body.rom .sheet#sheet-unit-memo { display: grid !important; }
-body.rom .sheet#sheet-unit-memo textarea { pointer-events : none; }
-body.rom .sheet#sheet-unit-memo button { display: none; }
 
 /* // ユニットシート
 ---------------------------------------------------------------------------------------------------- */
