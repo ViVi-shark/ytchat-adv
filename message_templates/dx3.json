@@ -1,9 +1,24 @@
 [
     {
+        "format": "----"
+    },
+    {
         "format": "# [[phase]]",
         "args": {
             "phase": ["Pre-play", "Opening Phase", "Middle Phase", "Climax Phase", "Ending Phase", "After-play"]
         }
+    },
+    {
+        "format": "## トレーラー"
+    },
+    {
+        "format": "## ハンドアウト"
+    },
+    {
+        "format": "## ＰＣ紹介"
+    },
+    {
+        "format": "### ＰＣ紹介 - [[&unit]]"
     },
     {
         "format": "## Scene: [[...シーンタイトル]]",
