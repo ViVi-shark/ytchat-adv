@@ -126,10 +126,15 @@ button, .button {
   font-weight: normal;
 }
 .logs em,
+#sheet-memo-pretty em,
+.memo-zoom-body em,
 .float-box em {
   -webkit-text-emphasis: dot filled;
           text-emphasis: dot filled;
   font-style: inherit; 
+}
+.memo-zoom-body em{
+  font-style: inherit;
 }
 .oblique { font-style: oblique; }
 .strike  { text-decoration: line-through; }

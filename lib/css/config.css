@@ -248,6 +248,10 @@ dd[data-stt*="侵蝕"] .gauge[data-signal="monster"] i::before { background: non
   -webkit-text-emphasis: none;
           text-emphasis: none;
 }
+.logs dl dd.info.memo em {
+  -webkit-text-emphasis: dot filled;
+          text-emphasis: dot filled;
+}
 .logs dl:hover {
   background-image: linear-gradient(rgba(0,0,0, 0.3), rgba(0,0,0, 0.3));
 }
