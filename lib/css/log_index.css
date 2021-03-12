@@ -1,10 +1,11 @@
 div.table-of-contents{
-    min-width: 16em;
-    max-width: 19em;
+    display: block;
+    width: 100%;
+    height: auto;
     max-height: 85%;
-    position: fixed;
-    left: 1em;
-    top: 1em;
+    position: sticky;
+    top: 0;
+    padding: 0 0.7em 0.7em 0.7em;
 }
 div.table-of-contents > h2{
     margin: 1rem .8rem;
