@@ -468,45 +468,12 @@ html,body {
 .memo ul#memo-list li[onclick]:hover {
   background: rgba(255,150,0,0.3);
 }
-#memo-list > li{
-  height: 1.8em;
-  box-sizing: content-box;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
 #memo-list > li[data-memo-index]:before{
   content: "#" attr(data-memo-index);
   opacity: 0.7;
+  font-size: 85%;
   font-weight: normal;
-  overflow: visible;
-  width: 2em;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-#memo-list > li > .headline{
-  display: flex;
-  width: calc(100% - 2em);
-  height: 100%;
-  justify-content: flex-start;
-  align-items: center;
-}
-#memo-list > li:hover > .headline{
-  width: calc(100% - 2em - 1.8em);
-}
-#memo-list > li > .to-open{
-  display: none;
-  height: 1.8em;
-  width: 1.8em;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  font-size: inherit;
-}
-#memo-list > li:hover > .to-open{
-  display: flex;
+  margin-right: 0.25em;
 }
 .memo .add.button {
   position: absolute;
