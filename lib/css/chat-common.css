@@ -494,12 +494,12 @@ html,body {
   align-items: center;
 }
 #memo-list > li:hover > .headline{
-  width: calc(100% - 2em - 1.8em);
+  width: calc(100% - 2em - 1.8rem);
 }
 #memo-list > li > .to-open{
   display: none;
-  height: 1.8em;
-  width: 1.8em;
+  height: 1.8rem;
+  width: 1.8rem;
   justify-content: center;
   align-items: center;
   border-radius: 50%;

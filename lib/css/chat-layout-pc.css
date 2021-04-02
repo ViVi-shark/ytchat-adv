@@ -739,19 +739,20 @@ body {
 }
 [data-layout="row"] #memo ul#memo-list {
   position: absolute;
-  width: auto;
+  width: calc(100% - 1.0rem);
   height: 100%;
   overflow: auto;
 }
 [data-layout="row"] #memo ul#memo-list li {
-  display: inline-block;
-  max-width: 8em;
+  display: flex;
+  width: calc(100% - 1.5rem);
   margin-right: .3rem;
   padding: .3em;
   background-color: rgba(127,127,127,0.15);
   border: .1rem solid var(--border-color-pale);
   border-radius: .8em;
   font-size: 90%;
+  flex-flow: row;
 }
 
 /* // ユニットシート
