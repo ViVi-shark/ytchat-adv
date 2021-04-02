@@ -714,7 +714,7 @@ body {
 ---------------------------------------------------------------------------------------------------- */
 #memo {
   position: relative;
-  padding-bottom: 1.2em;
+  padding-bottom: 1.9em;
   overflow: auto;
   flex-shrink: 0;
 }
@@ -723,11 +723,15 @@ body {
 #memo ul#memo-list {
 }
 #memo ul#memo-list li {
+  overflow: visible;
+  padding: 0;
+  border-bottom: .1rem solid var(--border-color-pale);
+}
+#memo ul#memo-list li .headline{
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  padding: .3em 0;
-  border-bottom: .1rem solid var(--border-color-pale);
+  padding: 0;
 }
 [data-layout="row"] #memo {
   overflow: hidden;
