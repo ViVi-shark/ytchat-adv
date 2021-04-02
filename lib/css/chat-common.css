@@ -192,12 +192,12 @@ html,body {
 #status #status-body > dl.selected {
   background-color: rgba(0,150,255, 0.2);
 }
-#status #status-body > dl.check::before {
+#status #status-body > dl.check::after {
   content: "\f00c";
   display: inline-block;
   position: absolute;
   top: .3rem;
-  left: .1rem;
+  left: .5rem;
   font-family: "Font Awesome 5 Free";
   font-size: 1em;
   font-weight: bold;
