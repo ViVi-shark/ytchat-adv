@@ -2,7 +2,8 @@ div.table-of-contents{
     display: block;
     width: 100%;
     height: auto;
-    max-height: 85%;
+    max-height: 85vh;
+    overflow-y: auto;
     position: sticky;
     top: 0;
     padding: 0 0.7em 0.7em 0.7em;
