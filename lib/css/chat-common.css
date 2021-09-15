@@ -881,6 +881,10 @@ body.rom .input-form { display: none !important; }
 .decoration-buttons .insert-left::before    { content:"\f036"; }
 .decoration-buttons .insert-center::before  { content:"\f037"; }
 .decoration-buttons .insert-right::before   { content:"\f038"; }
+.decoration-buttons .insert-add-line-spacing::before   { content:"\f034"; }
+/* for Font Awesome Pro
+.decoration-buttons .insert-add-line-spacing::before   { content:"\f871"; }
+*/
 
 .decoration-buttons .insert-image::before   { content:"\f03e"; color:#8fd; }
 
