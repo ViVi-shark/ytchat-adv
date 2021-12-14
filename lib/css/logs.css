@@ -158,6 +158,22 @@ article#contents {
   cursor: zoom-in;
 }
 
+.logs dd audio {
+  visibility: visible;
+  width: 100%;
+  max-width: initial;
+  height: 1.5em;
+  display: block;
+  box-sizing: border-box;
+  margin: 0.25em auto;
+  color: initial !important;
+  text-shadow: none !important;
+}
+.logs dd .sound-effect-src {
+  display: block;
+  font-size: smaller;
+}
+
 /* メニュー -------------------------------------------------- */
 #menu {
   display: grid;

@@ -225,3 +225,16 @@ img.icon { width: 1em; height: 1em; }
 .logs dl dd button {
   vertical-align: middle;
 }
+
+.logs dd audio {
+  height: 1em;
+  max-width: 12em;
+  margin: 0 0.5em;
+  visibility: hidden;
+}
+.logs dd:hover audio {
+  visibility: visible;
+}
+.logs dd .sound-effect-src {
+  display: none;
+}

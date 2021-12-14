@@ -160,6 +160,9 @@ foreach (@set::bgm_preset){
 }
 $ROOM->param(bgmPreset => \@bgm_list);
 
+require './lib/pl/sound-effect.pl';
+$ROOM->param(soundEffect => @SoundEffect::list);
+
 my @src_url;
 if($set::src_url_limit){
   foreach (@set::src_url_list){

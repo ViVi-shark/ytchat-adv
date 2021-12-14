@@ -1,0 +1,12 @@
+<ul class="sound-effect-list">
+    <TMPL_LOOP soundEffect>
+        <li class="sound-effect">
+            <button class="to-trial">試聴</button>
+            <button class="to-insert-to-chat"><i class="fas fa-pen-square"></i>発言欄に入力</button>
+            <span class="duration"><TMPL_VAR durationSeconds></span>
+            <span class="short-name"><TMPL_VAR shortName></span>
+            <span class="path"><TMPL_VAR path></span>
+            <span class="copyright"><TMPL_VAR copyright></span>
+        </li>
+    </TMPL_LOOP>
+</ul>
