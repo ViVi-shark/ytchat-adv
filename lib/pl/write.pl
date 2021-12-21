@@ -371,6 +371,7 @@ sub tagConvert{
   1 while $comm =~ s#&lt;left&gt;(.*?)&lt;/left&gt;\n?#<div class="left">$1</div>#gis;
   1 while $comm =~ s#&lt;center&gt;(.*?)&lt;/center&gt;\n?#<div class="center">$1</div>#gis;
   1 while $comm =~ s#&lt;right&gt;(.*?)&lt;/right&gt;\n?#<div class="right">$1</div>#gis;
+  1 while $comm =~ s#&lt;add-line-spacing&gt;(.*?)&lt;/add-line-spacing&gt;\n?#<div class="add-line-spacing">$1</div>#gis;
   
   # 自動リンク
   $comm =~ s#((?:\G|>)[^<]*?)(https?://[^\s\<]+)#$1<a href="$2" target="_blank">$2</a>#gi;
