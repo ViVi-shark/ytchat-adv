@@ -355,6 +355,8 @@ sub tagConvert{
     $comm =~ s/${qkey}/$set::replace_rule{$key}/g;
   }
   
+  $comm =~ s/\[&lt;se\:(.+?)&gt;\]/<span class="sound-effect-src">$1<\/span><audio class="sound-effect" src="lib\/sound\/$1" controls><\/audio>/gi;
+  
   $comm =~ s#&lt;hr&gt;\n?#<hr>#gi;
   $comm =~ s#&lt;ruby&gt;(.+?)\((.*?)\)&lt;/ruby&gt;#<ruby>$1<rp>(</rp><rt>$2</rt><rp>)</rp></ruby>#gi;
   1 while $comm =~ s#&lt;mi&gt;(.+?)&lt;/mi&gt;#<i class="serif">$1</i>#gis;

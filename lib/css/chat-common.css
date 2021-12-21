@@ -1124,6 +1124,7 @@ body.rom .input-form { display: none !important; }
 */
 
 .decoration-buttons .insert-image::before   { content:"\f03e"; color:#8fd; }
+.decoration-buttons .sound-effect::before   { content:"\1f508"; color:#8fd; }
 
 /* ダイスボタン */
 .dice-button {
@@ -2022,6 +2023,54 @@ body.rom .input-form { display: none !important; }
   padding: 0.5em;
   border-radius: 0.7em;
   background-color: rgba(255, 255, 255, 0.767);
+}
+
+#sound-effect-window {
+  display: grid;
+  grid-template-rows: max-content 1fr;
+}
+#sound-effect-window .sound-effect-list {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+#sound-effect-window .sound-effect-list > li {
+  margin: 0.65em;
+  padding: 0.25em;
+  border-radius: 0.25em;
+  background-color: rgba(255, 255, 255, 0.1);
+  box-sizing: border-box;
+}
+#sound-effect-window .sound-effect button {
+  margin-right: 0.25em;
+}
+#sound-effect-window .sound-effect button i.fas {
+  margin-right: 0.2em;
+}
+#sound-effect-window .sound-effect > .path {
+  display: none;
+}
+#sound-effect-window .sound-effect:hover > .path {
+  display: initial;
+}
+#sound-effect-window .sound-effect:hover > .short-name {
+  display: none;
+}
+#sound-effect-window .sound-effect > .duration {
+  font-size: smaller;
+}
+#sound-effect-window .sound-effect > .duration::before {
+  content: "(";
+}
+#sound-effect-window .sound-effect > .duration::after {
+  content: "sec)";
+}
+#sound-effect-window .sound-effect > .copyright:empty {
+  display: none;
+}
+#sound-effect-window .sound-effect > .copyright::before {
+  content: "©";
+  font-family: 'Lato', sans-serif;
 }
 
 /* // その他

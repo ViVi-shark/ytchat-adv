@@ -157,6 +157,9 @@ $ROOM->param(bgPreset => \@bg_list);
 my @encoded_bgm_preset = encode_json \@set::bgm_preset;
 $ROOM->param(bgmPreset => decode('utf8', uri_escape(@encoded_bgm_preset)));
 
+require './lib/pl/sound-effect.pl';
+$ROOM->param(soundEffect => @SoundEffect::list);
+
 my @src_url;
 if($set::src_url_limit){
   foreach (@set::src_url_list){

@@ -992,3 +992,11 @@ body {
   text-align: left;
 }
 
+#sound-effect-window {
+  width: 40em;
+  height: 50%;
+}
+#sound-effect-window .box-body {
+  overflow: auto;
+}
+

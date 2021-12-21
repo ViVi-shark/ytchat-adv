@@ -144,7 +144,8 @@
             <span class="button insert-right" title="右揃え"></span>
             <span class="button end insert-add-line-spacing" title="行送りを大きく"></span>
             
-            <span class="button start end insert-image" title="挿絵" onclick="boxOpen('image-insert');"></span>
+            <span class="button start insert-image" title="挿絵" onclick="boxOpen('image-insert');"></span>
+            <span class="button end sound-effect" title="SE" onclick="boxOpen('sound-effect-window');"></span>
           </div>
           
           <div class="check-buttons">
@@ -745,6 +746,14 @@
       <TMPL_INCLUDE NAME="help.html">
     </div>
     <span class="close button" onclick="boxClose('help-window');">×</span>
+  </div>
+  
+  <div class="float-box" id="sound-effect-window">
+    <h2>効果音</h2>
+    <div class="box-body">
+      <TMPL_INCLUDE NAME="sound-effect.html">
+    </div>
+    <span class="close button" onclick="boxClose('sound-effect-window');">×</span>
   </div>
   
   <!-- / FLOAT-BOXES -->
