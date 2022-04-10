@@ -28,7 +28,12 @@ my %roomdata;
 error('ルームがありません') if !exists($rooms{$id});
 
 my %room = %{$rooms{$id}};
-my @tabs = $room{'tab'} ? @{$room{'tab'}} : ('メイン','サブ');
+
+my $game = $room{'game'};
+
+my @tabs = $room{'tab'} ? @{$room{'tab'}}
+    : $games{$game}{'chatTabs'} ? @{$games{$game}{'chatTabs'}}
+    : ('メイン','サブ');
 
 ###################
 ### ディレクトリ・ファイルが無い場合
@@ -98,7 +103,6 @@ $ROOM->param(ver => $::ver);
 $ROOM->param(roomId => $id);
 $ROOM->param(title => $room{'name'});
 
-my $game = $room{'game'};
 $ROOM->param(gameSystem => $game);
 $ROOM->param(gameSystemName => $games{$game}{'name'} ? $games{$game}{'name'} : $game ? $game : '－');
 
