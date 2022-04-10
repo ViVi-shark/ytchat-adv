@@ -1,0 +1,37 @@
+#topic-value.storyteller-keywords:empty::before {
+    content: 'キーワード';
+}
+
+#topic-value.storyteller-keywords .storyteller-keyword {
+    display: inline-block;
+    white-space: nowrap;
+    padding: 0.25em 0.50em;
+    border: 1px solid rgba(128, 128, 128, 0.5);
+    border-radius: 0.5em;
+    background-color: rgb(48, 64, 96);
+    margin: 0.5em;
+    color: white;
+}
+#topic-value.storyteller-keywords .storyteller-keyword:hover {
+    cursor: copy;
+    border-color: rgb(160, 160, 160);
+    background-color: rgb(64, 80, 108);
+    color: inherit;
+}
+#topic-value.storyteller-keywords .storyteller-keyword.collected {
+    opacity: 0.35;
+}
+#topic-value.storyteller-keywords .storyteller-keyword.collected:hover {
+    border-color: rgba(128, 128, 128, 0.5);
+    background-color: rgb(48, 64, 96);
+}
+#topic-value.storyteller-keywords .storyteller-keyword.collected::before {
+    content: "✔";
+    margin-right: 0.2em;
+}
+#topic-value.storyteller-keywords .storyteller-keyword > .bracket {
+    display: none;
+}
+#topic-value.storyteller-keywords .storyteller-keyword > .collection-mark {
+    display: none;
+}
