@@ -125,6 +125,25 @@ html,body {
   left: .2rem;
 }
 
+#topic-value.animation-updated::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, .3) 100%);
+  transform: skewX(-25deg);
+}
+#topic-value.animation-updated::before {
+  animation: topic-shine 0.7s;
+}
+@keyframes topic-shine {
+  100% {
+    left: 125%;
+  }
+}
+
 /* // ラウンド
 ---------------------------------------------------------------------------------------------------- */
 #round {
