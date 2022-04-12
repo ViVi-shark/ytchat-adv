@@ -1980,7 +1980,7 @@ body.rom .input-form { display: none !important; }
 .message-templates .template{
   display: block;
   width: 100%;
-  height: 2.2em;
+  min-height: 2.2em;
   float: left;
   clear: left;
   padding: 0.3em 0.6em;
@@ -2001,12 +2001,11 @@ body.rom .input-form { display: none !important; }
   align-items: center;
 }
 .message-templates .template > .format{
-  display: flex;
+  display: block;
   width: calc(100% - (4.3em + 0.7em));
-  height: 100%;
+  height: auto;
   float: left;
-  justify-content: start;
-  align-items: center;
+  line-height: 200%;
 }
 .message-templates .template > .actions > .button{
   display: flex;

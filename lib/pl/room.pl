@@ -178,9 +178,11 @@ $ROOM->param(customCSS => $set::custom_css);
 $ROOM->param(userRoomFlag => exists($set::rooms{$id}) ? 0 : 1);
 
 my @message_templates;
-if (sysopen(my $FH, './message_templates/dx3.json', O_RDONLY)) {
+if (sysopen(my $FH, "./message_templates/${game}.json", O_RDONLY)) {
   @message_templates = join('', <$FH>);
   close($FH);
+} else {
+  @message_templates = '[]';
 }
 $ROOM->param(messageTemplates => uri_escape_utf8(@message_templates));
 
