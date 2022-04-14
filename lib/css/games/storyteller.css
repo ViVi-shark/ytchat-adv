@@ -1,4 +1,6 @@
-
+#topic-value.storyteller-keywords:empty::before {
+    content: "キーワード";
+}
 #topic-value.storyteller-keywords .storyteller-keyword {
     display: inline-block;
     white-space: nowrap;
