@@ -963,6 +963,7 @@ body {
 }
 .float-box h2 {
   cursor: move;
+  height: 3rem;
 }
 .float-box table th {
   white-space: nowrap;
@@ -1010,12 +1011,25 @@ body {
   left: 1.5em;
   right: auto;
   bottom: auto;
+  --button-size: 5rem;
+  min-width: 60vw;
+  height: min(20vh, 12rem);
+}
+#edit-topic .comm-area {
+  display: block;
+  height: calc(100% - 3rem);
+  margin: 0;
+  padding: 0.5em 0;
 }
 #edit-topic textarea {
-  width: 60vw;
-  max-width: 100vw;
-  max-height: 80vh;
-  margin-top: .1rem;
+  width: calc(100% - var(--button-size));
+  height: 100%;
+  float: left;
+}
+#edit-topic button {
+  width: var(--button-size);
+  height: 100%;
+  float: left;
 }
 #edit-npc {
   top: auto;
