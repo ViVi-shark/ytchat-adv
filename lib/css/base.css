@@ -37,6 +37,11 @@ input:hover, textarea:hover, select:hover, button:hover, .button:hover {
   box-shadow: inset 0 0 .5rem #7af;
   color: var(--base-font-color);
 }
+button[disabled]:hover {
+  box-shadow: none;
+  color: #ddc;
+  cursor: default;
+}
 input:focus,textarea:focus,select:focus,button:focus {
   outline: 0;
   box-shadow: 0 0 0 .1rem #09f, 0 0 .5rem .0rem #09f;

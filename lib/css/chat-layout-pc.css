@@ -939,7 +939,7 @@ body {
   height: 100%;
   float: left;
 }
-#edit-topic button {
+#edit-topic .comm-area button {
   width: var(--button-size);
   height: 100%;
   float: left;

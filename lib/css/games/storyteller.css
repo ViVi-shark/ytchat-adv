@@ -1,3 +1,9 @@
+#edit-topic {
+    --bottom-area-height: 2rem;
+}
+#edit-topic .comm-area {
+    height: calc(100% - 3rem - var(--bottom-area-height));
+}
 #topic-value.storyteller-keywords:empty::before {
     content: "キーワード";
 }
@@ -33,4 +39,11 @@
 }
 #topic-value.storyteller-keywords .storyteller-keyword > .collection-mark {
     display: none;
+}
+#edit-topic .bottom-area {
+    height: var(--bottom-area-height);
+}
+#edit-topic .bottom-area button {
+    height: 100%;
+    padding: 0 1em;
 }
