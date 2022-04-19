@@ -85,7 +85,7 @@
   </header>
   <article id="contents">
   <div class="logs logs-font">
-    <TMPL_LOOP Logs><dl id="line-<TMPL_VAR NUM>" class="<TMPL_VAR CLASS>" data-user="<TMPL_VAR USER>" data-tab="<TMPL_VAR TAB>" data-tab-name="<TMPL_VAR TABNAME>">
+    <TMPL_LOOP Logs><dl id="line-<TMPL_VAR NUM>" class="<TMPL_VAR CLASS>" data-user="<TMPL_VAR USER>" data-user-id="<TMPL_VAR USER_ID>" data-tab="<TMPL_VAR TAB>" data-tab-name="<TMPL_VAR TABNAME>">
       <dt style="color:<TMPL_VAR COLOR>"><TMPL_VAR NAME></dt>
       <TMPL_LOOP LogsDD><TMPL_IF COMM><dd class="comm" data-date="<TMPL_VAR DATE>"><TMPL_VAR COMM></dd></TMPL_IF>
       <TMPL_IF INFO><dd class="info <TMPL_VAR TYPE>" data-date="<TMPL_VAR DATE>" data-game="<TMPL_VAR GAME>"><TMPL_VAR INFO></dd></TMPL_IF></TMPL_LOOP>
