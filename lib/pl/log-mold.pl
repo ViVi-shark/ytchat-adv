@@ -217,7 +217,7 @@ foreach (<$FH>){
   $comm =~ s#(―+)#<span class="dash">$1</span>#g;
   $info =~ s#(―+)#<span class="dash">$1</span>#g;
   
-  if ($system =~ /^memo/) {
+  if ($system =~ /^memo/ && $info) {
     if ($info eq '') {
       $info = '<details open><summary>詳細</summary>'.$info.'</details>';
     } else {
