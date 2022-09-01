@@ -18,8 +18,8 @@ sub diceCheck {
   $comm =~ s/<br>/ /;
   $comm =~ tr/ａ-ｚＡ-Ｚ０-９＋－＊／＾＠＄＃（）＜＞、＝！：/a-zA-Z0-9\+\-\*\/\^@\$#\(\)<>,=!:/;
   if   ($comm =~ /^[0-9\+\-\*\/()]*[0-9]+\)?D\(?([0-9\+\-]|\s|$)/i){ return diceRoll($comm), 'dice'; }
-  elsif($comm =~ /^[0-9]*@/){ return shuffleRoll($comm), 'choice'; }
-  elsif($comm =~ /^[0-9]*\$/){ return choiceRoll($comm), 'choice'; }
+  elsif($comm =~ /^[0-9]*\@/){ return shuffleRoll($comm); }
+  elsif($comm =~ /^[0-9]*\$/){ return  choiceRoll($comm); }
   # 四則演算
   elsif($comm =~ /^
     ( \(? \-? [0-9]+ [\+\-\/*\^]
@@ -46,7 +46,8 @@ sub diceCheck {
   elsif($::in{'game'} eq 'dx3'){
     if   ($comm =~ /^ET(P|N)?(?:\s|$)/i)      { require './lib/pl/dice/dx3.pl'; return emotionRoll($1), 'dice:dx'; }
     elsif($comm =~ /^HC(?:\s|$)/i)            { require './lib/pl/dice/dx3.pl'; return hcRoll(), 'dice:dx'; }
-    elsif($comm =~ /^ER([0-9]*)(?:\s|$)/i)    { require './lib/pl/dice/dx3.pl'; return encroachRoll($1); }
+    elsif($comm =~ /^\+?ER([0-9]*)(?:\s|$)/i) { require './lib/pl/dice/dx3.pl'; return encroachRoll($1); }
+    elsif($comm =~ /^-ER([0-9]*)(?:\s|$)/i)   { require './lib/pl/dice/dx3.pl'; return encroachRoll($1,1); }
     elsif($comm =~ /^RE([0-9]*)(?:\s|$)/i)    { require './lib/pl/dice/dx3.pl'; return resurrectRoll($1); }
     elsif($comm =~ /^\+RE([0-9]*)(?:\s|$)/i)  { require './lib/pl/dice/dx3.pl'; return resurrectRoll($1,1); }
     elsif($comm =~ /^[0-9\+\-\*\/()]+(r|dx)/i){ require './lib/pl/dice/dx3.pl'; return dxRoll($comm), 'dice:dx'; }
@@ -171,7 +172,7 @@ sub dice {
   my $rolls = $_[0];
   my $faces = $_[1];
   my $crit  = $_[2]; $crit =~ s/^@//;
-  if($faces eq ''){ $faces = 6 }
+  if($faces eq ''){ $faces = $set::games{$::in{'game'}}{'faces'} || 6 }
   if   ($rolls > 200) { return ("${rolls}D${faces}", '', 'ダイスの個数は200が最大です'); }
   elsif($faces > 1000){ return ("${rolls}D${faces}", '', 'ダイスの面数は1000が最大です'); }
   elsif($crit ne '' && $crit  <= $rolls){ return ("${rolls}D${faces}\@${crit}", '∞'); }
@@ -213,19 +214,32 @@ sub shuffleRoll {
   }
   my $rolls = $1; my $rolls_raw = $rolls;
   my $faces = $2;
-  my $max = $set::random_table{$faces} ? $set::random_table{$faces}{'max'} : 10;
-  my $def = $set::random_table{$faces} ? $set::random_table{$faces}{'def'} : 1;
-     $rolls = $rolls > $max ? $max
-            : !$rolls ? $def
-            : $rolls;
+  my $max = 10;
+  my $def = 1;
+  if($set::random_table{$faces}){
+    $max = $set::random_table{$faces}{'max'} || $max;
+    $def = $set::random_table{$faces}{'def'} || $def;
+  }
+  $rolls = $rolls > $max ? $max
+         : !$rolls ? $def
+         : $rolls;
   if($set::random_table{$faces}) {
     open(my $FH, '<', "${set::rtable_dir}/$set::random_table{$faces}{'data'}") or error($set::random_table{$2}.'が開けません');
     my @list = <$FH>;
     close($FH);
-    @list = shuffle(@list);
-    my @choice = @list[0 .. $rolls-1];
-    chomp $_ foreach (@choice);
-    return "${rolls}\@${faces} → [".join('][', @choice)."]";
+    if($list[0] =~ /[0-9]+D[0-9]+/i){
+      return randomDiceTableRoll($rolls,$faces,@list), 'choice:table';
+    }
+    else {
+      @list = shuffle(@list);
+      my @choice = @list[0 .. $rolls-1];
+      foreach (@choice){
+        chomp $_;
+        $_ =~ s/\\n/<br>/g;
+        $_ .= ($set::random_table{$faces}{'faces'} ? ' ('.$set::random_table{$faces}{'faces'}[rand @{ $set::random_table{$faces}{'faces'} }].')' : '')
+      }
+      return "${rolls}＠${faces} → [".join('][', @choice)."]", 'choice:list';
+    }
   }
   else {
     $faces =~ s/>/&gt;/;
@@ -234,7 +248,7 @@ sub shuffleRoll {
     return "" if (@list <= 1 || (!$rolls_raw)); #誤爆防止
     @list = shuffle(@list);
     my @choice = splice(@list, 0, $rolls);
-    return '<b>【✔:'.join(',', @choice).'】</b> <s>［×:'.join(',', @list).'］</s>';
+    return '<b>【✔:'.join(',', @choice).'】</b> <s>［×:'.join(',', @list).'］</s>', 'choice';
   }
   return "";
 }
@@ -249,21 +263,33 @@ sub choiceRoll {
   }
   my $rolls = $1; my $rolls_raw = $rolls;
   my $faces = $2;
-  my $max = $set::random_table{$faces} ? $set::random_table{$faces}{'max'} : 10;
-  my $def = $set::random_table{$faces} ? $set::random_table{$faces}{'def'} : 1;
-     $rolls = $rolls > $max ? $max
-            : !$rolls ? $def
-            : $rolls;
+  my $max = 10;
+  my $def = 1;
+  if($set::random_table{$faces}){
+    $max = $set::random_table{$faces}{'max'} || $max;
+    $def = $set::random_table{$faces}{'def'} || $def;
+  }
+  $rolls = $rolls > $max ? $max
+         : !$rolls ? $def
+         : $rolls;
   if($set::random_table{$faces}) {
-    open(my $FH, '<', "${set::rtable_dir}/$set::random_table{$faces}{'data'}") or error($set::random_table{$2}.'が開けません');
+    open(my $FH, '<', "${set::rtable_dir}/$set::random_table{$faces}{'data'}") or error($set::random_table{$faces}.'が開けません');
     my @list = <$FH>;
     close($FH);
-    my @choice;
-    foreach (1 .. $rolls){
-      push(@choice, $list[rand(@list)]);
+    if($list[0] =~ /^[0-9]+D[0-9]+$/i){
+      return randomDiceTableRoll($rolls,$faces,@list), 'choice:table';
     }
-    chomp $_ foreach (@choice);
-    return "${rolls}\$${faces} → [".join('][', @choice)."]";
+    else {
+      my @choice;
+      foreach (1 .. $rolls){
+        push(@choice,
+          $list[rand(@list)]
+          . ($set::random_table{$faces}{'faces'} ? ' ('.$set::random_table{$faces}{'faces'}[rand @{ $set::random_table{$faces}{'faces'} }].')' : '')
+        );
+      }
+      foreach (@choice){ chomp $_; $_=~ s/\\n/<br>/g; }
+      return "${rolls}＄${faces} → [".join('][', @choice)."]", 'choice:list';
+    }
   }
   else {
     $faces =~ s/>/&gt;/;
@@ -275,7 +301,29 @@ sub choiceRoll {
     foreach (1 .. $rolls){
       push(@results, $list[rand(@list)]);
     }
-    return "(${faces}) → <b>".join(',', @results).'</b>';
+    return "(${faces}) → ".join(',', @results), 'choice';
+  }
+  return "";
+}
+
+sub randomDiceTableRoll {
+  my $repeat = shift;
+  my $name = shift;
+  my $code = shift;
+  my @list = @_;
+  chomp $code;
+  foreach (@list){ chomp $_; $_=~ s/\\n/<br>/g; }
+  my $results;
+  foreach(1 .. $repeat){
+    ($code, my $value, my $text) = dice(split(/D/i, $code));
+    $text =~ s/[\!\.]//g;
+    $results .= '<br>' if $results;
+    foreach(@list){
+      if($_ =~ s/^$value:(.*?)$/$1/){ $results .= "＠$name → $code → $value\[$text\] : \[$1\]"; last; }
+    }
+  }
+  return $results;
+}
   }
   return "";
 }

@@ -23,8 +23,7 @@
   <meta name="msapplication-TileColor" content="#9f00a7">
   <meta name="theme-color" content="#ffffff">
   <link rel="stylesheet" media="all" href="./lib/css/config.css?<TMPL_VAR ver>">
-  <link rel='stylesheet' media="all" href='./lib/js/lib/spectrum.css'>
-  <link rel="stylesheet" media="all" href="./lib/css/memo.css?<TMPL_VAR ver>">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css"/>
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   <link rel="stylesheet" media="all" href="./lib/css/games/storyteller.css?<TMPL_VAR ver>">
@@ -32,7 +31,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="./lib/js/lib/jquery.selection.js" defer></script>
-  <script src='./lib/js/lib/spectrum.js' defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
   <script src="./lib/js/lib/rx.all.js?<TMPL_VAR ver>" defer></script>
   <script src="./lib/js/lib/rxx.js?<TMPL_VAR ver>" defer></script>
   <script src="./lib/js/ui.js?<TMPL_VAR ver>" defer></script>
@@ -40,7 +40,7 @@
   <script src="./lib/js/chat.js?<TMPL_VAR ver>" defer></script>
   <script src="./lib/js/memo.js?<TMPL_VAR ver>" defer></script>
   <script src="./lib/js/games/storyteller.js?<TMPL_VAR ver>" defer></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
   <script>
     const roomId = '<TMPL_VAR roomId>';
     const tabArray = ['<TMPL_VAR tabArray>'];
@@ -95,8 +95,7 @@
     <!-- / TOPIC -->
     
     <!-- CHAT-AREA -->
-    <div id="chat-closes-area"></div>
-    <div id="chat-area"></div>
+    <div id="chat-area"><ul id="tab-add-area"></ul></div>
     <!-- / CHAT-AREA -->
     
     <div class="box" id="tablist-area">
@@ -117,8 +116,8 @@
           <div class="comm-config-area">
             <div class="name-area">
               <input type="text" id="main-name1" class="main-name bold" style="background:transparent" title="現在の名前" placeholder="名前が空欄です" readonly>
-              <input type="color" id="form-color" class="selectcolor-main" list="color-list" value="#FFFFFF" title="名前色">
-              <input type="text" id="form-color-text" class="selectcolor-main" list="color-list" value="#FFFFFF" title="名前のカラーコード">
+              <span id="form-color-pickr" class="color-pickr" data-pickr="form-color"></span>
+              <input type="text" id="form-color" class="" list="color-list" value="#FFFFFF" title="名前色">
             </div>
             <div class="address-area">
               <select id="form-address" title="発言送信先"><option value="">全員</option></select>
@@ -152,7 +151,7 @@
           </div>
           
           <div class="check-buttons">
-            <button onclick="unitCommandSubmit('check')">✔</button><button onclick="unitCommandSubmit('uncheck')">×</button>
+            <button onclick="unitCheckSubmit()"><span class="small">行動済</span></button>
           </div>
         </div>
         <div class="open-message-templates" data-source="<TMPL_VAR messageTemplates>">発言テンプレート</div>
@@ -209,7 +208,7 @@
       <div class="sheet-body-default">
         <dl>
           <dt>名前      </dt><dd><input id="new-unit-name-value"  type="text"></dd>
-          <dt>名前色    </dt><dd><input id="new-unit-color-value" type="color" class="selectcolor-unit" list="color-list" value="#ffffff"><input id="new-unit-color-value-text" type="text" class="selectcolor-unit" list="color-list" value="#ffffff"></dd>
+          <dt>名前色    </dt><dd><span class="color-pickr" data-pickr="new-unit-color-value"></span><input id="new-unit-color-value" type="text" class="selectcolor-unit" list="color-list" value="#ffffff"></dd>
           <dt>参照URL</dt><dd><input id="new-unit-url-value" type="url" placeholder="キャラシなどのURL"></dd>
           <dt>ステータス</dt><dd><textarea class="autosize" id="new-unit-stt-value"><TMPL_VAR newUnitSttDefault></textarea></dd>
         </dl>
@@ -618,48 +617,6 @@
       </p>
       </TMPL_IF>
     </details>
-    <script>
-    function gameChange(game){
-      document.getElementById('config-room-bcdice-options').style.display = (game == 'bcdice') ? 'block' : 'none';
-      const status = document.getElementById('config-room-status');
-      if     (game == 'sw2'){ status.value = 'HP　MP　防護'; }
-      else if(game == 'dx3'){ status.value = 'HP　侵蝕　行動'; }
-      else                  { status.value = 'HP　MP　他'; }
-    }
-    function BCDiceGet(apiUrl, set){
-      console.log('BCDiceGet >> API: '+apiUrl);
-      const select = document.getElementById('config-room-bcdice-game');
-      $.ajax({
-        url: apiUrl+'/v1/names',
-        type: 'GET',
-        cache: false,
-        timeout: 10000,
-        dataType: 'json',
-      })
-      .done( (data) => {
-        data['names'].sort(function(a,b){
-          if(a.name < b.name) return -1;
-          if(a.name > b.name) return 1;
-          return 0;
-        });
-        while (0 < select.childNodes.length) {
-          select.removeChild(select.childNodes[0]);
-        }
-        for(let key in data['names']){
-          let op = document.createElement("option");
-          op.text = data['names'][key]['name'];
-          op.value = data['names'][key]['system'];
-          if(bcdiceSystem === data['names'][key]['system']){
-            op.selected = true;
-          }
-          select.appendChild(op);
-        }
-      })
-      .fail( (data) => {
-        alert('APIサーバー（'+apiUrl+'）にアクセスできませんでした。URLが間違っているか、サーバーがダウンしている可能性があります。');
-      });
-    }
-    </script>
     <details>
       <summary onclick="getFileName();"><i class="fas fa-file-export"></i>ログ初期化／保存／ルーム削除</summary>
       <form onsubmit="resetRoom();return false;">
@@ -706,6 +663,16 @@
     <span class="close button" onclick="boxClose('member-list');">×</span>
   </div>
   
+  <div class="float-box" id="ready-check">
+    <h2>レディチェック（準備確認）</h2>
+    <p class="center">
+      <button onclick="readyCheckSubmit(1)">✔準備ＯＫ！</button>
+      <button onclick="readyCheckSubmit(0)">×まだ待って</button>
+    </p>
+    <ul id="ready-list"></ul>
+    <span class="close button" onclick="boxClose('ready-check');">×</span>
+  </div>
+  
   <div class="float-box" id="enter-form">
     <h2>ルーム：<TMPL_VAR title></h2>
     <p>
@@ -713,7 +680,9 @@
       <input type="text" id="in-name"><br>
       <br>
       名前色<br>
-      <input type="color" id="in-color" class="selectcolor-in" list="color-list" value="#FFFFFF"><input type="text" id="in-color-text" class="selectcolor-in" list="color-list" value="#FFFFFF"><br>
+      <span id="enter-color-area">
+        <span class="color-pickr" data-pickr="in-color"></span><input type="text" id="in-color" class="selectcolor-in" list="color-list" value="#FFFFFF">
+      </span><br>
       <br>
       <button onclick="enterRoom();">入室</button>
     </p>

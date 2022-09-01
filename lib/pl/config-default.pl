@@ -20,6 +20,7 @@ our %games = (
       '防護' => ['defenseTotalAllDef'],
     },
     'bcdice' => 'SwordWorld2.5',
+    'faces' => 6,
   },
   'dx3' => {
     'name' => 'ダブルクロス3rd',
@@ -32,6 +33,7 @@ our %games = (
       '行動'   => ['initiativeTotal'],
     },
     'bcdice' => 'DoubleCross',
+    'faces' => 10,
   },
   'storyteller' => {
     'name'     => 'ストリテラ',

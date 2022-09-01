@@ -106,7 +106,10 @@ foreach (<$FH>){
     }
   }
   
-  if($system =~ /^image$/){
+  if($system =~ /^palette$/){
+    next;
+  }
+  elsif($system =~ /^image$/){
     $info = '<img loading="lazy" src="' . $info . '">';
   }
   elsif($system =~ /^bgm:([0-9]+):(.+)$/){
@@ -214,7 +217,7 @@ foreach (<$FH>){
   $comm =~ s#(―+)#<span class="dash">$1</span>#g;
   $info =~ s#(―+)#<span class="dash">$1</span>#g;
   
-  if ($system =~ /^memo/) {
+  if ($system =~ /^memo/ && $info) {
     if ($info eq '') {
       $info = '<details open><summary>詳細</summary>'.$info.'</details>';
     } else {
@@ -241,7 +244,6 @@ foreach (<$FH>){
   ){
     push(@logs, {
       "NUM"    => $num,
-      "DATE"   => $date,
       "TAB"    => $tab,
       "TABNAME"=> $tabs[$tab-1],
       "USER"   => $user,
@@ -254,6 +256,7 @@ foreach (<$FH>){
   }
   
   push(@{$logs[$#logs]{'LogsDD'}},{
+    "DATE"  => $date,
     "COMM"  => $comm,
     "TYPE"  => $type,
     "INFO"  => $info,

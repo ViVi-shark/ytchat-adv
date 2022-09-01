@@ -33,17 +33,19 @@ foreach (%::in) {
 
 my @adds;
 
-my @status = $::in{'status'} ? (split(' \| ', $::in{'status'}))
+my @status = $::in{'status'} ? (split(' &lt;&gt; ', $::in{'status'}))
           # : $set::rooms{$::in{'room'}}{'status'} ? @{$set::rooms{$::in{'room'}}{'status'}}
           # : $set::games{$::in{'game'}}{'status'} ? @{$set::games{$::in{'game'}}{'status'}}
           # : ('HP','MP','他')
            : ();
-my $stt_commands = join('|', @status);
+my @stt_commands = map { quotemeta $_; } @status;
+my $stt_commands = join('|', @stt_commands);
 
 $::in{'name'} =~ s/!SYSTEM/$::in{'player'}/;
 
 # 入退室処理
 if($::in{'system'} eq 'enter'){
+  if($::in{'player'} eq ''){ error('名前を入力してください') }
   $::in{'name'} = "!SYSTEM";
   $::in{'comm'} = "<b style=\"color:$::in{'color'}\">$::in{'player'}</b>が入室しました";
   delete $::in{'color'};
@@ -108,7 +110,7 @@ else {
     $::in{'system'} = 'bgm';
     delete $::in{'color'};
   }
-  elsif($::in{'comm'} =~ s<^/bgm(?:\s(.*?))?(?:\s([0-9]{1,3}))?\s+(https?://.+)><>i){
+  elsif($::in{'comm'} =~ s<^/bgm(?:\s+(.*?))?(?:\s+([0-9]{1,3}))?\s+(https?://.+)><>i){
     my $url = $3;
     my $title = $1 || '無題';
     $2 =~ s/^0+//;
@@ -150,7 +152,7 @@ else {
     $::in{'system'} = 'bg';
     delete $::in{'color'};
   }
-  elsif($::in{'comm'} =~ s<^/bg(?:\s(.*?))?\s+(https?://.+)><>i){
+  elsif($::in{'comm'} =~ s<^/bg(?:\s+(.*?))?\s+(https?://.+)><>i){
     my $url = $2;
     my $title = $1 || '無題';
     if($set::src_url_limit) {
@@ -192,11 +194,16 @@ else {
     $::in{'comm'} = "レディチェックを開始 by $::in{'player'}";
     $::in{'system'} = "ready";
     delete $::in{'color'};
-    checkReset();
+    delete $::in{'address'};
+  }
+  elsif($::in{'comm'} =~ s<^/ready-(yes|ok|no)(?:\s|$)><>i){
+    my $ready = $1 eq 'no' ? 'no' : 'ok';
+    $::in{'system'} = "ready-${ready}";
+    delete $::in{'comm'};
     delete $::in{'address'};
   }
   #新規
-  elsif($::in{'comm'} =~ s/^(.*?) [@＠] new \s ( .*? )$//ixs){
+  elsif($::in{'comm'} =~ s/^(.*?) [@＠] new \s+ ( .*? )$//ixs){
     $::in{'name'} = $1 || $::in{'name'};
     ($::in{'info'}, $::in{'system'}) = unitMake($::in{'name'}, $2);
     delete $::in{'address'};
@@ -209,6 +216,13 @@ else {
     $::in{'system'} = "unit-delete:${name}";
     delete $::in{'color'};
     unitDelete($name);
+    delete $::in{'address'};
+  }
+  #追加
+  elsif($::in{'comm'} =~ s/^(.*?) [@＠] add \s+ ( .+?  [=＝:：] .*)$//ixs){
+    $::in{'name'} = $1 || $::in{'name'};
+    $stt_commands = '.+?';
+    ($::in{'info'}, $::in{'system'}) = unitCalcEdit($::in{'name'}, $2);
     delete $::in{'address'};
   }
   #更新
@@ -232,6 +246,7 @@ else {
     #なんもないよ
   }
 }
+
 error('書き込む情報がありません') if ($::in{'comm'} eq '' && $::in{'info'} eq '' && $::in{'system'} eq '');
 
 # ダイスコード確認
@@ -698,6 +713,7 @@ sub unitCalcEdit {
         $data{'unit'}{$set_name}{'status'}{$type} = $result;
         $result_info .= ($result_info ? '　' : '') . "<b>$type</b>:$result";
       }
+      push(@status, $type);
     }
   }
   if($result_info || $update){
