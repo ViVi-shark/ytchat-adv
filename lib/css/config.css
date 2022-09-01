@@ -141,7 +141,6 @@ label:hover input+b {
   text-shadow: inherit;
 }
 #form-name :checked {
-  text-shadow: none;
 }
 @media (max-width: 600px) {
   .box {
