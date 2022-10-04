@@ -236,6 +236,10 @@ html,body {
   text-align: right;
   width: 100%;
 }
+#status #status-body > dl[data-name][data-image-url] > dd[id*="stt-memo"] {
+  position: relative;
+  top: -1.5em;
+}
 #status #status-body > dl[data-name] > dd[id*="stt-memo"][data-memo=""] {
   display: none;
 }
@@ -348,6 +352,18 @@ html,body {
 #status #status-body > dl[data-name][data-number-of-items="9"], #status #status-body > dl[data-name][data-number-of-items="10"] {
   height: calc((2em * 5) + 1.5em + 1.5em);
 }
+#status #status-body > dl[data-name][data-image-url]:before {
+  content: "";
+  display: block;
+  float: left;
+  width: 35%;
+  height: 100%;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+}
+#status #status-body > dl[data-name] > .dummy {
+  display: none;
+}
 #status #status-body > dl[data-name] > dt {
   width: 100%;
   height: 1.5em;
@@ -358,6 +374,9 @@ html,body {
   padding-left: 0;
   display: block;
   font-size: inherit;
+}
+#status #status-body > dl[data-name][data-image-url] > dt {
+  width: calc(100% - 35%);
 }
 #status #status-body > dl[data-name] > dt > .name {
   display: flex;
@@ -376,6 +395,9 @@ html,body {
   margin-left: 0;
   margin-right: 0;
   padding: 0.55em 0 0 0.30em;
+}
+#status #status-body > dl[data-name][data-image-url] > dd {
+  width: calc((100% - 35%) / 2);
 }
 #status #status-body > dl[data-name] > dd > dl {
   width: 100%;
