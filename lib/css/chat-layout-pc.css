@@ -991,12 +991,29 @@ body {
   left: 10em;
   right: auto;
   bottom: 10em;
+  min-width: 40rem;
+  min-height: 30rem;
+}
+#edit-npc h2 {
+  height: 3rem;
+}
+#edit-npc .comm-area {
+  height: calc(100% - 3rem - 10rem - (0.5rem * 2));
+  margin: 0.5rem 0;
+  display: flex;
 }
 #edit-npc textarea {
-  width: 20em;
-  max-width: 65vw;
-  max-height: 80vh;
-  margin-top: .1rem;
+  width: calc(100% - 3rem);
+  height: 100%;
+  resize: none;
+}
+#edit-npc .comm-area button {
+  width: 3rem;
+}
+#edit-npc .notice {
+  height: 10rem;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 #image-insert {
   top:auto;
