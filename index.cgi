@@ -166,6 +166,7 @@ sub tagConvert {
   1 while $comm =~ s#%%(.*?)%%#<s>$1</s>#gis;
   1 while $comm =~ s#~~(.*?)~~#<s>$1</s>#gis;
   1 while $comm =~ s#&lt;u&gt;(.*?)&lt;/u&gt;#<span class="under">$1</span>#gis;
+  1 while $comm =~ s#__(.*?)__#<span class="under">$1</span>#gis;
   1 while $comm =~ s#&lt;o&gt;(.*?)&lt;/o&gt;#<span class="over">$1</span>#gis;
   1 while $comm =~ s#&lt;em&gt;(.+?)&lt;/em&gt;#<em>$1</em>#gis;
   1 while $comm =~ s#&lt;mi&gt;(.+?)&lt;/mi&gt;#<i class="serif">$1</i>#gis;
