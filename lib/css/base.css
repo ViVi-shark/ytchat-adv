@@ -339,12 +339,16 @@ img.icon { width: 1em; height: 1em; }
 }
 
 blockquote.decoration {
+  display: block;
   border-radius: 1em;
   border-left: 1px solid rgba(218, 218, 193, 0.3);
-  padding: 0.7em 0.5em 0.7em 1.3em;
-  margin: 0.9em 0 0.9em 0.1em;
+  padding: 0.7rem 1.5rem 0.7rem calc(1.3rem + 0.75em);
+  width: fit-content;
+  max-width: 100%;
+  margin: 0.9rem auto 0.9rem 0.1rem;
   font-size: 10pt;
   font-style: oblique 10deg;
+  position: relative;
 }
 blockquote.decoration:before, blockquote.decoration:after {
   display: inline;
@@ -352,9 +356,14 @@ blockquote.decoration:before, blockquote.decoration:after {
 }
 blockquote.decoration:before {
   content: "❝";
-  margin-right: 0.3em;
+  position: absolute;
+  top: 0.7rem;
+  left: 1.3rem;
 }
 blockquote.decoration:after {
   content: "❞";
   margin-left: 0.3em;
+  position: absolute;
+  bottom: 0.7rem;
+  right: 0.5rem;
 }
