@@ -1229,6 +1229,7 @@ body.rom .input-form { display: none !important; }
 .decoration-buttons .insert-center::before  { content:"\e234"; }
 .decoration-buttons .insert-right::before   { content:"\e237"; }
 .decoration-buttons .insert-add-line-spacing::before { content:"\ea16"; }
+.decoration-buttons .insert-quote::before { content:"\e244"; }
 .decoration-buttons .insert-headline::before{ content:"\f019"; transform: scale(1.55); }
 
 .decoration-buttons .insert-image::before   { content:"\e3f4"; color:#8fd; }
@@ -1401,6 +1402,7 @@ body.rom .input-form { display: none !important; }
 .chat .logs dl dd.comm:hover button.rewrite {
   display: inline-block;
 }
+
 /* システムメッセージ */
 /* ダイス・システムメッセージ補足表示部 */
 .chat .logs dl dd.info {
