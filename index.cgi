@@ -121,7 +121,7 @@ sub getFileNameDate {
 }
 
 ## 文字装飾変換
-sub quoteConvert {
+sub quoteConvert_Core {
   my $comm = shift;
 
   if ($comm !~ /&gt;/) {
@@ -136,7 +136,7 @@ sub quoteConvert {
       push(@currentQuoted, $1);
     } else {
       if ($#currentQuoted > 0) {
-        push(@destinationLines, '&lt;quoted&gt;' . join("\n", @currentQuoted) . '&lt;/quoted&gt;');
+        push(@destinationLines, "&lt;quoted&gt;\n" . join("\n", @currentQuoted) . "\n&lt;/quoted&gt;");
         @currentQuoted = ();
       } elsif ($#destinationLines > 0) {
         push(@destinationLines, "\n");
@@ -146,10 +146,23 @@ sub quoteConvert {
   }
 
   if ($#currentQuoted > 0) {
-    push(@destinationLines, '&lt;quoted&gt;' . join("\n", @currentQuoted) . '&lt;/quoted&gt;');
+    push(@destinationLines, "&lt;quoted&gt;\n" . join("\n", @currentQuoted) . "\n&lt;/quoted&gt;");
   }
 
-  return join('', @destinationLines);
+  my $resolved = join('', @destinationLines);
+
+  if (!($resolved eq $comm) && $resolved =~ /(&gt;|\n)&gt;/) {
+    return quoteConvert_Core($resolved);
+  }
+
+  return $resolved;
+}
+sub quoteConvert {
+  my $comm = shift;
+  my $converted = quoteConvert_Core($comm);
+  $converted =~ s/&lt;quoted&gt;\n+/&lt;quoted&gt;/g;
+  $converted =~ s/\n+&lt;\/quoted&gt;/&lt;\/quoted&gt;/g;
+  return $converted;
 }
 sub tagConvert {
   my $comm = shift;
