@@ -1161,16 +1161,17 @@ body.rom .input-form { display: none !important; }
 }
 /* 装飾ボタン */
 .decoration-buttons {
-  display: flex;
+  display: block;
   padding-left: .2em;
   padding-right: 7em;
   border-top: .1rem solid var(--border-color-input);
-  height: calc(2rem + 0.1rem);
+  height: calc((2rem * 2) + 0.1rem);
+  --help-button-width: 2.2rem;
 }
 .decoration-buttons .button {
   position: relative;
   width: 2.5rem;
-  height: 100%;
+  height: calc(100% / 2);
   padding: 0;
   background: transparent;
   font-size: 1.2rem;
@@ -1178,15 +1179,18 @@ body.rom .input-form { display: none !important; }
   border-width: 0 .1rem .1rem 0;
   border-radius: 0;
   overflow: visible;
+  float: left;
 }
 .decoration-buttons .button.start {
   border-left-width: .1rem;
+}
+.decoration-buttons .button.insert-horizon, .decoration-buttons .button.insert-image {
   border-bottom-left-radius: .6rem;
 }
 .decoration-buttons .button.end + .button.start {
   margin-left: 1em;
 }
-.decoration-buttons .button.end {
+.decoration-buttons .button.insert-hide, .decoration-buttons .button.insert-headline, .decoration-buttons .button.insert-image {
   border-bottom-right-radius: .5rem;
 }
 .decoration-buttons .button::before,
@@ -1205,6 +1209,11 @@ body.rom .input-form { display: none !important; }
 .decoration-buttons .insert-ruby    { width: 3rem; }
 .decoration-buttons .insert-em      { width: 3rem; }
 .decoration-buttons .insert-serif   { width: 3rem; }
+.decoration-buttons .insert-horizon {
+  clear: left;
+  margin-left: var(--help-button-width);
+  border-left-width: 1px;
+}
 .decoration-buttons .insert-headline{ position: relative; }
 .decoration-buttons .insert-headline select {
   position: absolute;
