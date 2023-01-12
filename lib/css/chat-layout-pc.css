@@ -680,6 +680,10 @@ body {
 }
 #status #status-body > dl > dd[id*="stt-url"] a {
   background: none;
+  float: right;
+  position: relative;
+  top: -0.5em;
+  padding-right: 0.25em;
 }
 #status #status-body > dl > dd[id*="stt-url"] a::before {
   content: "\e89e";
@@ -690,10 +694,6 @@ body {
   font-variation-settings: 'FILL' 1;
   font-size: 1.2em;
   line-height: 1;
-}
-#sidebar:not([data-layout="row"]) #status #status-body > dl {
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
 }
 [data-layout="row"] #status {
   flex-grow: 5;
@@ -707,12 +707,6 @@ body {
 [data-layout="row"] #status #status-body > dl {
   align-content: start;
   border: 0;
-}
-[data-layout="row"] #status #status-body > dl dt {
-  height: 1.1em;
-}
-[data-layout="row"] #status #status-body > dl dt:hover {
-  height: auto;
 }
 [data-layout="row"] #status .edit.button {
   position: absolute;
