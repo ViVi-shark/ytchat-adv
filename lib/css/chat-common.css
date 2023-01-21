@@ -639,7 +639,6 @@ dialog.modal > .dialog-inner > .content-area {
   text-align: left;
   line-height: 1.6;
   overflow: auto;
-  cursor: zoom-in;
 }
 .sheet .sheet-memo-body #memo-view:empty::before {
   content: 'メモがありません';
