@@ -16,6 +16,7 @@
     @layer lib, base, logs;
     @import url('./lib/css/base.css?<TMPL_VAR ver>') layer(base);
     @import url('./lib/css/logs.css?<TMPL_VAR ver>') layer(logs);
+    @import url('./lib/css/games/bloodorium.css?<TMPL_VAR ver>');
     @import url('./lib/css/config.css?<TMPL_VAR ver>');
   </style>
   <TMPL_IF customCSS><link rel="stylesheet" media="all" href="<TMPL_VAR customCSS>"></TMPL_IF>

@@ -1,0 +1,19 @@
+
+dd.info.dice[data-game="bloodorium"] .triumph-group[data-triumph-group-name="1"] {
+    text-emphasis: filled circle;
+}
+dd.info.dice[data-game="bloodorium"] .triumph-group[data-triumph-group-name="2"] {
+    text-emphasis: "◆";
+}
+dd.info.dice[data-game="bloodorium"] .triumph-group[data-triumph-group-name="3"] {
+    text-emphasis: "■";
+}
+dd.info.dice[data-game="bloodorium"] .triumph-group[data-triumph-group-name="4"] {
+    text-emphasis: filled triangle;
+}
+dd.info.dice[data-game="bloodorium"] .triumph-group[data-triumph-group-name="5"] {
+    text-emphasis: "★";
+}
+dd.info.dice[data-game="bloodorium"] .triumph-group[data-triumph-group-name="6"] {
+    text-emphasis: open double-circle;
+}

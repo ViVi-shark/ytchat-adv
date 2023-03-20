@@ -124,6 +124,7 @@ $ROOM->param(newUnitSttDefault  => join("\n", @status_set_list_unit));
 
 if   ($game eq 'sw2') { $ROOM->param(helpOnSW2 => 1); }
 elsif($game eq 'dx3') { $ROOM->param(helpOnDX3 => 1); }
+elsif($game =~ /^bloodorium/) { $ROOM->param(helpOnBloodorium => 1); }
 if($room{'bcdice-url'} || $room{'bcdice'}) { $ROOM->param(helpOnBCDice => 1); }
 
 my @text_replace;

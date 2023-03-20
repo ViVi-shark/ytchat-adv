@@ -435,6 +435,25 @@
   </details>
   </TMPL_IF>
 
+  <TMPL_IF helpOnBloodorium>
+    <details>
+      <summary>ブラドリウム【ダイスチェック】</summary>
+      <p>
+        <span style="color:#ee7777;">個数</span><b>DC</b><br>
+        <b>DC</b><span style="color:#ee7777;">個数</span>
+      </p>
+      <p>
+        　個数は四則演算が可能です。
+      </p>
+      <p>
+        例1：【ダイスチェック：５個】<br>
+        　<span style="color:#ee7777;">5</span><b>DC</b>　または　<b>DC</b><span style="color:#ee7777;">5</span><br>
+        例2：【ダイスチェック：４個】、《ダイスブースト：＋２》<br>
+        　<span style="color:#ee7777;">4+2</span><b>DC</b>　または　<b>DC</b><span style="color:#ee7777;">4+2</span>
+      </p>
+    </details>
+  </TMPL_IF>
+
   <TMPL_IF helpOnBCDice>
   <details><summary>BCDice</summary><p id="help-bcdice-info"></p></details>
   </TMPL_IF>
