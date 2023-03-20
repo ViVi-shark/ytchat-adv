@@ -54,6 +54,13 @@ sub diceCheck {
     elsif($comm =~ /^\+RE([0-9]*)(?:\s|$)/i)  { require './lib/pl/dice/dx3.pl'; return resurrectRoll($1,1); }
     elsif($comm =~ /^[0-9\+\-\*\/()]+(r|dx)/i){ require './lib/pl/dice/dx3.pl'; return dxRoll($comm), 'dice:dx'; }
   }
+  # BLOODORIUM
+  elsif($::in{'game'} =~ /^bloodorium/){
+    if($comm =~ /^([0-9\+\-\*\/()]+DC|DC[0-9\+\-\*\/()]+)(?:\s|$)/i){
+      require './lib/pl/dice/bloodorium.pl';
+      return bloodoriumDiceCheck($comm), 'dice:bloodorium';
+    }
+  }
 }
 
 sub diceRoll {
