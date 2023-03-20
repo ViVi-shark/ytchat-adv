@@ -206,6 +206,17 @@ foreach (<$FH>){
       $_ =~ s#\[([0-9,]+?)\.\.\.\]#<em class='fail'>[$1]</em>#g;
       #
       $_ =~ s#\{(.*?)\}#{<span class='division'>$1</span>}#g;
+
+      if ($game =~ /bloodorium/) {
+        if ($_ =~ /《トライアンフ》/) {
+          $_ =~ s#\*([1-6])\*#<strong class="triumph-group" data-triumph-group-name="1">$1</strong>#g;
+          $_ =~ s#_([1-6])_#<strong class="triumph-group" data-triumph-group-name="2">$1</strong>#g;
+          $_ =~ s#~([1-6])~#<strong class="triumph-group" data-triumph-group-name="3">$1</strong>#g;
+          $_ =~ s#\#([1-6])\##<strong class="triumph-group" data-triumph-group-name="4">$1</strong>#g;
+          $_ =~ s#\^([1-6])\^#<strong class="triumph-group" data-triumph-group-name="5">$1</strong>#g;
+          $_ =~ s#@([1-6])@#<strong class="triumph-group" data-triumph-group-name="6">$1</strong>#g;
+        }
+      }
     }
     elsif($system =~ /^unit/){
       if(1){
@@ -317,11 +328,12 @@ $ROOM->param(BgiList => \@bgi_list);
 ## 出目統計
 {
   my $user_stat_dice;
-  my $stat_game = $stat_count{'D10'} > $stat_count{'2D6'} ? 'D10' : '2D6';
+  my $stat_game = $stat_count{'D10'} > $stat_count{'2D6'} && $stat_count{'D10'} > $stat_count{'D6'} ? 'D10' : $stat_count{'D6'} > $stat_count{'2D6'} ? 'D6' : '2D6';
   my $stat_type = $stat_game eq '2D6' ? 'total' : 'single';
   my %stat_nums = (
     '2D6' => [2..12],
     'D10' => [1..10],
+    'D6' => [1..6],
   );
   foreach my $name (sort keys %stat){
     my $c = 0; my $t = 0; my $max = 0;
@@ -501,6 +513,14 @@ sub diceStat {
       foreach (split(',',$1)){
         $stat_count{'D10'}++;
         $stat{$user}{'D10'}{'single'}{$_}++;
+      }
+    }
+  }
+  elsif($game =~ /^bloodorium/){
+    if ($dices =~ /\[([1-6](,[1-6])*)\]/) {
+      foreach (split(',', $1)) {
+        $stat_count{'D6'}++;
+        $stat{$user}{'D6'}{'single'}{$_}++;
       }
     }
   }

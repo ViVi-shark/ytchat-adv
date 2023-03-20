@@ -59,6 +59,17 @@ foreach($reverseOn ? (reverse <$FH>) : <$FH>) {
       $_ =~ s#\[([0-9,]+?)\.\.\.\]#<em class='fail'>[$1]</em>#g;
       #
       $_ =~ s#\{(.*?)\}#{<span class='division'>$1</span>}#g;
+
+      if ($system =~ /^dice:?bloodorium$/) {
+        if ($_ =~ /《トライアンフ》/) {
+          $_ =~ s#\*([1-6])\*#<strong class='triumph-group' data-triumph-group-name='1'>$1</strong>#g;
+          $_ =~ s#_([1-6])_#<strong class='triumph-group' data-triumph-group-name='2'>$1</strong>#g;
+          $_ =~ s#~([1-6])~#<strong class='triumph-group' data-triumph-group-name='3'>$1</strong>#g;
+          $_ =~ s#\#([1-6])\##<strong class='triumph-group' data-triumph-group-name='4'>$1</strong>#g;
+          $_ =~ s#\^([1-6])\^#<strong class='triumph-group' data-triumph-group-name='5'>$1</strong>#g;
+          $_ =~ s#@([1-6])@#<strong class='triumph-group' data-triumph-group-name='6'>$1</strong>#g;
+        }
+      }
     }
     elsif($system =~ /^unit/){
       $_ =~ s# (\[.*?\])# <i>$1</i>#g;
