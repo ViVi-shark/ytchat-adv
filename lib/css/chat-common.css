@@ -208,6 +208,8 @@ dialog.modal > .dialog-inner > .content-area {
 }
 #round .button:not(:first-child):not(:last-child) {
   border-radius: 0;
+}
+#sidebar:not([data-layout="row"]) #round .button:not(:first-child):not(:last-child) {
   border-left: 0;
   border-right: 0;
 }
@@ -226,9 +228,10 @@ dialog.modal > .dialog-inner > .content-area {
   overflow: hidden;
 }
 #status #status-body {
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: block;
 }
 #status #status-body > dl {
   position: relative;
@@ -388,30 +391,39 @@ dialog.modal > .dialog-inner > .content-area {
   display: none;
 }
 
+#status #status-body {
+  --unit-name-height: 2.1rem;
+  --unit-property-height: 2.0rem;
+  --unit-property-row-count: 0; /* default value */
+  --unit-bottom-spacce: 0.75rem;
+}
 #status #status-body > dl[data-name] {
   font-size: 1.4rem;
   padding: 0 0.35em;
   box-sizing: content-box;
   margin-bottom: 0.7em;
-  height: calc((2em * 6) + 1.5em + 1.5em);
+  height: calc(var(--unit-name-height) + (var(--unit-property-height) * var(--unit-property-row-count)) + var(--unit-bottom-spacce));
+}
+#status #status-body > dl[data-name][data-image-url] {
+  height: calc(var(--unit-name-height) + (var(--unit-property-height) * max(2, var(--unit-property-row-count))) + var(--unit-bottom-spacce));
 }
 #status #status-body > dl[data-name][data-number-of-items="0"] {
-  height: calc((2em * 0) + 1.5em + 1.5em);
+  --unit-property-row-count: 0;
 }
 #status #status-body > dl[data-name][data-number-of-items="1"], #status #status-body > dl[data-name][data-number-of-items="2"] {
-  height: calc((2em * 1) + 1.5em + 1.5em);
+  --unit-property-row-count: 1;
 }
 #status #status-body > dl[data-name][data-number-of-items="3"], #status #status-body > dl[data-name][data-number-of-items="4"] {
-  height: calc((2em * 2) + 1.5em + 1.5em);
+  --unit-property-row-count: 2;
 }
 #status #status-body > dl[data-name][data-number-of-items="5"], #status #status-body > dl[data-name][data-number-of-items="6"] {
-  height: calc((2em * 3) + 1.5em + 1.5em);
+  --unit-property-row-count: 3;
 }
 #status #status-body > dl[data-name][data-number-of-items="7"], #status #status-body > dl[data-name][data-number-of-items="8"] {
-  height: calc((2em * 4) + 1.5em + 1.5em);
+  --unit-property-row-count: 4;
 }
 #status #status-body > dl[data-name][data-number-of-items="9"], #status #status-body > dl[data-name][data-number-of-items="10"] {
-  height: calc((2em * 5) + 1.5em + 1.5em);
+  --unit-property-row-count: 5;
 }
 #status #status-body > dl[data-name][data-image-url]:before {
   content: "";
@@ -428,7 +440,7 @@ dialog.modal > .dialog-inner > .content-area {
 }
 #status #status-body > dl[data-name] > dt {
   width: 100%;
-  height: 1.5em;
+  height: 2.1rem;
   float: left;
   margin-left: 0;
   margin-right: 0;
@@ -457,7 +469,7 @@ dialog.modal > .dialog-inner > .content-area {
 }
 #status #status-body > dl[data-name] > dd {
   width: calc(100% / 2);
-  height: 2em;
+  height: 2rem;
   display: block;
   float: left;
   margin-left: 0;
@@ -491,8 +503,10 @@ dialog.modal > .dialog-inner > .content-area {
   padding-right: 0.2em;
 }
 [data-layout="row"] #status #status-body > dl[data-name] {
-  width: 11em;
+  width: 18.5rem;
   margin-right: 0.7em;
+  margin-bottom: 0;
+  height: 100%;
 }
 [data-layout="row"] #status #status-body > dl[data-name]:before {
   background-size: auto 100%;
@@ -520,6 +534,9 @@ dialog.modal > .dialog-inner > .content-area {
 ---------------------------------------------------------------------------------------------------- */
 .memo ul#memo-list {
   width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .memo ul#memo-list li {
   position: relative;
