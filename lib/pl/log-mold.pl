@@ -34,7 +34,12 @@ my $logs_dir = ($id && $rooms{$id}{'logs-dir'}) ? $rooms{$id}{'logs-dir'} : $set
 my $is_isolated = !($logs_dir eq $set::logs_dir);
 my $room_name = $is_isolated ? $rooms{$id}{'name'} : '';
 
-my @tabs = $id ? ($rooms{$id}{'tab'} ? @{$rooms{$id}{'tab'}} : ('メイン','サブ')) : ();
+my $game = $id ? $rooms{$id}{'game'} : undef;
+my @tabs = $id ? (
+    $rooms{$id}{'tab'} ? @{$rooms{$id}{'tab'}}
+        : $game && $games{$game}{'chatTabs'} ? @{$games{$game}{'chatTabs'}}
+        : ('メイン','サブ')
+    ) : ();
 
 ###################
 ### テンプレート読み込み
