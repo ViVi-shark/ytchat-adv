@@ -1,0 +1,7 @@
+.diaclock-map.blood-garden-map {
+    --outer-cell-color: rgb(105, 46, 54);
+    --inner-cell-color: rgb(93, 24, 34);
+    --center-cell-color: rgb(83, 17, 26);
+    --cell-label-color: rgb(255, 255, 255, 0.5);
+    --entity-name-background-color: rgb(36, 11, 14);
+}
