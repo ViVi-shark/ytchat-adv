@@ -20,10 +20,20 @@ sub bloodoriumDiceCheck {
         return '';
     }
 
-    my $additiveValueExpression = undef;
+    my $modificationOperator = undef;
+    my $modificationValueExpression = undef;
 
-    if ($comm =~ /^([0-9\+\-\*\/()]+DC|DC[0-9\+\-\*\/()]+)(\s*add\s*([0-9\+\-\*\/()]+))(?:\s|$)/i) {
-        $additiveValueExpression = $3;
+    if ($comm =~ /^([0-9\+\-\*\/()]+DC|DC[0-9\+\-\*\/()]+)(\s*(add|sub)\s*([0-9\+\-\*\/()]+))(?:\s|$)/i) {
+        $modificationOperator = $3;
+        $modificationValueExpression = $4;
+    }
+
+    if (defined($modificationOperator)) {
+        if ($modificationOperator =~ /^add$/i) {
+            $modificationOperator = '+';
+        } elsif ($modificationOperator =~ /^sub$/i) {
+            $modificationOperator = '-';
+        }
     }
 
     my $diceCount = int(calc($diceCountExpression));
@@ -34,7 +44,7 @@ sub bloodoriumDiceCheck {
         return '';
     }
 
-    my $additiveValue = defined($additiveValueExpression) ? int(calc($additiveValueExpression)) : undef;
+    my $modificationValue = defined($modificationValueExpression) ? int(calc($modificationValueExpression)) : undef;
 
     my @diceValues = ();
     my %diceValueGroup = (1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0);
@@ -85,9 +95,13 @@ sub bloodoriumDiceCheck {
         $message .= " = $maxDiceValue";
     }
 
-    if (defined($additiveValue) && $additiveValue != 0) {
-        $message .= ', ' . ($additiveValue > 0 ? '+' : '') . $additiveValue;
-        $finalValue += $additiveValue;
+    if (defined($modificationOperator) && defined($modificationValue) && $modificationValue != 0) {
+        $message .= ', ' . $modificationOperator . ($modificationValue >= 0 ? $modificationValue : '(' . $modificationValue . ')');
+        if ($modificationOperator eq '+') {
+            $finalValue += $modificationValue;
+        } elsif ($modificationOperator eq '-') {
+            $finalValue -= $modificationValue;
+        }
         $message .= " ⇒ $finalValue";
     }
 
