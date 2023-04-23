@@ -56,7 +56,7 @@ sub diceCheck {
   }
   # BLOODORIUM
   elsif($::in{'game'} =~ /^bloodorium/){
-    if($comm =~ /^(([0-9\+\-\*\/()]+DC|DC[0-9\+\-\*\/()]+)(\s*add\s*([0-9\+\-\*\/()]+))?)(?:\s|$)/i){
+    if($comm =~ /^(([0-9\+\-\*\/()]+DC|DC[0-9\+\-\*\/()]+)(\s*(add|sub)\s*([0-9\+\-\*\/()]+))?)(?:\s|$)/i){
       my $code = $1;
       require './lib/pl/dice/bloodorium.pl';
       return bloodoriumDiceCheck($comm), 'dice:bloodorium', $code;
