@@ -173,6 +173,14 @@ article#contents {
   animation: none !important;
 }
 
+.logs dl dd.info.memo > details::after {
+  display: block;
+  content: "";
+  width: 0;
+  height: 1em;
+  clear: both;
+}
+
 /* 挿絵 */
 .logs dl dd.image {
   margin: none;
