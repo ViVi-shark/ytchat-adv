@@ -85,3 +85,95 @@ dd.info.dice[data-game="bloodorium"] .triumph-group[data-triumph-group-name="6"]
     justify-content: center;
     align-items: center;
 }
+
+
+
+.data-structure[data-game="ブラドリウム"] > .title {
+    background-color: black;
+    color: white;
+    border-bottom: none;
+    padding: 0.5em;
+}
+.data-structure[data-game="ブラドリウム"] > dl > dd[data-related-term*="内容"],
+.data-structure[data-game="ブラドリウム"] > dl > dd[data-related-term*="描写"],
+.data-structure[data-game="ブラドリウム"][data-mode="トリガー"] > dl > dd[data-related-term*="条件"] {
+    border-left-style: dashed;
+}
+.data-structure[data-game="ブラドリウム"] dd[data-related-term*="描写"],
+.data-structure[data-game="ブラドリウム"] dd[data-related-term*="ストーリー"] {
+    font-style: italic;
+    font-weight: lighter;
+}
+.data-structure[data-game="ブラドリウム"][data-mode="メインドクトリン"] dt[data-content*="ブレイク条件"],
+.data-structure[data-game="ブラドリウム"][data-mode="メインドクトリン"] dt[data-content*="ブレイク効果"] {
+    grid-column-start: 1;
+    grid-column-end: -1;
+    width: 100%;
+    background-color: darkslategray;
+    color: white;
+    margin-top: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.data-structure[data-game="ブラドリウム"][data-mode="メインドクトリン"] dd[data-related-term*="ブレイク条件"],
+.data-structure[data-game="ブラドリウム"][data-mode="メインドクトリン"] dd[data-related-term*="ブレイク効果"] {
+    grid-column-start: 1;
+    grid-column-end: -1;
+    width: 100%;
+    margin-left: 0;
+    border-left: none;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+}
+.data-structure[data-game="ブラドリウム"][data-mode="メインドクトリン"] dd[data-related-term*="ブレイク条件"] dt[data-content*="ストーリー"],
+.data-structure[data-game="ブラドリウム"][data-mode="メインドクトリン"] dd[data-related-term*="ブレイク条件"] dd[data-related-term*="ストーリー"] {
+    margin-bottom: 0.75em;
+}
+.data-structure[data-game="ブラドリウム"][data-mode="メインドクトリン"] dd[data-related-term*="ブレイク効果"] dt,
+.data-structure[data-game="ブラドリウム"][data-mode="メインドクトリン"] dd[data-related-term*="ブレイク効果"] dd {
+    border-top: 1px dotted rgba(255, 255, 255, 0.25);
+}
+.data-structure[data-game="ブラドリウム"][data-mode="メインドクトリン"] dd[data-related-term*="ブレイク効果"] dt:first-of-type,
+.data-structure[data-game="ブラドリウム"][data-mode="メインドクトリン"] dd[data-related-term*="ブレイク効果"] dd:first-of-type {
+    border-top: none;
+}
+.data-structure[data-game="ブラドリウム"][data-mode="メインドクトリン"] dd[data-related-term*="ブレイク効果"] dt {
+    padding-right: 1em;
+}
+.data-structure[data-game="ブラドリウム"][data-mode="メインドクトリン"] dd[data-related-term*="ブレイク効果"] dd {
+    margin-left: 0;
+}
+.data-structure[data-game="ブラドリウム"][data-mode="トリガー"] > dl > dt {
+    padding-right: 1em;
+}
+.data-structure[data-game="ブラドリウム"][data-mode="トリガー"] > dl > dd {
+    margin-left: 0;
+}
+.data-structure[data-game="ブラドリウム"][data-mode="トリガー"] > dl > dt[data-content*="内容"],
+.data-structure[data-game="ブラドリウム"][data-mode="トリガー"] > dl > dd[data-related-term*="内容"] {
+    border-top: 1px dotted rgba(255, 255, 255, 0.25);
+}
+
+
+
+#sheet-unit-memo .data-structure[data-game="ブラドリウム"][data-mode="メインドクトリン"] dd[data-related-term*="ブレイク条件"] dt[data-content*="条件"]:not(:first-child) {
+    width: 100%;
+    border-top: 1px dotted rgba(255, 255, 255, 0.25);
+    padding-top: 1.5em;
+    margin-top: 1.5em;
+}
+#sheet-unit-memo .data-structure[data-game="ブラドリウム"][data-mode="メインドクトリン"] dd[data-related-term*="ブレイク効果"] dt {
+    width: 100%;
+}
+#sheet-unit-memo .data-structure[data-game="ブラドリウム"][data-mode="メインドクトリン"] dd[data-related-term*="ブレイク効果"] dd {
+    border-top: none;
+}
+
+#sheet-unit-memo .data-structure[data-game="ブラドリウム"][data-mode="トリガー"] > dl > dt[data-content*="内容"] {
+    border-top: none;
+}
+#sheet-unit-memo .data-structure[data-game="ブラドリウム"][data-mode="トリガー"] > dl > dd[data-related-term*="内容"] {
+    border-top: none;
+}
