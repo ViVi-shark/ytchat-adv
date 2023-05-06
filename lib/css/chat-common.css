@@ -2453,7 +2453,7 @@ dialog.modal.message-templates {
 .mem-signal.yellow::before { content: "\f0ac"; color: #ff0; }
 .mem-signal.red::before    { content: "\f239"; color: #f00; }
 
-.tooltip {
+.old-tooltip {
   display: flex;
   position: fixed;
   background-color: rgba(119, 255, 119, 0.37);
@@ -2466,10 +2466,10 @@ dialog.modal.message-templates {
   border-width: 0;
   border-radius: 1.1em;
 }
-.tooltip.hidden {
+.old-tooltip.hidden {
   display: none;
 }
-.tooltip > div {
+.old-tooltip > div {
   width: auto;
   max-width: 20vw;
   height: auto;
