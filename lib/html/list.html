@@ -36,7 +36,7 @@
     }
   });
   function gameChange(game){
-    document.getElementById('bcdice-options').style.display = (game == 'bcdice') ? 'block' : 'none';
+    document.getElementById('bcdice-options').style.display = (game == 'bcdice' || game === 'bloodorium-beta1') ? 'block' : 'none';
     const status = document.getElementById('set-status');
     if(games[game]){
       status.placeholder = games[game]['status'].join('　');
@@ -45,6 +45,13 @@
         const chatTabs = document.getElementById('set-tab');
         if (chatTabs) {
           chatTabs.placeholder = games[game]['chatTabs'].join('　');
+        }
+      }
+
+      if (game === 'bloodorium-beta1') {
+        const bcdiceUrlInput = document.getElementById('set-bcdice-url');
+        if (bcdiceUrlInput.value === '') {
+          BCDiceGet(bcdiceUrlInput.value = 'https://bcdice.onlinesession.app');
         }
       }
     }
@@ -85,10 +92,14 @@
       while (0 < select.childNodes.length) {
         select.removeChild(select.childNodes[0]);
       }
+      const game = document.getElementById('set-game').value;
       for(let key in data['names']){
         let op = document.createElement("option");
         op.text = data['names'][key]['name'];
         op.value = data['names'][key]['system'];
+        if (game === 'bloodorium-beta1' && data['names'][key]['system'] === 'Bloodorium') {
+          op.setAttribute('selected', '');
+        }
         select.appendChild(op);
       }
     })
@@ -124,6 +135,7 @@
         管理パスワード: <input type="password" name="pass"> <small>//削除・リセット用</small><br>
         ゲームシステム: <select name="game" id="set-game" onchange="gameChange(this.value)">
           <option value="storyteller">ストリテラ</option>
+          <option value="bloodorium-beta1">ブラドリウム（暫定）</option>
           <option value="sw2">ソードワールド2.x</option>
           <option value="dx3">ダブルクロス3rd</option>
           <option value="">その他</option>

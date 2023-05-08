@@ -14,6 +14,9 @@
   }
   const bcdiceAPI = '<TMPL_VAR bcdiceAPI />';
   let bcdiceSystem = '<TMPL_VAR bcdiceSystem />';
+  if (bcdiceSystem === 'bloodorium-beta1') {
+    bcdiceSystem = 'Bloodorium';
+  }
   const replaceRule = <TMPL_VAR replaceRule DEFAULT="{}" />;
   const replaceRegex = <TMPL_VAR replaceRegex DEFAULT="[]" />;
   const tooltips = <TMPL_VAR tooltips DEFAULT="{}" />;

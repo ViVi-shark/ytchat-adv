@@ -50,7 +50,12 @@ our %games = (
     'name'     => 'ストリテラ',
     'status'   => [ 'フラグポイント' ],
     'chatTabs' => [ '舞台', '楽屋／客席' ]
-  }
+  },
+  'bloodorium-beta1' => {
+    'name'     => 'ブラドリウム',
+    'status'   => [ 'HP', 'ゲージ', 'ロスト数値', 'コレクトポイント', 'フラグメント', ],
+    'chatTabs' => [ '舞台', '楽屋／客席' ]
+  },
 );
 
 our $default_game = 'sw2';
