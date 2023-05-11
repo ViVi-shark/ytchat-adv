@@ -234,6 +234,8 @@ foreach (<$FH>){
           $_ =~ s#\^([1-6])\^#<strong class="triumph-group" data-triumph-group-name="5">$1</strong>#g;
           $_ =~ s#@([1-6])@#<strong class="triumph-group" data-triumph-group-name="6">$1</strong>#g;
         }
+
+        $_ =~ s#⇒ (\d+)$#⇒ <strong>$1</strong>#;
       }
     }
     elsif($system eq 'choice') {

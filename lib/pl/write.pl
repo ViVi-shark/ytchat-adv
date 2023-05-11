@@ -311,10 +311,16 @@ sub diceCodeCheck {
     | 威力[0-9] | [rk][ァ-ヴ] | 成長
   )/ix){
     require './lib/pl/dice.pl';
-    ($::in{'info'}, $::in{'system'}) = diceCheck($::in{'comm'});
+    my $code;
+    ($::in{'info'}, $::in{'system'}, $code) = diceCheck($::in{'comm'});
     if($::in{'info'}){
-      $::in{'comm'} =~ s/^(.*?(?:\s|$))//;
-      $::in{'info'} .= '<<'.$1;
+      if (defined($code)) {
+        $::in{'comm'} = trimSpaces(substr($::in{'comm'}, length($code)));
+        $::in{'info'} .= '<<'.$code;
+      } else {
+        $::in{'comm'} =~ s/^(.*?(?:\s|$))//;
+        $::in{'info'} .= '<<'.$1;
+      }
       return $::in{'info'};
     }
   }
@@ -323,15 +329,29 @@ sub diceCodeCheck {
       [\@＠\$＄\#＃]
     | [a-zａ-ｚA-ZＡ-Ｚ0-9０-９\+＋\-－\*＊\/／\^＾\@＠\$＄#＃()（）]{2,}
     | 威力 | [rk][ァ-ヴ] | 成長
+    | ([a-zａ-ｚA-ZＡ-Ｚ0-9０-９\+＋\-－\*＊\/／()（）]*dc[a-zａ-ｚA-ZＡ-Ｚ0-9０-９\+＋\-－\*＊\/／()（）]*(\s*add\s*[a-zａ-ｚA-ZＡ-Ｚ0-9０-９\+＋\-－\*＊\/／()（）]+)?)
   )(?!.*\s).*)$/ix){
     require './lib/pl/dice.pl';
-    ($::in{'info'}, $::in{'system'}) = diceCheck($1);
+    my $code;
+    ($::in{'info'}, $::in{'system'}, $code) = diceCheck($1);
     if($::in{'info'}){
-      $::in{'comm'} =~ s/\s((?!.*\s).*)$//;
-      $::in{'info'} .= '<<'.$1;
+      if (defined($code)) {
+        $::in{'comm'} = trimSpaces(substr($::in{'comm'}, 0, length($::in{'comm'}) - length($code)));
+        $::in{'info'} .= '<<'.$code;
+      } else {
+        $::in{'comm'} =~ s/\s((?!.*\s).*)$//;
+        $::in{'info'} .= '<<'.$1;
+      }
       return $::in{'info'};
     }
   }
+}
+
+sub trimSpaces {
+  my $text = shift;
+  $text =~ s/\A\s*//;
+  $text =~ s/\s*\Z//;
+  return $text;
 }
 
 # 秘話 ----------
