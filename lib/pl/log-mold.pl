@@ -302,6 +302,7 @@ foreach (<$FH>){
       "TAB"    => $tab,
       "TABNAME"=> $tabs[$tab-1],
       "USER"   => $user,
+      "USER_ID" => $userid,
       "NAME"   => $name,
       "COLOR"  => $color,
       "CLASS" => $class,
