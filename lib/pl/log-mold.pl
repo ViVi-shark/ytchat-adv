@@ -106,6 +106,7 @@ my $before_user;
 my $before_address;
 my @bgms; my %bgms;
 my @bgis; my %bgis;
+my @sheet_names; my %sheets;
 my %stat;
 my %stat_count;
 my %user_color;
@@ -185,6 +186,15 @@ foreach (<$FH>){
   }
   elsif($system =~ /^map/) {
     $info = "<span class=\"map-update\" data-map-source=\"$info\" />";
+  }
+  elsif($system =~ /^unit:.*(?:\(|\|\s+)url>(http.+?)(?:\)|\s+\|)/) {
+    my $sheetUrl = $1;
+    my $unitName = $info =~ /\[{2}(.+?)>https?.+]{2}/ ? $1 : $name;
+
+    if (!$sheets{$unitName}) {
+      push(@sheet_names, $unitName);
+      $sheets{$unitName} = $sheetUrl;
+    }
   }
 
   if(!$tabs[$tab-1]){ $tabs[$tab-1] = "タブ${tab}"; }
@@ -336,6 +346,10 @@ push(@bgm_list,{ "TITLE"  => $bgms{$_} }) foreach @bgms;
 push(@bgi_list,{ "TITLE"  => $bgis{$_} }) foreach @bgis;
 $ROOM->param(BgmList => \@bgm_list);
 $ROOM->param(BgiList => \@bgi_list);
+
+my @sheet_list;
+push(@sheet_list,{ 'NAME' => $_, 'URL' => $sheets{$_} }) foreach @sheet_names;
+$ROOM->param(SheetList => \@sheet_list);
 
 ## 出目統計
 {
