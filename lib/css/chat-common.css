@@ -197,20 +197,23 @@ html,body {
 #status #status-body > dl.selected {
   background-color: rgba(0,150,255, 0.2);
 }
-#status #status-body > dl.check::before {
+#status #status-body > dl.check::after {
   content: "\e5ca";
   display: inline-block;
   position: absolute;
   top: .3rem;
-  left: .1rem;
+  left: .5rem;
   font-family: "Material Symbols Outlined";
   font-variation-settings: 'FILL' 1;
   font-weight: bold;
-  font-size: 1em;
+  font-size: 0.65em;
   color: #f20;
   text-shadow: 
     var(--box-text-shadow-color) 0 0 .1rem, var(--box-text-shadow-color) 0 0 .1rem ;
   transform: scale(1.2, 1.6);
+  width: 1.7em;
+  height: 1.7em;
+  background: linear-gradient(to bottom right, rgba(96, 12, 0, 0.65) 50%, transparent 50%) no-repeat top left;
 }
 #status #status-body > dl > dt {
   margin-left: -.5em;
@@ -380,6 +383,12 @@ html,body {
 }
 #status #status-body > dl[data-name][data-image-url] > dt {
   width: calc(100% - 35%);
+}
+#status #status-body > dl.check[data-name] > dt.chara-name {
+  padding-left: 1.2em;
+}
+#status #status-body > dl.check[data-name][data-image-url] > dt.chara-name {
+  padding-left: 0;
 }
 #status #status-body > dl[data-name] > dt > .name {
   display: flex;
