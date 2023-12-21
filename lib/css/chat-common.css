@@ -534,6 +534,9 @@ dialog.modal > .dialog-inner > .content-area {
   right: .1em;
   z-index: 3;
 }
+body.rom #status .add.button {
+  display: none;
+}
 #status .edit.button {
   display: none;
 }
