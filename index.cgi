@@ -249,6 +249,8 @@ sub tagConvert {
   $comm =~ s#(</ul>)\n#$1#;
   
   $comm =~ s#\n#<br>#gi;
+  $comm =~ s/(<|&lt;)data-structure(>|&gt;)\s*(.+?)\s*(<|&lt;)\/data-structure(>|&gt;)/&encodeDataStructure($3)/egim;
+
   return $comm;
 }
 sub tagConvertUnit {
@@ -358,6 +360,13 @@ sub escapeBracket {
   $text =~ s/</&lt;/g;
   $text =~ s/>/&gt;/g;
   return $text;
+}
+
+sub encodeDataStructure {
+  use URI::Escape;
+  my $source = shift;
+  my $encoded = uri_escape_utf8($source);
+  return "<data-structure class=\"data-structure-source\" style=\"display: none;\">$encoded</data-structure>";
 }
 
 ## タグ削除

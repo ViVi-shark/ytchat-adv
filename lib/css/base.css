@@ -231,6 +231,7 @@ img.icon { width: 1em; height: 1em; }
   position: relative;
   border-bottom: 1px #6699bb dashed;
   cursor: help;
+  display: inline;
 }
 .tooltip .tooltip-text {
   display: none;
