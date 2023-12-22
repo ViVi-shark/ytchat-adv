@@ -156,6 +156,7 @@ sub tagConvert {
   #
   $comm =~ s#<ruby>(.+?)(?:<rp>\(</rp>)?<rt>(.*?)(?:<rp>\)</rp>)?</ruby>#<ruby><rp>｜</rp>$1<rp>《</rp><rt>$2<rp>》</rp></ruby>#gi;
 
+  1 while $comm =~ s#《《(.+?)》》#<em>$1</em>#gis;
   1 while $comm =~ s#&lt;b&gt;(.*?)&lt;/b&gt;#<b>$1</b>#gis;
   1 while $comm =~ s#&lt;i&gt;(.*?)&lt;/i&gt;#<i>$1</i>#gis;
   1 while $comm =~ s#&lt;s&gt;(.*?)&lt;/s&gt;#<s>$1</s>#gis;
