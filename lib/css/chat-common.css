@@ -124,6 +124,9 @@ html,body {
   max-height: 25vh;
   overflow-y: auto;
 }
+body.rom #topic-value {
+  padding-left: .5em;
+}
 #topic-value > .image-container > img {
   max-height: 6em;
   cursor: zoom-in;
@@ -132,6 +135,9 @@ html,body {
   position: absolute;
   top: .2rem;
   left: .2rem;
+}
+body.rom #topic .edit.button {
+  display: none;
 }
 
 #topic-value.animation-updated::after {
