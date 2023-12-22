@@ -154,8 +154,8 @@ sub tagConvert {
     $comm =~ s/${qkey}/$set::replace_rule{$key}/g;
   }
 
-  while ($comm =~ /(\A|^|\n|>)----+(<)?(\Z|$|\n)/) {
-    $comm =~ s#(\A|^|\n|>)----+(<)?(\Z|$|\n)#$1<hr>$2#;
+  while ($comm =~ /(\A|^|\n|>)---+(<)?(\Z|$|\n)/) {
+    $comm =~ s#(\A|^|\n|>)---+(<)?(\Z|$|\n)#$1<hr>$2#;
   }
 
   #
