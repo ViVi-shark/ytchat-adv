@@ -1,0 +1,179 @@
+
+.data-structure dl, .data-structure dt, .data-structure dd {
+    animation: none;
+
+    position: initial;
+    border-radius: initial;
+}
+.data-structure dl {
+    border: initial;
+
+    display: grid;
+    grid-template-columns: auto 1fr;
+
+    padding: initial;
+
+    line-height: 1.8;
+
+    font-size: inherit;
+    background: none;
+}
+.data-structure dl:hover {
+    background: none;
+}
+.data-structure dl::before {
+    color: inherit;
+
+    content: none;
+    position: initial;
+    font-size: inherit;
+    top: initial;
+    left: initial;
+    opacity: initial;
+    z-index: initial;
+}
+.data-structure dl:hover::before {
+    opacity: initial;
+}
+.data-structure dt, .data-structure dd {
+    white-space: initial;
+    word-break: initial;
+    overflow-wrap: initial;
+}
+.data-structure dt {
+    display: initial;
+
+    margin: initial;
+    font-size: inherit;
+    line-height: inherit;
+    text-align: initial;
+
+    background: none;
+
+    grid-column-start: 1;
+    grid-column-end: 2;
+    width: max-content;
+    max-width: initial;
+    height: max-content;
+
+    padding: initial;
+}
+.data-structure dt:after {
+    content: none;
+    display: initial;
+    width: initial;
+    margin-right: initial;
+    color: inherit;
+    font-weight: inherit;
+    text-align: initial;
+    opacity: initial;
+}
+.data-structure dd {
+    min-width: initial;
+    min-height: initial;
+
+    grid-column-start: 2;
+    grid-column-end: 3;
+
+    margin: initial;
+    padding: initial;
+}
+.data-structure dl dd:hover, .data-structure dd:hover {
+    box-shadow: none;
+}
+.data-structure dd::after {
+    color: inherit;
+    letter-spacing: inherit;
+    text-shadow: none;
+
+    content: none;
+    position: initial;
+    font-size: inherit;
+    top: initial;
+    right: initial;
+    opacity: initial;
+    font-family: inherit;
+    font-weight: inherit;
+    white-space: initial;
+    overflow-x: initial;
+}
+.data-structure dd:hover::after {
+    opacity: initial;
+}
+.data-structure > .title > p, .data-structure dt > p, .data-structure dd > .paragraph {
+    margin: 0;
+    margin-block: auto;
+    margin-inline: auto;
+}
+.data-structure hr.space {
+    height: 1em;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+}
+
+
+
+.data-structure {
+    font-size: 90%;
+    padding: 1.8em;
+    border-radius: 0.75em;
+    background-color: rgba(24, 24, 24, 0.25);
+    margin: 1em;
+    box-shadow: 0.25em 0.25em 0.25em rgba(24, 24, 24, 0.3);
+}
+#contents > .logs .data-structure {
+    background-color: rgba(48, 48, 48, 0.3);
+}
+.data-structure > .title {
+    font-size: 120%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 3px double rgba(255, 255, 255, 0.8);
+}
+.data-structure > dl,
+.data-structure > div {
+    margin-top: 1em;
+}
+.data-structure dt, .data-structure dd {
+    padding: 0.5em;
+}
+.data-structure dd {
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    margin-left: 0.5em;
+}
+.data-structure > dl > dd > dl > dd {
+    border-left-style: dashed;
+}
+.data-structure > dl > dd > dl > dd dl dd {
+    border-left-style: dotted;
+}
+.data-structure .paragraph::before {
+    content: "";
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+}
+
+
+
+#sheet-unit-memo .data-structure > .title {
+    justify-content: flex-start;
+}
+#sheet-unit-memo .data-structure dl {
+    display: initial;
+}
+#sheet-unit-memo .data-structure dl dt {
+    display: block;
+    height: auto;
+}
+#sheet-unit-memo .data-structure dl dd {
+    margin-left: 1em;
+    margin-bottom: 1em;
+}
+#sheet-unit-memo .data-structure dl dd:last-child {
+    margin-bottom: 0;
+}

@@ -20,6 +20,7 @@
     @import url('./diaclock/css/bloodorium.css?<TMPL_VAR ver>');
     @import url('./lib/css/games/bloodorium.css?<TMPL_VAR ver>');
     @import url('./lib/css/config.css?<TMPL_VAR ver>');
+    @import url('./lib/css/data-structure.css?<TMPL_VAR ver>');
   </style>
   <TMPL_IF customCSS><link rel="stylesheet" media="all" href="<TMPL_VAR customCSS>"></TMPL_IF>
   <TMPL_UNLESS dlMode>
@@ -27,6 +28,7 @@
   <script src="https://cdn.jsdelivr.net/npm/jszip-utils@0.1.0/dist/jszip-utils.min.js"></script>
   </TMPL_UNLESS>
   <script src="./diaclock/js/map_event.js?<TMPL_VAR ver>" defer></script>
+  <script src="./lib/js/data-structure.js?<TMPL_VAR ver>" defer></script>
   <script src="./lib/js/logs.js?<TMPL_VAR ver>" defer></script>
   <script type="module" src="./lib/js/logs-map.js?<TMPL_VAR ver>" defer></script>
   <script>
