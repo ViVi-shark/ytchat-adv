@@ -20,6 +20,7 @@ if(!$::in{'loadedLog'}){
   if($allsize > $presize){ $logfile = 'log-all.dat'; $reverseOn = 1; }
 }
 my @lines; my %palette;
+my %pictures;
 open(my $FH, '<', $dir.$logfile) or error "${logfile}が開けません";
 foreach($reverseOn ? (reverse <$FH>) : <$FH>) {
   chomp;
@@ -88,6 +89,8 @@ foreach($reverseOn ? (reverse <$FH>) : <$FH>) {
   
   if($system eq 'palette'){
     $palette{$name} = 1;
+  }elsif($system eq 'picture-settings'){
+    $pictures{$name} = 1;
   }
   
   my $openlater;
@@ -113,6 +116,11 @@ foreach($reverseOn ? (reverse <$FH>) : <$FH>) {
     }
   }
   
+  my $picture;
+  if ($comm =~ s/\s*(?:<|&lt;)picture:\s*(.+?)\s*(?:>|&gt;)\s*//) {
+    $picture = $1;
+  }
+  
   my $line  = '{'
     . '"num":'       .$num
     . ',"date":"'    .$time.'"'
@@ -121,6 +129,7 @@ foreach($reverseOn ? (reverse <$FH>) : <$FH>) {
     . ',"userName":"'.$username.'"'
     . ',"name":"'    .$name.'"'
     . ',"color":"'   .$color.'"'
+    . ',"picture":"' .$picture.'"'
     . ',"comm":"'    .$comm.'"'
     . ($info   ? ',"info":"'   .$info.   '"' : '')
     . ($code   ? ',"code":"'   .$code.   '"' : '')
@@ -133,21 +142,32 @@ foreach($reverseOn ? (reverse <$FH>) : <$FH>) {
 }
 close($FH);
 
-my $outs;
+my $paletteOuts;
 if(%palette && $::in{'loadedLog'}){
   open(my $FH, '<', $dir.'room.dat') or error "room.datが開けません";
   my %load = %{ decode_json(encode('utf8', (join '', <$FH>))) };
   close($FH);
   my %pdata;
   foreach my $n (keys %palette){ $pdata{$n} = $load{'unit'}{$n}{'palette'} }
-  $outs = decode('utf8', encode_json (\%pdata))
+  $paletteOuts = decode('utf8', encode_json (\%pdata))
+}
+
+my $pictureOuts;
+if(%pictures || !$::in{'loadedLog'}){
+  open(my $FH, '<', $dir.'room.dat') or error "room.datが開けません";
+  my %load = %{ decode_json(encode('utf8', (join '', <$FH>))) };
+  close($FH);
+  my %data;
+  foreach my $n (keys %pictures){ $data{$n} = $load{'unit'}{$n}{'pictures'}; }
+  $pictureOuts = decode('utf8', encode_json (\%data));
 }
 
 $" = ",";
 print "Content-type:application/json; charset=UTF-8\n\n";
 print '{';
 print "\"logs\":[@lines]";
-print ",\"palette\":$outs" if $outs;
+print ",\"palette\":$paletteOuts" if $paletteOuts;
+print ",\"pictures\":$pictureOuts" if $pictureOuts;
 print '}';
 
 exit;

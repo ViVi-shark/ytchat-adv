@@ -718,7 +718,7 @@ body.rom .sheet { display: none; }
 }
 .sheet-body {
   display: grid;
-  grid-template-rows: auto minmax(min-content,1fr) auto;
+  grid-template-rows: auto auto minmax(min-content,1fr) auto;
   overflow-y: hidden;
 }
 .sheet-body h3 {
@@ -864,6 +864,36 @@ body.rom .sheet { display: none; }
 }
 .status-manipulator .manipulation[data-token="+1"], .status-manipulator .manipulation[data-token="-1"] {
   clear: left;
+}
+
+/* 発言者画像エリア */
+.sheet-body .message-picture-area {
+  max-height: min(8em, 20vh);
+  position: relative;
+  margin-top: 0.5rem;
+  border-top: .1rem solid var(--border-color);
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+.sheet-body .message-picture-area > .button {
+  position: absolute;
+  top: .25em;
+}
+.sheet-body .message-picture-area > .button.add { right: 3rem; }
+.sheet-body .message-picture-area > .button.del { right: .5rem; }
+.sheet-body .message-picture-area > .picture-list {
+  margin-top: 0.4em;
+  overflow-y: auto;
+  list-style-type: circle;
+  padding-left: 1.5em;
+}
+.sheet-body .message-picture-area > .picture-list > li:not(:last-child) {
+  margin-bottom: 0.25em;
+}
+.sheet-body .message-picture-area > .picture-list > li > label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  width: 100%;
 }
 
 /* パレット */
@@ -1130,6 +1160,8 @@ body.rom .input-form { display: none !important; }
   grid-gap: 0;
   grid-template-columns: auto auto auto;
   margin-right: .8em;
+  width: auto;
+  float: left;
 }
 #main-form .name-area input {
   height: 2.2rem;
@@ -1157,12 +1189,45 @@ body.rom .input-form { display: none !important; }
 #main-form .name-area #form-color {
   width: 7em;
 }
+#main-form .picture-area {
+  display: grid;
+  grid-gap: 0;
+  grid-template-columns: auto auto auto;
+  margin-top: 0.3em;
+  margin-right: .8em;
+  width: auto;
+  float: left;
+  clear: left;
+}
+#main-form .picture-area > span {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  margin-right: .4em;
+}
+#main-form .picture-area > .unit-select-area {
+  margin-right: .4em;
+  display: flex;
+  align-items: center;
+  font-size: 80%;
+}
+#main-form .picture-area .picture-select-area {
+  font-size: 80%;
+}
+#main-form .picture-area .picture-select-area > label[data-unit-id] {
+  display: flex;
+  align-items: center;
+}
+#main-form .picture-area .picture-select-area > label[data-unit-id]:not(.active) {
+  display: none;
+}
 .address-area {
   display: inline-flex;
   position: relative;
   margin-left: auto;
   border: .1rem solid var(--border-color);
   border-radius: .8rem;
+  float: right;
 }
 .address-area::before {
   position: absolute;
@@ -1461,6 +1526,42 @@ body.rom .input-form { display: none !important; }
 }
 .chat .logs dl dd.comm:hover button.rewrite {
   display: inline-block;
+}
+
+/* 発言者画像 */
+.chat .logs dl > dt.picture {
+  display: none;
+  --picture-size: 5em;
+}
+.main .chat .logs dl.contains-picture > dt.picture {
+  grid-row: 1 / 1000;
+}
+.main .chat .logs dl > dt.picture {
+  display: flex;
+  grid-column: 1;
+  grid-row-start: 1;
+  grid-row-end: -1;
+  height: auto;
+  min-height: var(--picture-size);
+  padding: 0;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: transparent;
+}
+.main .chat .logs dl > dt.picture:not(.resolved) {
+  grid-column-end: 1;
+}
+.main .chat .logs dl > dt.picture > span {
+  width: var(--picture-size);
+  height: var(--picture-size);
+  border-radius: calc(var(--picture-size) / 2);
+  background-size: contain;
+  background-position: center;
+  cursor: zoom-in;
+}
+.main .chat .logs dl > dt.picture > span:hover {
+  filter: brightness(85%);
 }
 
 /* システムメッセージ */

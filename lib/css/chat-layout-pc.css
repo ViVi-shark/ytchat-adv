@@ -357,9 +357,17 @@ body {
 .main .chat .logs dl dt {
   grid-column: 1;
 }
+.main .chat .logs dl.picture-resolved dt[id] {
+  grid-column-start: 2;
+  grid-column-end: -1;
+}
 .main .chat .logs dl dd {
   grid-column: 2;
   min-height: calc((1em * 1.8) - .1rem);
+}
+.main .chat .logs dl.picture-resolved dd {
+  grid-column-start: 2;
+  grid-column-end: -1;
 }
 .main .chat .logs dl dt {
   margin: .1em .6em .1em 0;
@@ -367,7 +375,7 @@ body {
   line-height: 1.8;
   text-align: right;
 }
-.main .chat .logs dl dt::after {
+.main .chat .logs dl dt:not(.picture)::after {
   content: ":";
   display: inline-block;
   width: .6em;
@@ -377,7 +385,7 @@ body {
   text-align: center;
   opacity: 0.5;
 }
-.main .chat .logs dl dt:empty {
+.main .chat .logs dl dt:empty:not(.picture) {
   width: .5em;
   height: 1.6em;
   margin: 0;
@@ -388,6 +396,9 @@ body {
 }
 .main .chat .logs dl dt:empty::after {
   display: none;
+}
+.main .chat .logs dl dt.picture {
+  margin: 0.4em;
 }
 
 .main .chat .logs dl.system dt::after {
@@ -509,7 +520,7 @@ body {
   margin-right: 2rem;
 }
 .comm-config-area {
-  display: flex;
+  display: block;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-end;
@@ -519,6 +530,13 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 0 1.2rem;
+}
+.chat .comm-config-area::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  clear: both;
 }
 .chat .comm-config-area select {
   width: 100%;
