@@ -154,6 +154,10 @@ sub tagConvert {
     $comm =~ s/${qkey}/$set::replace_rule{$key}/g;
   }
 
+  while ($comm =~ /(\A|^|\n|>)----+(<)?(\Z|$|\n)/) {
+    $comm =~ s#(\A|^|\n|>)----+(<)?(\Z|$|\n)#$1<hr>$2#;
+  }
+
   #
   $comm =~ s#<ruby>(.+?)(?:<rp>\(</rp>)?<rt>(.*?)(?:<rp>\)</rp>)?</ruby>#<ruby><rp>｜</rp>$1<rp>《</rp><rt>$2<rp>》</rp></ruby>#gi;
 
