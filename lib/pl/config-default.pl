@@ -46,6 +46,11 @@ our %games = (
     'bcdice' => 'DoubleCross',
     'faces' => 10,
   },
+  'storyteller' => {
+    'name'     => 'ストリテラ',
+    'status'   => [ 'フラグポイント' ],
+    'chatTabs' => [ '舞台', '楽屋／客席' ]
+  }
 );
 
 our $default_game = 'sw2';
