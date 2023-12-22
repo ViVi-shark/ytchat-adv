@@ -121,6 +121,36 @@ sub getFileNameDate {
 }
 
 ## 文字装飾変換
+sub quoteConvert {
+  my $comm = shift;
+
+  if ($comm !~ /&gt;/) {
+    return $comm;
+  }
+
+  my @destinationLines = ();
+  my @currentQuoted = ();
+
+  foreach my $sourceLine (split(/\n/, $comm)) {
+    if ($sourceLine =~ /\A&gt;\s*(.+?)\s*\Z/) {
+      push(@currentQuoted, $1);
+    } else {
+      if ($#currentQuoted > 0) {
+        push(@destinationLines, '&lt;quoted&gt;' . join("\n", @currentQuoted) . '&lt;/quoted&gt;');
+        @currentQuoted = ();
+      } elsif ($#destinationLines > 0) {
+        push(@destinationLines, "\n");
+      }
+      push(@destinationLines, $sourceLine);
+    }
+  }
+
+  if ($#currentQuoted > 0) {
+    push(@destinationLines, '&lt;quoted&gt;' . join("\n", @currentQuoted) . '&lt;/quoted&gt;');
+  }
+
+  return join('', @destinationLines);
+}
 sub tagConvert {
   my $comm = shift;
   $comm =~ s/<br>/\n/g;
@@ -153,6 +183,8 @@ sub tagConvert {
     my $qkey = quotemeta $key;
     $comm =~ s/${qkey}/$set::replace_rule{$key}/g;
   }
+
+  $comm = quoteConvert($comm);
 
   while ($comm =~ /(\A|^|\n|>)---+(<)?(\Z|$|\n)/) {
     $comm =~ s#(\A|^|\n|>)---+(<)?(\Z|$|\n)#$1<hr>$2#;

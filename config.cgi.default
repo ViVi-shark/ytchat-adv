@@ -79,13 +79,6 @@ our $rtable_dir = './rtable/'; # txtファイルを入れるディレクトリ
 # 基本で使える以外のタグを使用可能にしたい場合など。
 # メタ文字のエスケープ等が必要。注意。
 our @replace_regex = (
-    # 引用
-    { '(</div>|</h\d>|^|\n|<hr>|</ul>|</ol>|</table>|<blockquote class="decoration">)(((&gt\;\s?){1,}(.+?(\n|$)))+)' => '$1<blockquote class="decoration">$2</blockquote>' },
-    { '(</div>|</h\d>|^|\n|<hr>|</ul>|</ol>|</table>|<blockquote class="decoration">)(((&gt\;\s?){2,}(.+?(\n|$)))+)' => '$1<blockquote class="decoration">$2</blockquote>' },
-    { '(</div>|</h\d>|^|\n|<hr>|</ul>|</ol>|</table>|<blockquote class="decoration">)(((&gt\;\s?){3,}(.+?(\n|$)))+)' => '$1<blockquote class="decoration">$2</blockquote>' },
-    { '(</div>|</h\d>|^|\n|<hr>|</ul>|</ol>|</table>|<blockquote class="decoration">)(&gt\;\s?){1,}(.+?(\n|$))' => '$1$3' },
-    { '(</div>|</h\d>|^|\n|<hr>|</ul>|</ol>|</table>|<blockquote class="decoration">)(&gt\;\s?){1,}(.+?(\n|$))' => '$1$3' },
-
     # ソードワールド2.5の能力分類アイコン（いらなきゃ消す）
     { '\[([○◯〇]|常時?)\]' => '<i class="s-icon passive"><i>[常]</i></i>' },
     { '\[([△]|準備?|備)\]' => '<i class="s-icon setup"><i>[準]</i></i>' },
@@ -99,7 +92,6 @@ our @replace_regex = (
 
 ## ●追加した置き換えをヘルプに乗せたい場合
 our @replace_help = (
-    ['> テキスト',  '<blockquote class="decoration">テキスト</blockquote>','引用'],
 );
 # push(@set::replace_help, { '置換前の例', '置換後の例', '説明' });
 
