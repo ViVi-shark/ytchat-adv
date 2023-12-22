@@ -40,8 +40,24 @@
     const status = document.getElementById('set-status');
     if(games[game]){
       status.placeholder = games[game]['status'].join('　');
+
+      if (games[game]['chatTabs']) {
+        const chatTabs = document.getElementById('set-tab');
+        if (chatTabs) {
+          chatTabs.placeholder = games[game]['chatTabs'].join('　');
+        }
+      }
     }
-    else { status.placeholder = 'HP　MP'; }
+    else {
+      status.placeholder = 'HP　MP';
+
+      {
+        const chatTabs = document.getElementById('set-tab');
+        if (chatTabs) {
+          chatTabs.placeholder = 'メイン　サブ';
+        }
+      }
+    }
   }
   function BCDiceGet(apiUrl){
     /** @return {Promise<Response>} */
@@ -107,6 +123,7 @@
         ゲームルーム名: <input type="text" name="name" required><br>
         管理パスワード: <input type="password" name="pass"> <small>//削除・リセット用</small><br>
         ゲームシステム: <select name="game" id="set-game" onchange="gameChange(this.value)">
+          <option value="storyteller">ストリテラ</option>
           <option value="sw2">ソードワールド2.x</option>
           <option value="dx3">ダブルクロス3rd</option>
           <option value="">その他</option>
