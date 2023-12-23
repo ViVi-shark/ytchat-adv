@@ -508,6 +508,7 @@ body {
   height: 100%;
   position: relative;
   overflow-y: hidden;
+  padding-right: 2rem;
 }
 #main-form .namelist-area select.form-name option:checked {
   background-color: rgba(0,150,255, 0.2);
@@ -521,12 +522,6 @@ body {
 #main-form input#form-color-text {
   width: 7em;
 }
-#main-form .comm-area {
-  margin-right: 2rem;
-}
-#main-form .address-area {
-  margin-right: 2rem;
-}
 .comm-config-area {
   display: block;
   flex-wrap: wrap;
@@ -534,39 +529,37 @@ body {
   align-items: flex-end;
   margin-bottom: 2px;
 }
-.chat .comm-config-area {
+.comm-config-area {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 20rem;
   grid-gap: 0 1.2rem;
 }
-.chat .comm-config-area::after {
+.comm-config-area::after {
   content: "";
   display: block;
   width: 0;
   height: 0;
   clear: both;
 }
-.chat .comm-config-area select {
+.comm-config-area select {
   width: 100%;
   font-size: 1.2rem;
   padding: .3rem .5rem;
 }
-.chat .comm-config-area .address-area::before { font-size: 1.2rem; }
-.chat .comm-config-area .address-area label { width: 3em; }
+.comm-config-area .address-area::before { font-size: 1.2rem; }
+.comm-config-area .address-area label { width: 3em; }
 
 
 /* 装飾ボタン */
 .decoration-buttons {
-  margin-right: 2rem;
 }
 /* チェックボタン */
 .check-buttons {
   position: absolute;
-  right: 0;
+  right: 2rem;
   bottom: 0;
   height: 4rem;
   width: 100%;
-  padding-right: 2rem;
   text-align: right;
   pointer-events: none;
 }
