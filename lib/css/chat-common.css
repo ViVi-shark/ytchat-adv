@@ -1154,7 +1154,7 @@ body.rom .input-form { display: none !important; }
 #main-form .name-area {
   display: grid;
   grid-gap: 0;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: 18rem 3rem 10rem;
   margin-right: .8em;
   width: auto;
   float: left;
@@ -1176,24 +1176,22 @@ body.rom .input-form { display: none !important; }
 }
 #main-form .name-area .main-name {
   display: inline-block;
-  width: 12em;
+  width: 18rem;
   text-align: center;
 }
 #main-form .name-area .pickr {
   border-width: .1rem 0 .1rem .1rem;
 }
 #main-form .name-area #form-color {
-  width: 7em;
+  width: 10rem;
 }
 #main-form .picture-area {
   display: grid;
   grid-gap: 0;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: 8rem 20rem 20rem;
   margin-top: 0.3em;
-  margin-right: .8em;
   width: auto;
-  float: left;
-  clear: left;
+  grid-column: 1 / -1;
 }
 #main-form .picture-area > span {
   display: flex;
@@ -1203,7 +1201,8 @@ body.rom .input-form { display: none !important; }
 }
 #main-form .picture-area > .unit-select-area {
   margin-right: .4em;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr;
   align-items: center;
   font-size: 80%;
 }
@@ -1211,7 +1210,8 @@ body.rom .input-form { display: none !important; }
   font-size: 80%;
 }
 #main-form .picture-area .picture-select-area > label[data-unit-id] {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr;
   align-items: center;
 }
 #main-form .picture-area .picture-select-area > label[data-unit-id]:not(.active) {
@@ -1223,7 +1223,7 @@ body.rom .input-form { display: none !important; }
   margin-left: auto;
   border: .1rem solid var(--border-color);
   border-radius: .8rem;
-  float: right;
+  width: 20rem;
 }
 .address-area::before {
   position: absolute;
@@ -2586,7 +2586,7 @@ dialog.modal.message-templates {
 /* カラーピッカー */
 body .pickr {
   display: inline-grid;
-  width: 2em;
+  width: 3rem;
   border-width: .1rem;
   border-style: solid;
   border-color: var(--border-color-input);
