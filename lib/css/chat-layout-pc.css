@@ -531,7 +531,7 @@ body {
 }
 .comm-config-area {
   display: grid;
-  grid-template-columns: 1fr 20rem;
+  grid-template-columns: 1fr auto;
   grid-gap: 0 1.2rem;
 }
 .comm-config-area::after {
@@ -542,12 +542,10 @@ body {
   clear: both;
 }
 .comm-config-area select {
-  width: 100%;
   font-size: 1.2rem;
   padding: .3rem .5rem;
 }
 .comm-config-area .address-area::before { font-size: 1.2rem; }
-.comm-config-area .address-area label { width: 3em; }
 
 
 /* 装飾ボタン */
