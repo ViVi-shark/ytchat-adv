@@ -158,6 +158,8 @@ dialog.modal > .dialog-inner > .content-area {
   padding: 0 .5em 0 1.8em;
   font-size: 1.2rem;
   line-height: 1.6rem;
+  max-height: 25vh;
+  overflow-y: auto;
 }
 #topic-value > .image-container > img {
   max-height: 6em;
