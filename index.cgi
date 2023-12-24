@@ -168,6 +168,10 @@ sub tagConvert {
   my $comm = shift;
   $comm =~ s/<br>/\n/g;
 
+  # 画像記法・前処理
+  my @pictureURL;
+  $comm =~ s{&lt;picture&gt;(.+?)&lt;/picture&gt;}{ push(@pictureURL, $1); "<!img#".scalar(@pictureURL).">" }ge;
+
   # 自動リンク・前処理
   my @linkURL;
   $comm =~ s{(https?://[^\s\<]+)}{ push(@linkURL, $1); "<!a#".scalar(@linkURL).">" }ge;
@@ -245,6 +249,9 @@ sub tagConvert {
   
   # 自動リンク・後処理
   $comm =~ s{<!a#([0-9]+)>}{'<a href="'.$linkURL[$1-1].'" target="_blank">'.$linkURL[$1-1].'</a>'}ge;
+
+  # 画像記法・後処理
+  $comm =~ s{<!img#([0-9]+)>}{'<img class="picture" alt="picture" src="'.@pictureURL[$1-1].'" onclick="imgView(this.src)" />'}ge;
   
   $comm =~ s#\n#<br>#gi;
   $comm =~ s/(<|&lt;)data-structure(>|&gt;)\s*(.+?)\s*(<|&lt;)\/data-structure(>|&gt;)/&encodeDataStructure($3)/egim;

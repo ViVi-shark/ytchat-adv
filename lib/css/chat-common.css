@@ -1638,6 +1638,20 @@ body.rom .input-form { display: none !important; }
   to   { opacity: 1; }
 }
 
+.logs dl dd img.picture,
+#topic-value img.picture,
+#memo-view img.picture {
+  /*display: block;*/
+  /*margin: auto;*/
+  max-width: 100%;
+  max-height: 40vh;
+  object-fit: scale-down;
+  cursor: zoom-in;
+  animation-name: imgfadein;
+  animation-duration: .5s;
+  animation-timing-function: linear;
+}
+
 /* タブリスト */
 .tablist {
   display: flex;
@@ -2306,6 +2320,10 @@ body.rom .input-form { display: none !important; }
 }
 #help-window table.help-text-rule-table tbody th {
   font-size: 90%;
+}
+#help-window table.help-text-rule-table td img.picture {
+  width: 8em;
+  cursor: zoom-in;
 }
 #help-window table.help-rate-table i {
   margin: 0 .1em;
