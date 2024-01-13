@@ -1,6 +1,10 @@
 @charset "utf-8";
 /* // 基本設定
 ---------------------------------------------------------------------------------------------------- */
+@font-face {
+  font-family: "Ytchat-Monospace";
+  src: url("../font/VL-Gothic-Regular.woff");
+}
 * {
   margin: 0;
   padding: 0;
