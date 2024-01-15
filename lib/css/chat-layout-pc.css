@@ -808,6 +808,9 @@ body {
   margin-top: 0;
   margin-bottom: 0.5rem;
 }
+#sidebar.memo-shrunken #status {
+  height: calc((100% - (2rem + 0.5rem + 2.9rem + 0.5rem + 0.5rem)) * 1.00);
+}
 #sidebar[data-layout="bottom"] #status {
   margin-top: 0.5rem;
   margin-bottom: 0;
@@ -816,6 +819,9 @@ body {
   height: 100%;
   width: calc((100% - (2rem + 0.5rem + 2.9rem + 0.5rem + 0.5rem)) * 0.75);
   margin: 0;
+}
+#sidebar.memo-shrunken[data-layout="row"] #status {
+  width: calc(((100% - (2rem + 0.5rem + 2.9rem + 0.5rem + 0.5rem)) * 1.00) - 4rem);
 }
 #sidebar.close #status {
   height: calc((100% - (2rem + 0.5rem + 3.5rem + 0.5rem + 0.5rem)) * 0.75);
@@ -929,6 +935,27 @@ body {
 }
 #memo #memo-list {
 }
+#sidebar.memo-shrunken {
+  & #memo::before {
+    content: "共有メモ";
+    position: absolute;
+    left: 2.5em;
+    top: 0.5em;
+  }
+
+  & #memo {
+    height: auto;
+    padding-bottom: 0.5rem;
+
+    & #memo-list {
+      display: none;
+    }
+
+    & .button.add {
+      display: none;
+    }
+  }
+}
 #memo ul#memo-list {
 }
 #memo ul#memo-list li {
@@ -943,6 +970,29 @@ body {
 [data-layout="row"] #memo {
   overflow: hidden;
   flex-basis: 16em;
+
+  & .button.shrink {
+    position: absolute;
+    left: 0.5em;
+    bottom: 0.5em;
+
+    & .icon {
+      transform: rotateZ(90deg);
+    }
+  }
+}
+#sidebar.memo-shrunken[data-layout="row"] {
+  & #memo {
+    height: 100%;
+    width: 4rem;
+  }
+
+  & #memo::before {
+    content: "\f1c6";
+    font-family: "Material Symbols Outlined";
+    font-variation-settings: 'FILL' 1;
+    left: 0.5em;
+  }
 }
 [data-layout="row"] #memo ul#memo-list {
   width: 100%;
