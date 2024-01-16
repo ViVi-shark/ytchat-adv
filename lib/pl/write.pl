@@ -965,30 +965,4 @@ sub pictureSettingsUpdate {
   close($FH);
 }
 
-sub resolveCloudAssetUrl {
-  my $url = shift;
-  $url = resolveGoogleDriveAssetUrl($url);
-  $url = resolveDropboxAssetUrl($url);
-  return $url;
-}
-sub resolveGoogleDriveAssetUrl {
-  my $url = shift;
-
-  if ($url =~ /^https?:\/\/drive\.google\.com\/file\/d\/(.+)\/view\?usp=(?:sharing|(?:share|drive)_link)$/) {
-    return 'https://drive.google.com/uc?id=' . $1;
-  }
-
-  return $url;
-}
-sub resolveDropboxAssetUrl {
-  my $url = shift;
-
-  if ($url =~ /^https?:\/\/www\.dropbox\.com\/.+[?&]dl=0$/) {
-    $url =~ s/dl=0$/dl=1/;
-    return $url;
-  }
-
-  return $url;
-}
-
 1;
