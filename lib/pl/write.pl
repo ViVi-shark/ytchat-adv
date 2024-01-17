@@ -113,7 +113,6 @@ else {
   # 挿絵 ----------
   elsif($::in{'comm'} =~ s<^/insert\s+(https?://.+)><>i){
     my $url = $1;
-    $url = resolveCloudAssetUrl($url);
     $::in{'system'} = 'image';
     $::in{'comm'} = '';
     $::in{'info'} = $url;
@@ -153,7 +152,6 @@ else {
       }
       if(!$hit){ error('許可されていないURLです'); }
     }
-    $url = resolveCloudAssetUrl($url);
     bgmEdit($url,$title,$volume);
     $::in{'name'} = "!SYSTEM";
     $::in{'comm'} = "BGMを変更 by $::in{'player'}";
@@ -186,7 +184,6 @@ else {
       }
       if(!$hit){ error('許可されていないURLです'); }
     }
-    $url = resolveCloudAssetUrl($url);
     bgEdit($mode,$url,$title);
     $::in{'name'} = "!SYSTEM";
     $::in{'comm'} = "背景を変更 by $::in{'player'}";
