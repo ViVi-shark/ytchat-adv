@@ -705,7 +705,7 @@ dd[data-stt*="侵蝕"] .gauge[data-signal="monster"] i::before { background: non
 .logs table tbody td,
 #topic table tbody th,
 #topic table tbody td {
-  padding: 1em;
+  padding: 1rem;
   border-width: 1px;
   border-style: solid;
   border-color: var(--border-color-pale);
