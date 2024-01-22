@@ -291,6 +291,8 @@ sub tagConvert {
   # 画像記法・後処理
   $comm =~ s{<!img#([0-9]+)>}{'<img class="picture" alt="picture" src="'.resolveCloudAssetUrl(@pictureURL[$1-1], 'log').'" onclick="imgView(this.src)" />'}ge;
   
+  $comm =~ s#(</ul>)\n#$1#;
+  
   $comm =~ s#\n#<br>#gi;
   $comm =~ s/(<|&lt;)data-structure(>|&gt;)\s*(.+?)\s*(<|&lt;)\/data-structure(>|&gt;)/&encodeDataStructure($3)/egim;
 
