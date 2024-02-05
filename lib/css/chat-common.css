@@ -330,6 +330,7 @@ body.rom #status #status-body > dl > dt {
 #status #status-body > dl[data-name][data-image-url] > dd[id*="stt-memo"] .icon {
   color: lightgoldenrodyellow;
   opacity: 0.75;
+  cursor: default;
 }
 #status #status-body > dl[data-name][data-image-url] > dd[id*="stt-memo"] .icon:hover {
   opacity: 1;
