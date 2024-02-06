@@ -309,30 +309,22 @@ body.rom #status #status-body > dl > dt {
   padding: 0 0 .2em .2em;
   display: grid;
 }
-#status #status-body > dl[data-name] > dd[id*="stt-memo"], #status #status-body > dl[data-name][data-image-url] > dd[id*="stt-memo"] {
-  width: 100%;
-  height: 0;
-  padding: 0;
-  overflow-y: visible;
-  clear: left;
-}
-#status #status-body > dl[data-name] > dd[id*="stt-memo"] {
-  text-align: right;
+#status #status-body > dl[data-name] > dd.separated-row[id*="stt-memo"] {
   width: 100%;
 }
-#status #status-body > dl[data-name][data-image-url] > dd[id*="stt-memo"] {
-  position: relative;
-  top: -1.5em;
+#status #status-body > dl[data-name][data-image-url] > dd.separated-row[id*="stt-memo"] {
+  width: calc(100% - 35%);
 }
 #status #status-body > dl[data-name] > dd[id*="stt-memo"][data-memo=""] {
   display: none;
 }
-#status #status-body > dl[data-name][data-image-url] > dd[id*="stt-memo"] .icon {
+#status #status-body > dl[data-name] > dd[id*="stt-memo"] .icon {
   color: lightgoldenrodyellow;
   opacity: 0.75;
   cursor: default;
+  float: right;
 }
-#status #status-body > dl[data-name][data-image-url] > dd[id*="stt-memo"] .icon:hover {
+#status #status-body > dl[data-name] > dd[id*="stt-memo"] .icon:hover {
   opacity: 1;
 }
 #status #status-body > dl > dd[id*="stt-url"] {
