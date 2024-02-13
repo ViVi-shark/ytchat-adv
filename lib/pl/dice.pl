@@ -500,6 +500,15 @@ sub loadRoomRandomTable {
   }
 
   my %table = %{ $tables{$tableName} };
+
+  if ($table{'diceCode'}) {
+    my $command = $table{'diceCode'}{'command'};
+    my @rows = @{ $table{'rows'} };
+    unshift(@rows, $command);
+    delete $table{'diceCode'};
+    $table{'rows'} = \@rows;
+  }
+
   return %table;
 }
 
