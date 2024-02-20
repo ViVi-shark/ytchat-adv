@@ -495,8 +495,14 @@ dialog.modal > .dialog-inner > .content-area {
 
 /* // 共有メモ
 ---------------------------------------------------------------------------------------------------- */
+.memo ul#memo-list {
+  width: 100%;
+}
 .memo ul#memo-list li {
   position: relative;
+  width: 100%;
+  display: flex;
+  height: 2rem;
 }
 .memo ul#memo-list li.removed {
   display: none !important;
@@ -506,12 +512,38 @@ dialog.modal > .dialog-inner > .content-area {
 }
 .memo ul#memo-list li::before {
   content: '#' attr(data-num);
-  margin-right: .3em;
+  margin-right: .3rem;
   font-weight: normal;
   font-style: oblique;
   font-size: 80%;
   line-height: 1;
   opacity: 0.6;
+  min-width: 1rem;
+  display: inline-flex;
+  float: left;
+  align-items: center;
+}
+.memo ul#memo-list li > .headline {
+  display: inline-block;
+  float: left;
+  width: calc(100% - (.3rem + 1rem));
+  height: 100%;
+}
+.memo ul#memo-list li:hover > .headline {
+  width: calc(100% - (.3rem + 1rem) - 1.8rem);
+}
+#memo-list > li > .to-open {
+  display: none;
+  height: 1.8rem;
+  width: 1.8rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  float: right;
+}
+#memo-list > li:hover > .to-open {
+  display: inline-flex;
 }
 .memo .add.button {
   position: absolute;
