@@ -77,8 +77,9 @@ sub getRoomList {
 ## 計算処理
 sub calc {
   my $formula = shift;
-  $formula =~ s/[^0-9\.\+\-\*\/\(\)%]//gi; #数字と括弧と算術演算子以外は消す
+  $formula =~ s/[^0-9\.\+\-\*\/\(\)%⌈⌉]//gi; #数字と括弧と算術演算子と関数記号以外は消す
   $formula =~ tr/\+\-\/%//s; #指定記号の連続は一つにまとめる
+  $formula =~ s/⌈(.+?)⌉/ceil($1)/g;
   
   return eval($formula);
 }
