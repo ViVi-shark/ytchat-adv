@@ -281,9 +281,33 @@ else {
     delete $::in{'address'};
   }
   #新規
-  elsif($::in{'comm'} =~ s/^(.*?) [@＠] new \s+ ( .*? )$//ixs){
-    $::in{'name'} = $1 || $::in{'name'};
-    ($::in{'info'}, $::in{'system'}) = unitMake($::in{'name'}, $2);
+  elsif($::in{'comm'} =~ /^.*? [\@＠] new \s+ .*? $/ixs){
+    my @commands = ();
+    while ($::in{'comm'} =~ s/^\s* (.*?) [\@＠] new//ixs) {
+      my $unitName = $1;
+      my $status;
+      if ($::in{'comm'} =~ s/^\s* (.*?) ((?:\n[^\n]+?) [\@＠] new)/$2/ixs) {
+        $status = $1;
+      } else {
+        $status = $::in{'comm'};
+        $::in{'comm'} = '';
+      }
+      push(@commands, $unitName . '@new ' . $status);
+    }
+    my $commandCount = @commands;
+    for my $i (0..($commandCount-1)) {
+      my $command = $commands[$i];
+      $command =~ s/^(.*?) [\@＠] new \s+ ( .*? )$//ixs;
+      my $name = $1 || $::in{'name'};
+      (my $info, my $system) = unitMake($name, $2);
+      if ($i > 0) {
+        push(@adds, {name => $name, comm => '', info => $info, 'system' => $system});
+      } else {
+        $::in{'name'} = $name;
+        $::in{'info'} = $info;
+        $::in{'system'} = $system;
+      }
+    }
     delete $::in{'address'};
   }
   #削除
@@ -421,7 +445,8 @@ push(@posts, "$counter<>$date<>$::in{'tab'}<>$::in{'name'}<>$::in{'color'}<>$::i
 # 追加データ ----------
 foreach my $add (@adds){
   $counter++;
-  push(@posts, "$counter<>$date<>$::in{'tab'}<>$::in{'name'}<>$::in{'color'}<>$add->{'comm'}<>$add->{'info'}<>$add->{'system'}<>$::in{'player'}<$::in{'userId'}><>$::in{'address'}<>\n");
+  my $name = $add->{name} || $::in{'name'};
+  push(@posts, "$counter<>$date<>$::in{'tab'}<>$name<>$::in{'color'}<>$add->{'comm'}<>$add->{'info'}<>$add->{'system'}<>$::in{'player'}<$::in{'userId'}><>$::in{'address'}<>\n");
 }
 
 # 過去ログに追加 ----------
