@@ -34,7 +34,7 @@ sub rateRoll {
     (?: (?:[kr]|威力) ( [0-9]+ | \([0-9\+\-]+\) | $unique_reg ) )
     (?:\[([0-9\+\-]+)\])?
     ([0-9a-z\+\-\*\/\@\$()><\#!値必殺首切出目難半減]*)
-    (?:\:([0-9]+))?
+    (?:\:([0-9]+|.+,.+))?
     (?:\s|$)
   /ix){
     return "";
@@ -62,8 +62,21 @@ sub rateRoll {
   $crit = calc($crit);
   if($rate > 100){ $rate = 100; } elsif($rate < 0){ $rate = 0; }
   if($crit <= 0){ $crit = 0; } elsif($crit < 3){ $crit = 3; }
-  
-  $repeat = ($repeat > 20) ? 20 : (!$repeat) ? undef : $repeat;
+
+  my @repeatLabels;
+  if ($repeat !~ /,/) {
+    @repeatLabels = ();
+    $repeat = ($repeat > 20) ? 20 : (!$repeat) ? 1 : $repeat;
+    for my $i (1 .. $repeat) {
+      push(@repeatLabels, makeRollIndexText($i));
+    }
+  } else {
+    @repeatLabels = split(/\s*,\s*/, $repeat);
+    $repeat = @repeatLabels;
+    $repeat = 20 if $repeat > 20;
+    @repeatLabels = @repeatLabels[0 .. ($repeat - 1)];
+  }
+
   my @result;
   foreach my $i (1 .. ($repeat || 1)){
     push(@result,
@@ -77,6 +90,7 @@ sub rateRoll {
         $fixed   ,
         $curse   ,
         $gf      ,
+        $repeat > 1 ? $repeatLabels[$i - 1] : undef,
         $repeat ? $i : undef
       )
     );
@@ -94,13 +108,14 @@ sub rateCalc {
   my $fixed    = shift;
   my $curse    = shift;
   my $gf       = shift;
+  my $label    = shift;
   my $repeat   = shift;
   my $unique   = (exists $unique{$rate}) ? $unique{$rate}{'name'} : '';
   
   return '' if $form =~ /[a-z]/i;
   
   my $total = 0;
-  my $code = (defined($repeat) ? makeRollIndexText($repeat) . ' ' : '') . ($unique || "威力${rate}");
+  my $code = (defined($label) ? $label . ' ' : '') . ($unique || "威力${rate}");
   my @results;
   my $crits_max = 20;
   foreach my $crits (0 .. $crits_max) {

@@ -80,7 +80,7 @@ sub diceRoll {
     (?:(\/\/|\*\*) ([0-9]*) ([+-][0-9()][0-9\+\-\*()⌈⌉]*)? )?
     (?:(>=?|<=?|==) ([0-9\+\-\*()]*) )?
     =?
-    (?:\:([0-9]+))?
+    (?:\:([0-9]+|.+,.+))?
     (?:\s|$)
   /ix){
     return "";
@@ -104,12 +104,23 @@ sub diceRoll {
     $target = parenthesisCalc($target);
     if($target eq ''){ return ''; }
   }
-  
-  $repeat = ($repeat > 20) ? 20 : (!$repeat) ? 1 : $repeat;
+
+  my @repeatLabels;
+  if ($repeat !~ /,/) {
+    @repeatLabels = ();
+    $repeat = ($repeat > 20) ? 20 : (!$repeat) ? 1 : $repeat;
+    push(@repeatLabels, '') foreach (1 .. $repeat);
+  } else {
+    @repeatLabels = split(/\s*,\s*/, $repeat);
+    $repeat = @repeatLabels;
+    $repeat = 20 if $repeat > 20;
+    @repeatLabels = @repeatLabels[0 .. ($repeat - 1)];
+  }
+
   my @result;
-  foreach my $i (1 .. $repeat){
+  foreach my $label (@repeatLabels){
     push(@result,
-      diceCalc(
+      ($label ne '' ? "〚$label〛 " : '') . diceCalc(
         $base      ,
         $half_type ,
         $half_num  ,
