@@ -924,9 +924,6 @@ body.rom #main-form > .help.button {
 }
 #status #status-body > dl > dd[id*="stt-url"] a {
   background: none;
-  float: right;
-  position: relative;
-  top: -0.5em;
   padding-right: 0.25em;
 }
 #status #status-body > dl > dd[id*="stt-url"] a::before {
@@ -956,12 +953,6 @@ body.rom #main-form > .help.button {
   justify-content: flex-start;
   overflow-x: auto;
   overflow-y: hidden;
-}
-[data-layout="row"] #status #status-body > dl {
-  display: block;
-  flex-shrink: 0;
-  align-content: start;
-  border: 0;
 }
 [data-layout="row"] #status .edit.button {
   position: absolute;
