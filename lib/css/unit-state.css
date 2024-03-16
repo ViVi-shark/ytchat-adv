@@ -1,4 +1,4 @@
-#status #status-body > dl[data-name] > .state {
+#status #status-body > dl[data-name] ul.details > .state {
     width: calc(100%);
     display: flex;
     flex-flow: row;
@@ -9,7 +9,7 @@
     cursor: pointer;
 }
 
-#status #status-body > dl[data-name] > .state,
+#status #status-body > dl[data-name] ul.details > .state,
 .state-controller,
 #unit-state-window .state-selector-area,
 dialog.state-template-selector {
@@ -116,7 +116,7 @@ dialog.state-template-selector {
     }
 }
 
-#status #status-body > dl[data-name] > .state,
+#status #status-body > dl[data-name] ul.details > .state,
 .state-controller,
 #unit-state-window .state-selector-area {
     --row-height: 2rem;
@@ -144,7 +144,7 @@ dialog.state-template-selector {
     }
 }
 
-#status #status-body > dl[data-name] > .state {
+#status #status-body > dl[data-name] ul.details > .state {
     & .state-name {
         width: calc(100% - var(--icon-size) - var(--duration-width));
         font-size: 1.1rem;
@@ -162,18 +162,13 @@ dialog.state-template-selector {
     }
 }
 
-#status #status-body > dl[data-name] > .state > .state-name {
+#status #status-body > dl[data-name] ul.details > .state > .state-name {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
 }
 
-#status #status-body > dl[data-name][data-image-url] > .state {
-    width: calc(100% - 35%);
-    padding-left: 0.2rem;
-}
-
-#status #status-body > dl[data-name] > .state .tooltip-text,
+#status #status-body > dl[data-name] ul.details > .state .tooltip-text,
 .state-controller,
 #unit-state-window .state-selector-area {
     & .state-header {
@@ -255,7 +250,7 @@ dialog.state-template-selector {
     }
 }
 
-#status #status-body > dl[data-name] > .state .tooltip-text,
+#status #status-body > dl[data-name] ul.details > .state .tooltip-text,
 .state-controller {
     & .state-name {
         font-size: 1.4rem;
@@ -287,17 +282,17 @@ dialog.state-template-selector {
     }
 }
 
-#status #status-body > dl[data-name] > .state:hover,
-#status #status-body > dl[data-name] > .state.state-selected {
+#status #status-body > dl[data-name] ul.details > .state:hover,
+#status #status-body > dl[data-name] ul.details > .state.state-selected {
     --background-color: rgba(146, 137, 120, 0.3);
     background-image: linear-gradient(to bottom, transparent 0%, transparent calc(0% + 1px), var(--background-color) calc(0% + 1px), var(--background-color) calc(100% - 1px), transparent calc(100% - 1px), transparent 100%);
 }
 
-#status #status-body > dl[data-name] > .state.state-selected {
+#status #status-body > dl[data-name] ul.details > .state.state-selected {
     pointer-events: none;
 }
 
-#status #status-body > dl[data-name] > .state .tooltip-text {
+#status #status-body > dl[data-name] ul.details > .state .tooltip-text {
     & .state-header {
         display: flex;
         flex-flow: row;
