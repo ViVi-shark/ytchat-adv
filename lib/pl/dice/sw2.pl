@@ -33,7 +33,7 @@ sub rateRoll {
   if($comm !~ /^
     (?: (?:[kr]|威力) ( [0-9]+ | \([0-9\+\-]+\) | $unique_reg ) )
     (?:\[([0-9\+\-]+)\])?
-    ([0-9a-z\+\-\*\/\@\$()><\#!PA値必殺首切出目難半減威力確実化]*)
+    ([0-9a-z\+\-\*\/\@\$()><\#!PAVC値必殺首切出目難半減威力確実化聖王の冠]*)
     (?:\:([0-9]+|.+,.+))?
     (?:\s|$)
   /ix){
@@ -49,6 +49,7 @@ sub rateRoll {
   my $crit_ray;
   my $fixed;
   my $powerAccurate;
+  my $virtuousCrown;
   my $curse;
   my $gf;
   while($form =~ s/gf//gi)                            { $gf = ' GF'; }                      #Gフォーチュン
@@ -58,6 +59,7 @@ sub rateRoll {
   while($form =~ s/(?:[\$]|出目)(n?[0-9]+)//gi)       { $fixed    = $1 if !$fixed; }        #出目固定
   while($form =~ s/(?:[\$]|出目)\+?([\+\-][0-9]+)//gi){ $crit_ray = $1 if !$crit_ray; }     #出目修正
   while($form =~ s/(?:PA|威力確実化)(\d+)?//gi)       { $powerAccurate = $1 || 4; }         #威力確実化
+  while($form =~ s/(?:VC|聖王(?:の冠)?)//gi)          { $virtuousCrown = 1; }               #聖王の冠
   while($form =~ s/(?:[<]|難)([0-9]+)//gi)            { $curse    = $1 if !$curse; }        #Aカース「難しい」
   
   $rate = $unique || calc($rate);
@@ -93,6 +95,7 @@ sub rateRoll {
           $crit_ray,
           $fixed   ,
           $curse   ,
+          $virtuousCrown,
           $gf      ,
           $repeat > 1 && $j == 1 ? $repeatLabels[$i - 1] : undef,
           $repeat && $j == 1 ? $i : undef
@@ -122,6 +125,7 @@ sub rateCalc {
   my $crit_ray = shift;
   my $fixed    = shift;
   my $curse    = shift;
+  my $virtuousCrown = shift;
   my $gf       = shift;
   my $label    = shift;
   my $repeat   = shift;
@@ -151,7 +155,7 @@ sub rateCalc {
       #両方固定
       else {
         $number = ($fixed > 12) ? 12 : ($fixed < 2) ? 2 : $fixed;
-        if($number <= 2 && !$unique){ return ($code." → \[${number}:1ゾロ..\] = 0", 0, $number); }
+        if($number <= 2 && !$unique && !$virtuousCrown){ return ($code." → \[${number}:1ゾロ..\] = 0", 0, $number); }
         $fixed = 0; # 1回処理したらなくなる
       }
     }
@@ -171,7 +175,7 @@ sub rateCalc {
     my $number_result = $number;
     
     # 1ゾロ
-    if(!$crits && $number <= 2 && !$unique){
+    if(!$crits && $number <= 2 && !$unique && !$virtuousCrown){
       return ($code." → \[${inside_code}=${number}:1ゾロ..\] = 0", 0, $number);
       last;
     }
