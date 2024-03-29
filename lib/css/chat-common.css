@@ -1576,14 +1576,14 @@ body.rom .input-form { display: none !important; }
   display: inline-block;
 }
 
-.chat .logs dl dd.comm code.snippet[onclick] {
+.chat .logs dl dd:is(.comm, .info) code.snippet[onclick] {
   background-color: rgba(0, 255, 100, 0.15);
   cursor: copy;
   padding: 0.1em 0.25em;
   font-family: "Ytchat-Monospace", monospace;
   font-weight: normal;
 }
-.chat .logs dl dd.comm code.snippet[onclick]:hover {
+.chat .logs dl dd:is(.comm, .info) code.snippet[onclick]:hover {
   background-color: rgba(0, 255, 100, 0.30);
 }
 
