@@ -90,6 +90,8 @@ html,body {
 #menu-button-macro > a::before { content: "\f0c8"; }
 #map-window > h2::before,
 #menu-button-map > a::before { content: "\e9b0"; }
+#unit-state-window > h2::before,
+#menu-button-unit-state > a::before { content: "\e6da"; }
 #help-window > h2::before,
 #menu-button-help > a::before { content: "\e887"; font-variation-settings: 'FILL' 0 !important; }
 #exit-room > h2::before,
@@ -738,7 +740,8 @@ body.rom .sheet#sheet-unit-memo button { display: none; }
   color: var(--text-color);
   line-height: 1.8;
 }
-#dialog-memo::backdrop {
+#dialog-memo::backdrop,
+dialog.state-template-selector::backdrop {
   background-color: #000a;
 }
 
