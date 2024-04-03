@@ -1018,7 +1018,7 @@ body {
   grid-template-columns: 1fr;
 
   .sheet-body {
-    grid-template-rows: max-content 1fr max-content;
+    grid-template-rows: max-content max-content 1fr max-content;
 
     .status-remocon-area {
       display: grid;
