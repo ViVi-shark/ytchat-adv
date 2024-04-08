@@ -34,6 +34,18 @@ function getFromStorytellerActorMemoSheet($id) {
     return null;
 }
 
+function getFromYotabanaCharacterSheet($sheetUrl) {
+    $jsonUrl = $sheetUrl . 'export-for-ytchat/body/';
+    $json = file_get_contents($jsonUrl);
+    $summary = json_decode($json, true);
+
+    if (isset($summary['imageURL'])) {
+        return $summary['imageURL'];
+    }
+
+    return null;
+}
+
 class SourceServerException extends Exception
 {
 }
@@ -126,6 +138,8 @@ function getImageUrl($sheetUrl): ?string
 {
     if (preg_match('/^https:\/\/s-ammit\.sakura\.ne\.jp\/storyteller\/actor-memo-sheet\/([0-9a-f]{64})\/$/', $sheetUrl, $matches)) {
         return getFromStorytellerActorMemoSheet($matches[1]);
+    } else if (preg_match('/^https:\/\/s-ammit\.sakura\.ne\.jp\/yotabana(?:-demo)?\/character-sheet\/(?:[0-9a-f]{64})\/$/', $sheetUrl)) {
+        return getFromYotabanaCharacterSheet($sheetUrl);
     } else if (preg_match('/https:\/\/www\.fragment-sys\.com\/(bloodorium|wefl)\/make\.html\?id=(\d+)/', $sheetUrl, $matches)) {
         return getFromFragmentSystemCharacterSheet($sheetUrl, $matches[2]);
     } else if (preg_match('/\/\/character-sheets\.appspot\.com\//', $sheetUrl)) {
