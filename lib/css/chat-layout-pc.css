@@ -354,20 +354,29 @@ body {
   display: grid;
   grid-template-columns: auto 1fr;
 }
+.main .chat .logs dl.picture-resolved {
+  grid-template-columns: max-content 1fr;
+
+  > dt.picture {
+    grid-column: 1 / 2;
+    grid-row: 1 / -1;
+  }
+
+  > dt[id] {
+    grid-column: 2 / -1;
+    grid-row: 1 / 2;
+  }
+
+  > dd {
+    grid-column: 2 / -1;
+  }
+}
 .main .chat .logs dl dt {
   grid-column: 1;
-}
-.main .chat .logs dl.picture-resolved dt[id] {
-  grid-column-start: 2;
-  grid-column-end: -1;
 }
 .main .chat .logs dl dd {
   grid-column: 2;
   min-height: calc((1em * 1.8) - .1rem);
-}
-.main .chat .logs dl.picture-resolved dd {
-  grid-column-start: 2;
-  grid-column-end: -1;
 }
 .main .chat .logs dl dt {
   margin: .1em .6em .1em 0;

@@ -1534,7 +1534,7 @@ body.rom .input-form { display: none !important; }
   --picture-size: 5em;
 }
 .main .chat .logs dl.contains-picture > dt.picture {
-  grid-row: 1 / 1000;
+  grid-row: 1 / -1;
 }
 .main .chat .logs dl > dt.picture {
   display: flex;
