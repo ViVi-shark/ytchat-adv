@@ -308,6 +308,10 @@ input[type=range]::-moz-range-thumb {
   display: none;
 }
 
+.chat .headline-list-container {
+  display: none;
+}
+
 .chat  {
   font-size: 3.4vw;
 }
