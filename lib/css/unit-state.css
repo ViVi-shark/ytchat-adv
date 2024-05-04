@@ -229,6 +229,7 @@ dialog.state-template-selector {
         display: block;
         font-size: 1rem;
         margin-top: 0.55em;
+        line-height: 150%;
     }
 
     & .state-description:empty {
