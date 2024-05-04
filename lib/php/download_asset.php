@@ -16,15 +16,18 @@ if (preg_match('/^https?:\/\/drive\.google\.com\/file\/d\/(.+?)\//', $assetOrigi
     exit(1);
 }
 
-$content = file_get_contents($downloadUrl);
+$indexHash = md5(file_get_contents('../../index.cgi'));
+$cacheKey = $indexHash . '-' . md5($downloadUrl);
+$temporaryFilePath = './../../.asset-cache/' . $cacheKey;
 
-$hash = md5($content);
-$tempFilePath = './' . $hash;
-file_put_contents($tempFilePath, $content);
+if (file_exists($temporaryFilePath)) {
+    $content = file_get_contents($temporaryFilePath);
+} else {
+    $content = file_get_contents($downloadUrl);
+    file_put_contents($temporaryFilePath, $content);
+}
 
-$mimetype = (new finfo(FILEINFO_MIME_TYPE))->file($tempFilePath);
-
-unlink($tempFilePath);
+$mimetype = (new finfo(FILEINFO_MIME_TYPE))->file($temporaryFilePath);
 
 header(sprintf('Content-Type: %s;', $mimetype));
 echo $content;
