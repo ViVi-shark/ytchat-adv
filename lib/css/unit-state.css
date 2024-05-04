@@ -230,6 +230,18 @@ dialog.state-template-selector {
         font-size: 1rem;
         margin-top: 0.55em;
         line-height: 150%;
+
+        &:has(p:first-child:not(:last-child)) {
+            p {
+                display: list-item;
+                list-style-type: circle;
+                margin-left: 1.5em;
+
+                &:not(:last-child) {
+                    margin-bottom: 0.75em;
+                }
+            }
+        }
     }
 
     & .state-description:empty {
