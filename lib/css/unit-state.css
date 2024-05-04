@@ -270,6 +270,11 @@ dialog.state-template-selector {
         & .occurrence-round {
             display: inline;
         }
+
+        .duration-number:not(:empty) + .duration-unit[data-value]:not([data-value="R"]) + .occurrence-round,
+        .duration-number:empty + .duration-unit[data-value="永続"] + .occurrence-round {
+            display: none;
+        }
     }
 
     & .state-duration::before {
