@@ -54,12 +54,12 @@ sub rateRoll {
   my $gf;
   while($form =~ s/gf//gi)                            { $gf = ' GF'; }                      #Gフォーチュン
   while($form =~ s/(?:\@|C値)([0-9][0-9\+\-]*)//gi)   { $crit     = $1 if !$crit; }         #C値
+  while($form =~ s/(?:VC|聖王(?:の冠)?)//gi)          { $virtuousCrown = 1; }               #聖王の冠
   while($form =~ s/(?:[rck]|首切)(\-?[0-9]*)//gi)     { $rate_up  = $1 ne ''?$1:5 if !$rate_up; } #首切効果
   while($form =~ s/(?:[#b!]|必殺)([\+\-]?[0-9]*)//gi) { $crit_atk = $1 ne ''?$1:1 if !$crit_atk; }#必殺効果
   while($form =~ s/(?:[\$]|出目)(n?[0-9]+)//gi)       { $fixed    = $1 if !$fixed; }        #出目固定
   while($form =~ s/(?:[\$]|出目)\+?([\+\-][0-9]+)//gi){ $crit_ray = $1 if !$crit_ray; }     #出目修正
   while($form =~ s/(?:PA|威力確実化)(\d+)?//gi)       { $powerAccurate = $1 || 4; }         #威力確実化
-  while($form =~ s/(?:VC|聖王(?:の冠)?)//gi)          { $virtuousCrown = 1; }               #聖王の冠
   while($form =~ s/(?:[<]|難)([0-9]+)//gi)            { $curse    = $1 if !$curse; }        #Aカース「難しい」
   
   $rate = $unique || calc($rate);
