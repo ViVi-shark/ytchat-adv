@@ -162,6 +162,16 @@ sub diceCalc {
     $dice_value += $num;
   }
   $base =~ s/[\.\+\-\*\/\s]+$//gi; # 末尾の演算子は消す
+
+  if (
+      ($::in{'game'} eq 'sw2') &&
+      $#code == 0 &&
+      $code[0] =~ /^2D6$/i &&
+      $rel =~ /^>=?$/ &&
+      $dice_value == 2
+  ) {
+    return $code[0] . $rel . $targets . ' → 2[1,1...] → 自動失敗';
+  }
   
   if ($burst && $burst =~ /^\[([>=<]=)(\d+):([-+]\d+)\]$/) {
     my $comparison = $1;
