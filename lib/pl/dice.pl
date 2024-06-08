@@ -367,7 +367,7 @@ sub choiceRoll {
       close($FH);
     }
 
-    if($list[0] =~ /^[0-9]+D[0-9]+(?:\s+\d+){0,2}$/i){
+    if($list[0] =~ /^[0-9]+D[0-9](?:,\d+D\d+)?+(?:\s+\d+){0,2}$/i){
       return randomDiceTableRoll($rolls,$faces,$diceOffset,@list), 'choice:table';
     }
     else {
@@ -408,22 +408,37 @@ sub randomDiceTableRoll {
   foreach (@list){ chomp $_; $_=~ s/\\n/<br>/g; }
   my $results;
   foreach(1 .. $repeat){
-    ($code, my $value, my $text) = dice(split(/D/i, $code));
-    my $finalValue = defined($codeOffset) ? calc("$value$codeOffset") : $value;
-    $finalValue = $minValue if defined($minValue) && $minValue ne '' && $finalValue < $minValue;
-    $finalValue = $maxValue if defined($maxValue) && $maxValue ne '' && $finalValue > $maxValue;
-    $text =~ s/[\!\.]//g;
+    my $key = '';
+    my $values = '';
+    my $texts = '';
+    my @codeParts = split(',', $code);
+    for my $i (0 .. $#codeParts) {
+      my $codePart = $codeParts[$i];
+      ($codePart, my $value, my $text) = dice(split(/D/i, $codePart));
+      my $finalValue = defined($codeOffset) ? calc("$value$codeOffset") : $value;
+      $finalValue = $minValue if defined($minValue) && $minValue ne '' && $finalValue < $minValue;
+      $finalValue = $maxValue if defined($maxValue) && $maxValue ne '' && $finalValue > $maxValue;
+      $text =~ s/[\!\.]//g;
+
+      $key .= ',' if $key ne '';
+      $key .= $value;
+      $values .= ',' if $values ne '';
+      $values .= $value;
+      $texts .= ',' if $texts ne '';
+      $texts .= $text;
+    }
+    $texts = '' if $texts eq $values;
     $results .= '<br>' if $results;
     my $hit = 0;
     foreach(@list){
-      if($_ =~ s/^($finalValue:(?:.*?))$/$1/){
-        $results .= "＠$name → $code" . (defined($codeOffset) ? "($codeOffset)" : '') . " → $value\[$text\]$codeOffset : \[$1\]";
+      if($_ =~ s/^($key:(?:.*?))$/$1/){
+        $results .= "＠$name → $code" . (defined($codeOffset) ? "($codeOffset)" : '') . " → $values" . ($texts ne '' ? "\[$texts\]" : '') . "$codeOffset : \[$1\]";
         $hit = 1;
         last;
       }
     }
     if (!$hit) {
-      error "合致する行がありませんでした（出目: $finalValue）";
+      error "合致する行がありませんでした（出目: $key）";
     }
   }
   return $results;
