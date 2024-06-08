@@ -119,6 +119,7 @@ our %random_table = (
   'トランプ2' => { 'data'=>'trump-wjoker.txt', 'help'=>'全54枚のトランプのカードです（ジョーカー2枚）' },
   '大アルカナ' => { 'data'=>'major-arcana.txt', 'faces' => ['正位置','逆位置'], 'help'=>'全21枚のタロットカード（大アルカナ）です' },
   'パニッシュ/フィアー表' => { 'data'=>'sw2-punish-fear.txt', 'help'=>'SW2.5のパニッシュ／フィアー表です' },
+  'トレジャードロップ表J' => { 'data' => 'sw2-td-j.txt', 'help' => 'SW2.5のトレジャードロップ表Jです' },
 );
 our $rtable_dir = './rtable/';
 
