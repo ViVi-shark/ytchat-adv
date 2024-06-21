@@ -1556,8 +1556,9 @@ body.rom .input-form { display: none !important; }
   width: var(--picture-size);
   height: var(--picture-size);
   border-radius: calc(var(--picture-size) / 2);
-  background-size: contain;
+  background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   cursor: zoom-in;
 }
 .main .chat .logs dl > dt.picture > span:hover {
