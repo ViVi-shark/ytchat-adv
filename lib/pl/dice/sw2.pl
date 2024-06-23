@@ -33,7 +33,7 @@ sub rateRoll {
   if($comm !~ /^
     (?: (?:[kr]|威力) ( [0-9]+ | \([0-9\+\-]+\) | $unique_reg ) )
     (?:\[([0-9\+\-]+)\])?
-    ([0-9a-z\+\-\*\/\@\$()><\#!PAVC値必殺首切出目難半減威力確実化聖王の冠]*)
+    ([0-9a-z\+\-\*\/\@\$~()><\#!PAVC値必殺首切出目難半減威力確実化聖王の冠]*)
     (?:\:([0-9]+|.+,.+))?
     (?:\s|$)
   /ix){
@@ -47,6 +47,7 @@ sub rateRoll {
   my $rate_up;
   my $crit_atk;
   my $crit_ray;
+  my $witch_blaze;
   my $fixed;
   my $powerAccurate;
   my $virtuousCrown;
@@ -58,7 +59,8 @@ sub rateRoll {
   while($form =~ s/(?:[rck]|首切)(\-?[0-9]*)//gi)     { $rate_up  = $1 ne ''?$1:5 if !$rate_up; } #首切効果
   while($form =~ s/(?:[#b!]|必殺)([\+\-]?[0-9]*)//gi) { $crit_atk = $1 ne ''?$1:1 if !$crit_atk; }#必殺効果
   while($form =~ s/(?:[\$]|出目)(n?[0-9]+)//gi)       { $fixed    = $1 if !$fixed; }        #出目固定
-  while($form =~ s/(?:[\$]|出目)\+?([\+\-][0-9]+)//gi){ $crit_ray = $1 if !$crit_ray; }     #出目修正
+  while($form =~ s/(?:[\$]|出目)\+?([\+\-][0-9]+)//gi){ $crit_ray = $1 if !$crit_ray; }     #出目修正【クリティカルレイ】
+  while($form =~ s/(?:[\$]|出目)~\+?([\+\-][0-9]+)//gi){ $witch_blaze = $1 if !$witch_blaze; } #出目修正［魔女の火］
   while($form =~ s/(?:PA|威力確実化)(\d+)?//gi)       { $powerAccurate = $1 || 4; }         #威力確実化
   while($form =~ s/(?:[<]|難)([0-9]+)//gi)            { $curse    = $1 if !$curse; }        #Aカース「難しい」
   
@@ -93,6 +95,7 @@ sub rateRoll {
           $rate_up ,
           $crit_atk,
           $crit_ray,
+          $witch_blaze,
           $fixed   ,
           $curse   ,
           $virtuousCrown,
@@ -123,6 +126,7 @@ sub rateCalc {
   my $rate_up  = shift;
   my $crit_atk = shift;
   my $crit_ray = shift;
+  my $witch_blaze = shift;
   my $fixed    = shift;
   my $curse    = shift;
   my $virtuousCrown = shift;
@@ -195,6 +199,13 @@ sub rateCalc {
       $number =  2 if $number <  2;
       $number_result .=">$number";
       $crit_ray = 0; # 1回処理したらなくなる
+    }
+    # ［魔女の火］
+    if($witch_blaze != 0 && (!defined($repeat) || $repeat == 1 || $unique)){
+      $number += $witch_blaze if 3 <= $number && $number <= 10;
+      $number = 12 if $number > 12;
+      $number_result .=">$number";
+      $witch_blaze = 0; # 1回処理したらなくなる
     }
     # アビスカース「難しい」
     if($curse && $number <= $curse){
