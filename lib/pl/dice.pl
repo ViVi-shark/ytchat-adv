@@ -421,7 +421,7 @@ sub randomDiceTableRoll {
       $text =~ s/[\!\.]//g;
 
       $key .= ',' if $key ne '';
-      $key .= $value;
+      $key .= $finalValue;
       $values .= ',' if $values ne '';
       $values .= $value;
       $texts .= ',' if $texts ne '';
