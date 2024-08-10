@@ -145,7 +145,13 @@ our @stateTemplates = (
             {
                 'categoryName' => '妖精魔法',
                 'states' => [
+                    {'name' => '【ハンドルフェアリー】', 'icon' => {'category' => 'SW2/妖精魔法', 'direction' => 'buff'}, 'duration' => '18R', 'description' => '妖精の行動に対する回避力判定や抵抗力判定＋２', 'source' => '#self'},
                     {'name' => '【フェアリーウィッシュⅡ】', 'icon' => {'category' => 'SW2/妖精魔法', 'direction' => 'buff'}, 'duration' => '360分', 'description' => '一度だけ、行為判定に＋２\n戦闘によって強制解除', 'source' => '#self'},
+                    {'name' => '【ミティゲイトフェアリー】', 'icon' => {'category' => 'SW2/妖精魔法', 'direction' => 'debuff'}, 'duration' => '18R', 'description' => '「分類：妖精」に対してのみ、行為判定－２、発生させる物理・魔法ダメージ－２'},
+                    {'name' => '【ストーンガード】', 'icon' => {'category' => 'SW2/妖精魔法', 'direction' => 'buff'}, 'duration' => '18R', 'description' => '一度だけ、物理ダメージ－５'},
+                    {'name' => '【エントラップ】', 'icon' => {'category' => 'SW2/妖精魔法', 'direction' => 'debuff'}, 'duration' => '18R', 'description' => '移動力０、回避力判定－２、あらたに飛行する権利を失う\n主動作で脱出を試みることができる（詳細⇒『ＭＡ』132頁）'},
+                    {'name' => '【リングプロテクション】', 'icon' => {'category' => 'SW2/妖精魔法', 'direction' => 'buff'}, 'duration' => '18R', 'description' => '１ラウンドにつき一度だけ、物理ダメージ－５'},
+                    {'name' => '【グレートキャプチャー】', 'icon' => {'category' => 'SW2/妖精魔法', 'direction' => 'debuff'}, 'duration' => '18R', 'description' => '移動力０、脱出以外の主動作不可、回避力判定自動失敗、飛行不可\n主動作で脱出を試みることができる（詳細⇒『ＭＡ』133頁）'},
                     {'name' => '【ウォータースクリーン】', 'icon' => {'category' => 'SW2/妖精魔法', 'direction' => 'buff'}, 'duration' => '18R', 'description' => '炎属性の魔法ダメージ－３'},
                     {'name' => '【ボトムウォーキング】', 'icon' => {'category' => 'SW2/妖精魔法', 'direction' => 'buff'}, 'duration' => '60分', 'description' => '水底で活動できる'},
                     {'name' => '【ハードウォーター】', 'icon' => {'category' => 'SW2/妖精魔法', 'direction' => 'buff'}, 'duration' => '60分', 'description' => '水上を歩行できる'},
@@ -180,7 +186,22 @@ our @stateTemplates = (
                     {'name' => '【ナーシング】', 'icon' => {'category' => 'SW2/妖精魔法', 'direction' => 'buff'}, 'duration' => '1日', 'description' => '毒属性、病気属性の効果の進行を抑制（⇒『ＭＡ』140頁）'},
                     {'name' => '【ライフサポート】', 'icon' => {'category' => 'SW2/妖精魔法', 'direction' => 'buff'}, 'duration' => '18R', 'description' => 'ＨＰへの適用ダメージを半減\nＨＰ０のあいだのみ有効'},
                     {'name' => '【インビジビリティ】', 'icon' => {'category' => 'SW2/妖精魔法', 'direction' => 'buff'}, 'duration' => '1R', 'description' => '「知覚：五感」「知覚：機械」に対して透明になる'},
-                    {'name' => '【バーチャルタフネス】', 'icon' => {'category' => 'SW2/妖精魔法', 'direction' => 'buff'}, 'duration' => '18R', 'description' => 'ＨＰの現在値と最大値を増加'},
+                    {'name' => '【バーチャルタフネスⅡ】', 'icon' => {'category' => 'SW2/妖精魔法', 'direction' => 'buff'}, 'duration' => '18R', 'description' => 'ＨＰの現在値と最大値を増加'},
+                ],
+            },
+            {
+                'categoryName' => '森羅魔法',
+                'states' => [
+                    {'name' => '【ラタイトランナー】', 'icon' => {'category' => 'SW2/森羅魔法', 'direction' => 'buff'}, 'duration' => '10分', 'description' => '移動力を増加'},
+                    {'name' => '【ファイアプロテクター】', 'icon' => {'category' => 'SW2/森羅魔法', 'direction' => 'buff'}, 'duration' => '1R', 'description' => '「◯炎無効」相当を得る'},
+                    {'name' => '【フォッシルアブソーバー】', 'icon' => {'category' => 'SW2/森羅魔法', 'direction' => 'buff'}, 'duration' => '1R', 'description' => '受ける魔法ダメージ－６点'},
+                    {'name' => '【コールドプロテクター】', 'icon' => {'category' => 'SW2/森羅魔法', 'direction' => 'buff'}, 'duration' => '1R', 'description' => '「◯水・氷無効」相当を得る'},
+                    {'name' => '【ウイングフライヤーⅡ】', 'icon' => {'category' => 'SW2/森羅魔法', 'direction' => 'buff'}, 'duration' => '1R', 'description' => '「◯飛行Ⅱ」相当を得る'},
+                    {'name' => '【リプロデューサー／リビングツリー】', 'icon' => {'category' => 'SW2/森羅魔法', 'direction' => 'buff'}, 'duration' => '6R', 'description' => '「◯再生＝10点」相当を得る'},
+                    {'name' => '【ポイズナスアタッカー】', 'icon' => {'category' => 'SW2/森羅魔法', 'direction' => 'buff'}, 'duration' => '1R', 'description' => '近接・遠隔攻撃を毒属性の魔法の武器によるものとし、物理ダメージ＋５'},
+                    {'name' => '【ノイジィディスターバー】', 'icon' => {'category' => 'SW2/森羅魔法', 'direction' => 'debuff'}, 'duration' => '1R', 'description' => '行使判定・演奏判定－４'},
+                    {'name' => '【サイケデリックスポア】', 'icon' => {'category' => 'SW2/森羅魔法', 'direction' => 'debuff'}, 'duration' => '1R', 'description' => '行動判定－４'},
+                    {'name' => '【サプレッシングゲイザー】', 'icon' => {'category' => 'SW2/森羅魔法', 'direction' => 'debuff'}, 'duration' => '1R', 'description' => '行動判定－２、累積可'},
                 ],
             },
             {
