@@ -313,7 +313,7 @@ else {
     #なんもないよ
   }
   else{
-    $::in{'comm'} .= "<picture:$::in{'picture'}>";
+    $::in{'comm'} .= "<picture:$::in{'picture'}>" if $::in{'picture'};
   }
 }
 
