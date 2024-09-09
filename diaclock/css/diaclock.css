@@ -41,6 +41,9 @@
 .diaclock-map .cell-outer-root[data-circle-name="in"]:not(.center) .filler {
     border-color: var(--inner-cell-color);
 }
+.diaclock-map .cell-outer-root:not([data-circle-name]):not(.center) .filler {
+    border-color: var(--cell-color);
+}
 .diaclock-map[data-cell-count-in-circle="6"] .cell-outer-root:not(.center) .filler {
     border-color: var(--cell-color);
 }

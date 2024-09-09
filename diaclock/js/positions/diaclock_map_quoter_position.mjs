@@ -17,6 +17,10 @@ export class DiaclockMapQuoterPosition extends DiaclockSystemPosition {
         return this.#cellIndex.toString();
     }
 
+    toString() {
+        return this.toCellId();
+    }
+
     /**
      * @return {DiaclockMapQuoterPositionParser}
      */

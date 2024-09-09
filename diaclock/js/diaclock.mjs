@@ -4,7 +4,7 @@ import {DiaclockMapPosition} from "./positions/diaclock_map_position.mjs";
 import {DiaclockMapQuoterPosition} from "./positions/diaclock_map_quoter_position.mjs";
 import {DiaclockSystemEntityList} from "./DiaclockSystemEntityList.mjs";
 
-class DiaclockMapCore {
+export class DiaclockMapCore {
     /** @var {int} */
     #cellCountInCircle;
 

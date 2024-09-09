@@ -1,0 +1,226 @@
+.diaclock-map.m-gate-map {
+    --cell-color: #2E3069;
+    --center-cell-color: #111352;
+    --cell-label-color: rgb(255, 255, 255, 0.5);
+    --entity-name-background-color: #0B0B24;
+}
+
+.diaclock-map[data-cell-count-in-circle="14"] .cell-outer-root:not(.center) .filler {
+    clip-path: polygon(50% 50%, 38.8% 0%, 61.2% 0%);
+}
+
+.diaclock-map[data-cell-count-in-circle="14"] .cell-outer-root .content::before {
+    font-size: 90%;
+}
+
+.diaclock-map {
+    .cell-outer-root {
+        &[data-cell-index-in-circle="1"] .content::before {
+            content: "R1";
+            rotate: calc((360deg / 14) * -1);
+        }
+
+        &[data-cell-index-in-circle="2"] .content::before {
+            content: "R2";
+            rotate: calc((360deg / 14) * -2);
+        }
+
+        &[data-cell-index-in-circle="3"] .content::before {
+            content: "R3";
+            rotate: calc((360deg / 14) * -3);
+        }
+
+        &[data-cell-index-in-circle="4"] .content::before {
+            content: "R4";
+            rotate: calc((360deg / 14) * -4);
+        }
+
+        &[data-cell-index-in-circle="5"] .content::before {
+            content: "R5";
+            rotate: calc((360deg / 14) * -5);
+        }
+
+        &[data-cell-index-in-circle="6"] .content::before {
+            content: "R6";
+            rotate: calc((360deg / 14) * -6);
+        }
+
+        &[data-cell-index-in-circle="7"] .content::before {
+            content: "7";
+            rotate: calc((360deg / 14) * -7);
+        }
+
+        &[data-cell-index-in-circle="8"] .content::before {
+            content: "L6";
+            rotate: calc((360deg / 14) * -8);
+        }
+
+        &[data-cell-index-in-circle="9"] .content::before {
+            content: "L5";
+            rotate: calc((360deg / 14) * -9);
+            text-decoration: none;
+        }
+
+        &[data-cell-index-in-circle="10"] .content::before {
+            content: "L4";
+            rotate: calc((360deg / 14) * -10);
+        }
+
+        &[data-cell-index-in-circle="11"] .content::before {
+            content: "L3";
+            rotate: calc((360deg / 14) * -11);
+        }
+
+        &[data-cell-index-in-circle="12"] .content::before {
+            content: "L2";
+            rotate: calc((360deg / 14) * -12);
+        }
+
+        &[data-cell-index-in-circle="13"] .content::before {
+            content: "L1";
+            rotate: calc((360deg / 14) * -13);
+        }
+
+        &[data-cell-index-in-circle="14"] .content::before {
+            content: "0";
+            rotate: 0deg;
+        }
+    }
+}
+
+.diaclock-map[data-cell-count-in-circle="14"] {
+    .cell-outer-root[data-cell-index-in-circle="1"] {
+        rotate: calc((360deg / 14) * 1);
+    }
+
+    .cell-outer-root[data-cell-index-in-circle="2"] {
+        rotate: calc((360deg / 14) * 2);
+    }
+
+    .cell-outer-root[data-cell-index-in-circle="3"] {
+        rotate: calc((360deg / 14) * 3);
+    }
+
+    .cell-outer-root[data-cell-index-in-circle="4"] {
+        rotate: calc((360deg / 14) * 4);
+    }
+
+    .cell-outer-root[data-cell-index-in-circle="5"] {
+        rotate: calc((360deg / 14) * 5);
+    }
+
+    .cell-outer-root[data-cell-index-in-circle="6"] {
+        rotate: calc((360deg / 14) * 6);
+    }
+
+    .cell-outer-root[data-cell-index-in-circle="7"] {
+        rotate: calc((360deg / 14) * 7);
+    }
+
+    .cell-outer-root[data-cell-index-in-circle="8"] {
+        rotate: calc((360deg / 14) * 8);
+    }
+
+    .cell-outer-root[data-cell-index-in-circle="9"] {
+        rotate: calc((360deg / 14) * 9);
+    }
+
+    .cell-outer-root[data-cell-index-in-circle="10"] {
+        rotate: calc((360deg / 14) * 10);
+    }
+
+    .cell-outer-root[data-cell-index-in-circle="11"] {
+        rotate: calc((360deg / 14) * 11);
+    }
+
+    .cell-outer-root[data-cell-index-in-circle="12"] {
+        rotate: calc((360deg / 14) * 12);
+    }
+
+    .cell-outer-root[data-cell-index-in-circle="13"] {
+        rotate: calc((360deg / 14) * 13);
+    }
+
+    .cell-outer-root[data-cell-index-in-circle="14"] {
+        rotate: calc((360deg / 14) * 0);
+    }
+}
+
+.diaclock-map[data-cell-count-in-circle="14"] .cell-outer-root .content .entities {
+    top: 53%;
+}
+
+.diaclock-map[data-cell-count-in-circle="14"] .cell-outer-root .content .entities .text {
+    font-size: 70%;
+}
+
+.diaclock-map[data-cell-count-in-circle="14"] .cell-outer-root {
+    &[data-cell-index-in-circle="1"] .content .entities {
+        rotate: calc((360deg / 14) * -1);
+        transform: translateX(1em);
+    }
+
+    &[data-cell-index-in-circle="2"] .content .entities {
+        rotate: calc((360deg / 14) * -2);
+        transform: translateX(1em);
+    }
+
+    &[data-cell-index-in-circle="3"] .content .entities {
+        rotate: calc((360deg / 14) * -3);
+        transform: translateX(1.5em);
+    }
+
+    &[data-cell-index-in-circle="4"] .content .entities {
+        rotate: calc((360deg / 14) * -4);
+        transform: translate(1.5em, 0.5em);
+    }
+
+    &[data-cell-index-in-circle="5"] .content .entities {
+        rotate: calc((360deg / 14) * -5);
+        transform: translate(1.5em, 1.25em);
+    }
+
+    &[data-cell-index-in-circle="6"] .content .entities {
+        rotate: calc((360deg / 14) * -6);
+        transform: translate(-0.25em, 0.5em);
+    }
+
+    &[data-cell-index-in-circle="7"] .content .entities {
+        rotate: calc((360deg / 14) * -7);
+        transform: translateY(0.5em);
+    }
+
+    &[data-cell-index-in-circle="8"] .content .entities {
+        rotate: calc((360deg / 14) * -8);
+        transform: translate(0.25em, 0.5em);
+    }
+
+    &[data-cell-index-in-circle="9"] .content .entities {
+        rotate: calc((360deg / 14) * -9);
+        transform: translate(-1.5em, 1.25em);
+    }
+
+    &[data-cell-index-in-circle="10"] .content .entities {
+        rotate: calc((360deg / 14) * -10);
+        transform: translate(-1.5em, 0.5em);
+    }
+
+    &[data-cell-index-in-circle="11"] .content .entities {
+        rotate: calc((360deg / 14) * -11);
+        transform: translateX(-1.5em);
+    }
+
+    &[data-cell-index-in-circle="12"] .content .entities {
+        rotate: calc((360deg / 14) * -12);
+        transform: translateX(-1em);
+    }
+
+    &[data-cell-index-in-circle="13"] .content .entities {
+        rotate: calc((360deg / 14) * -13);
+        transform: translateX(-1em);
+    }
+
+    &[data-cell-index-in-circle="14"] .content .entities {
+        rotate: 0deg;
+    }
+}
