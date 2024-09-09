@@ -97,6 +97,8 @@ $ROOM->param(title => $room{'name'});
 
 $ROOM->param(gameSystem => $game);
 $ROOM->param(gameSystemName => $games{$game}{'name'} ? $games{$game}{'name'} : $game ? $game : '－');
+$ROOM->param(isBloodorium => $game =~ /^bloodorium/ ? 1 : 0);
+$ROOM->param(isDragBride => $game eq 'drag-bride-2' ? 1 : 0);
 
 $ROOM->param(bcdiceAPI => $room{'bcdice-url'} || ($room{'bcdice'} ? $set::bcdice_api : ''));
 $ROOM->param(bcdiceSystem => $games{$game}{'bcdice'} ? $games{$game}{'bcdice'} : $game ? $game : 'DiceBot');

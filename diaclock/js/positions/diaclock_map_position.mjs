@@ -26,6 +26,10 @@ export class DiaclockMapPosition extends DiaclockSystemPosition {
         return `${this.#circleName}-${this.#cellIndex}`;
     }
 
+    toString() {
+        return this.toCellId();
+    }
+
     /**
      * @return {DiaclockMapPositionParser}
      */
