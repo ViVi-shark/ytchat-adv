@@ -314,18 +314,30 @@ sub makeRollIndexText {
 sub lineAoECheck {
   my $comm = shift;
 
-  if ($comm !~ /^\$(?:貫通|突破)(?:\s|$)/) {
+  if ($comm !~ /^(\d+)?\$(?:貫通|突破)(?:\s|$)/) {
     return '';
   }
 
-  my $screenCommand = '1d';
-  my $diceValue = int(rand(6)) + 1;
-  my $checkResult = $diceValue <= 3 ? '受ける' : '受けない';
-  my $checkResultClass = $checkResult eq '受ける' ? 'hit' : 'miss';
+  my $times = $1 || 1;
 
-  my $outputText = "${screenCommand} → ${diceValue} → <span class=\"${checkResultClass}\">${checkResult}</span>";
+  sub checkOnce {
+    my $screenCommand = '1d';
+    my $diceValue = int(rand(6)) + 1;
+    my $checkResult = $diceValue <= 3 ? '受ける' : '受けない';
+    my $checkResultClass = $checkResult eq '受ける' ? 'hit' : 'miss';
 
-  return $outputText;
+    return "${screenCommand} → ${diceValue} → <span class=\"${checkResultClass}\">${checkResult}</span>";
+  }
+
+  my @textRows = ();
+
+  foreach (1 .. $times) {
+    my $row = checkOnce;
+    $row = makeRollIndexText($_) . ' ' . $row if $times > 1;
+    push(@textRows, $row);
+  }
+
+  return join("\n", @textRows);
 }
 
 1;
