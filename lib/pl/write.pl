@@ -400,7 +400,9 @@ sub diceCodeCheck {
       [\@＠\$＄\#＃]
     | [a-zａ-ｚA-ZＡ-Ｚ0-9０-９\+＋\-－\*＊\/／\^＾\@＠\$＄#＃()（）⌈⌉]{2,}
     | 威力[0-9] | [rk][ァ-ヴ] | 成長
-  )/ix){
+  )/ix
+    || $::in{'comm'} =~ /^[^\s]*\$(?:貫通|突破)/
+  ){
     require './lib/pl/dice.pl';
     my $code;
     ($::in{'info'}, $::in{'system'}, $code) = diceCheck($::in{'comm'});
