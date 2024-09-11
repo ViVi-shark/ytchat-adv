@@ -112,12 +112,12 @@ sub diceRoll {
   }
   elsif ($repeat =~ /^\d+$/) {
     @repeatLabels = ();
-    $repeat = ($repeat > 20) ? 20 : (!$repeat) ? 1 : $repeat;
+    $repeat = ($repeat > 50) ? 50 : (!$repeat) ? 1 : $repeat;
     push(@repeatLabels, '') foreach (1 .. $repeat);
   } else {
     @repeatLabels = split(/\s*,\s*/, $repeat);
     $repeat = @repeatLabels;
-    $repeat = 20 if $repeat > 20;
+    $repeat = 50 if $repeat > 50;
     @repeatLabels = @repeatLabels[0 .. ($repeat - 1)];
   }
 
