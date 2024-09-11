@@ -68,14 +68,14 @@ sub rateRoll {
   my @repeatLabels;
   if ($repeat !~ /,/) {
     @repeatLabels = ();
-    $repeat = ($repeat > 20) ? 20 : (!$repeat) ? 1 : $repeat;
+    $repeat = ($repeat > 50) ? 50 : (!$repeat) ? 1 : $repeat;
     for my $i (1 .. $repeat) {
       push(@repeatLabels, makeRollIndexText($i));
     }
   } else {
     @repeatLabels = split(/\s*,\s*/, $repeat);
     $repeat = @repeatLabels;
-    $repeat = 20 if $repeat > 20;
+    $repeat = 50 if $repeat > 50;
     @repeatLabels = @repeatLabels[0 .. ($repeat - 1)];
   }
 
@@ -278,7 +278,13 @@ sub growRoll {
 sub makeRollIndexText {
   my $repeatId = shift;
   return undef unless defined($repeatId);
-  my @chars = ('❶', '❷', '❸', '❹', '❺', '❻', '❼', '❽', '❾', '❿', '⓫', '⓬', '⓭', '⓮', '⓯', '⓰', '⓱', '⓲', '⓳', '⓴');
+  my @chars = (
+      '①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩',
+      '⑪', '⑫', '⑬', '⑭', '⑮', '⑯', '⑰', '⑱', '⑲', '⑳',
+      '㉑', '㉒', '㉓', '㉔', '㉕', '㉖', '㉗', '㉘', '㉙', '㉚',
+      '㉛', '㉜', '㉝', '㉞', '㉟', '㊱', '㊲', '㊳', '㊴', '㊵',
+      '㊶', '㊷', '㊸', '㊹', '㊺', '㊻', '㊼', '㊽', '㊾', '㊿',
+  );
   return $chars[$repeatId - 1];
 }
 
