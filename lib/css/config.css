@@ -477,6 +477,10 @@
 
   .miss {
     color: gray;
+
+    em {
+      color: inherit;
+    }
   }
 }
 

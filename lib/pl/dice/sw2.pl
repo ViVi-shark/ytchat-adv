@@ -333,19 +333,43 @@ sub lineAoECheck {
     my $checkResultClass = $checkResult eq '受ける' ? 'hit' : 'miss';
     my $thresholdText = $_threshold == 3 ? '' : "[<=${_threshold}]";
 
-    return "${screenCommand} → ${diceValue}${thresholdText} → <span class=\"${checkResultClass}\">${checkResult}</span>";
+    return (
+        $checkResult,
+        "${screenCommand} → ${diceValue}${thresholdText} → <span class=\"${checkResultClass}\">${checkResult}</span>"
+    );
   }
 
   my @textRows = ();
+  my @hitLabels = ();
+  my @missLabels = ();
 
   foreach (1 .. $times) {
-    my $row = checkOnce($threshold);
-    my $label = ($labels[$_ - 1] // '') ne '' ? '〚' . $labels[$_ - 1] . '〛' : $times > 1 ? makeRollIndexText($_) : '';
+    my $label = $labels[$_ - 1] // '';
+
+    (my $result, my $row) = checkOnce($threshold);
+
+    push(@hitLabels, $label) if $result eq '受ける';
+    push(@missLabels, $label) if $result eq '受けない';
+
+    if ($label eq '') {
+      $label = makeRollIndexText($_) if $times > 1;
+    } else {
+      $label = "〚${label}〛";
+    }
+
     $row = "${label} ${row}" if $label ne '';
+
     push(@textRows, $row);
   }
 
-  return join("\n", @textRows);
+  my $text = join("\n", @textRows);
+
+  if ($#labels >= 0) {
+    $text .= "\n<span class=\"hit\">受ける： " . (@hitLabels ? '<span class="hit-labels">' . join(',', @hitLabels) . '</span>' : '<em>該当なし</em>') . "</span>";
+    $text .= "\n<span class=\"miss\">受けない： " . (@missLabels ? join(',', @missLabels) : '<em>該当なし</em>') . "</span>";
+  }
+
+  return $text;
 }
 
 1;
