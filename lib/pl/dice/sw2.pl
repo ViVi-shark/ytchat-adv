@@ -314,12 +314,15 @@ sub makeRollIndexText {
 sub lineAoECheck {
   my $comm = shift;
 
-  if ($comm !~ /^(\d+)?\$(?:貫通|突破)(?:<=([1-6]))?(?:\s|$)/) {
+  if ($comm !~ /^(?:(\d+)|([^\s]+))?\$(?:貫通|突破)(?:<=([1-6]))?(?:\s|$)/) {
     return '';
   }
 
   my $times = $1 || 1;
-  my $threshold = $2 || 3;
+  my @labels = ($2 // '') ne '' ? split(',', $2) : ();
+  my $threshold = $3 || 3;
+
+  $times = $#labels + 1 if $#labels >= 0;
 
   sub checkOnce {
     my $_threshold = shift;
@@ -337,7 +340,8 @@ sub lineAoECheck {
 
   foreach (1 .. $times) {
     my $row = checkOnce($threshold);
-    $row = makeRollIndexText($_) . ' ' . $row if $times > 1;
+    my $label = ($labels[$_ - 1] // '') ne '' ? '〚' . $labels[$_ - 1] . '〛' : $times > 1 ? makeRollIndexText($_) : '';
+    $row = "${label} ${row}" if $label ne '';
     push(@textRows, $row);
   }
 
