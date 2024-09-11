@@ -314,25 +314,29 @@ sub makeRollIndexText {
 sub lineAoECheck {
   my $comm = shift;
 
-  if ($comm !~ /^(\d+)?\$(?:貫通|突破)(?:\s|$)/) {
+  if ($comm !~ /^(\d+)?\$(?:貫通|突破)(?:<=([1-6]))?(?:\s|$)/) {
     return '';
   }
 
   my $times = $1 || 1;
+  my $threshold = $2 || 3;
 
   sub checkOnce {
+    my $_threshold = shift;
+
     my $screenCommand = '1d';
     my $diceValue = int(rand(6)) + 1;
-    my $checkResult = $diceValue <= 3 ? '受ける' : '受けない';
+    my $checkResult = $diceValue <= $_threshold ? '受ける' : '受けない';
     my $checkResultClass = $checkResult eq '受ける' ? 'hit' : 'miss';
+    my $thresholdText = $_threshold == 3 ? '' : "[<=${_threshold}]";
 
-    return "${screenCommand} → ${diceValue} → <span class=\"${checkResultClass}\">${checkResult}</span>";
+    return "${screenCommand} → ${diceValue}${thresholdText} → <span class=\"${checkResultClass}\">${checkResult}</span>";
   }
 
   my @textRows = ();
 
   foreach (1 .. $times) {
-    my $row = checkOnce;
+    my $row = checkOnce($threshold);
     $row = makeRollIndexText($_) . ' ' . $row if $times > 1;
     push(@textRows, $row);
   }
