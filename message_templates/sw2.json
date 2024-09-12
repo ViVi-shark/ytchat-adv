@@ -50,5 +50,8 @@
   },
   {
     "format": "##### 戦利品の獲得"
+  },
+  {
+    "format": "/state-modify duration-=1R if {source:[[&unit]]} {durationUnit:R}"
   }
 ]
