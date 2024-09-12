@@ -118,7 +118,7 @@ foreach($reverseOn ? (reverse <$FH>) : <$FH>) {
   
   my $picture;
   if ($comm =~ s/\s*(?:<|&lt;)picture:\s*(.+?)?\s*(?:>|&gt;)\s*//) {
-    $picture = $1 if defined($1);
+    $picture = $1 if defined($1) && $1 ne 'none';
   }
   
   my $line  = '{'
