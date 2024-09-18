@@ -293,7 +293,7 @@ sub growRoll {
   $num = $num ? $num : 2;
   my @result;
   foreach(1 .. $num){
-    push(@result, $grow[int(rand(6))]);
+    push(@result, '<em class="grow-result-unit">' . $grow[int(rand(6))] . '</em>');
   }
   return join(' or ', @result);
 }
