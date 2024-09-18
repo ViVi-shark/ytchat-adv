@@ -321,6 +321,7 @@ body {
     flex-flow: row;
     flex-shrink: 0;
     flex-basis: max-content;
+    align-items: flex-end;
   }
 
   & .level:not([data-level="1"])::before {
