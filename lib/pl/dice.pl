@@ -329,9 +329,20 @@ sub shuffleRoll {
     $faces =~ s/</&lt;/;
     my @list = split(/[,、]/, $faces);
     return "" if (@list <= 1 || (!$rolls_raw)); #誤爆防止
-    @list = shuffle(@list);
-    my @choice = splice(@list, 0, $rolls);
-    return '<b>【✔:'.join(',', @choice).'】</b> <s>［×:'.join(',', @list).'］</s>', 'choice';
+    my @indexes = 0 .. $#list;
+    @indexes = shuffle(@indexes);
+    my @choiceIndexes = splice(@indexes, 0, $rolls);
+    @choiceIndexes = sort(@choiceIndexes);
+    @indexes = sort(@indexes);
+    my @choice = ();
+    foreach (@choiceIndexes) {
+      push(@choice, $list[$_]);
+    }
+    my @notChoice = ();
+    foreach (@indexes) {
+      push(@notChoice, $list[$_]);
+    }
+    return '<b>【✔:'.join(',', @choice).'】</b> <s>［×:'.join(',', @notChoice).'］</s>', 'choice';
   }
   return "";
 }
