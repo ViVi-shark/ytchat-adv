@@ -839,6 +839,14 @@
   border-width: 1px;
   border-style: solid;
   border-color: var(--border-color-pale);
+
+  &.align-center {
+    text-align: center;
+  }
+
+  &.align-right {
+    text-align: right;
+  }
 }
 .logs table tbody tr:nth-child(even) {
   background: rgba(127,127,127,0.15);
