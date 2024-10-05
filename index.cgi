@@ -364,6 +364,11 @@ sub tableCreate {
       $output .= "<$td";
       if($colspan > 1){ $output .= ' colspan="'.$colspan.'"'; }
       if($rowspan > 1){ $output .= ' rowspan="'.$rowspan.'"'; }
+      my @classes = ();
+      if ($col =~ s#^\s*&lt;(center|right)&gt;(.+?)&lt;/(?:center|right)&gt;\s*$#$2#) {
+        push(@classes, "align-${1}");
+      }
+      $output .= ' class="' . join(' ', @classes) . '"' if @classes;
       $output .= ">$col";
     }
     $output .= "</tr>";
