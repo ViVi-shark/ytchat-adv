@@ -349,12 +349,7 @@ sub tableCreate {
   my $row_num = 0;
   foreach my $row (@data){
     next if !@{$row};
-    my $test = "@{$row}";
-    $test =~ s#&#&amp;#g;
-    $test =~ s#"#&quot;#g;
-    $test =~ s#<#&lt;#g;
-    $test =~ s#>#&gt;#g;
-    $output .= "<tr data-test=\"${test}\">";
+    $output .= "<tr>";
     my $col_num = 0;
     my $colspan = 1;
     foreach my $col (@{$row}){
