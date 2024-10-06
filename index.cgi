@@ -291,6 +291,9 @@ sub tagConvert {
   
   1 while $comm =~ s#&lt;h([1-6])&gt;(.*?)&lt;/h\1&gt;\n?#<h$1>$2</h$1>#gis;
   
+  1 while $comm =~ s#&lt;f&gt;(.+?)&lt;/f&gt;#&lt;formula&gt;$1&lt;/formula&gt;#gis;
+  1 while $comm =~ s#&lt;formula&gt;(.+?)&lt;/formula&gt;#&resolveFormula($1)#egis;
+  
   1 while $comm =~ s#&lt;tip&gt;(.*?)=&gt;(.*?)&lt;\/tip&gt;#$1#gis;
   1 while $comm =~ s#&lt;snippet&gt;(.+?)&lt;\/snippet&gt;#$1#gis;
   
@@ -411,6 +414,25 @@ sub tableHeaderCreate {
   }
   $output .= "</tr></thead>";
   return $output;
+}
+
+sub resolveFormula {
+  my $formula = shift;
+
+  return $formula if $formula =~ /^[-+]?\d+$/;
+
+  sub resolve_core {
+    my $f = shift;
+    if ($f !~ /[\+\-\/\*\^]/) { return 'ERROR'; }
+    if ($f =~ m|//|) { return 'ERROR'; }
+    $f =~ s#\^#\*\*#g;
+    # $f =~ s/⌈(.+?)⌉/ceil($1)/g;
+    return eval($f);
+  }
+
+  my $result = resolve_core($formula);
+
+  return "<span class=\"formula\"><span class=\"left\">${formula}</span><i class=\"equals-sign\">=</i><span class=\"right\">${result}</span></span>";
 }
 
 ## 山括弧エスケープ
