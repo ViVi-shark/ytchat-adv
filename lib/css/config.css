@@ -858,6 +858,51 @@
   list-style-type: square;
 }
 
+/* チャットログ：数式 */
+.logs, #topic, .chat-palette {
+  span.formula {
+    margin-left: 0.35em;
+    margin-right: 0.35em;
+    display: inline-flex;
+    flex-flow: row;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    line-height: 1em;
+    height: 1.625em;
+    position: relative;
+    top: 2px;
+
+    .chat-palette & {
+      height: 1em;
+    }
+
+    &::before {
+      content: "\ea5f";
+      font-family: "Material Symbols Outlined", sans-serif;
+      font-variation-settings: 'FILL' 0;
+      opacity: 0.5;
+      text-shadow: none;
+    }
+
+    > .left {
+      font-weight: normal;
+    }
+
+    > .equals-sign {
+      margin-right: 0.25em;
+    }
+
+    > .right {
+      font-weight: bold;
+
+      code {
+        font-family: inherit;
+      }
+    }
+  }
+}
+
 /* // カラー設定：サイドバー
 ---------------------------------------------------------------------------------------------------- */
 /* ステータス欄 */
