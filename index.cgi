@@ -175,7 +175,8 @@ sub tagConvert {
   #
   $comm =~ s#&lt;br&gt;\n?#<br>#gi;
   $comm =~ s#&lt;hr&gt;\n?#<hr>#gi;
-  $comm =~ s/(^・(?!・).+(\n|$))+/&listCreate($&)/egim;
+  $comm =~ s/(^\s*・(?!・)\s*.+?(\n|$))+/&listCreateByNakaguro($&)/egim;
+  $comm =~ s/(^\s*\*\s*.+?(\n|$))+/&listCreateByAsterisk($&)/egim;
   $comm =~ s/(?:^(?:\|(?:.*?))+\|[hc]?(?:\n|$))+/&tableCreate($&)/egim;
   $comm =~ s#&lt;ruby&gt;(.+?)&lt;rt&gt;(.*?)&lt;/ruby&gt;#<ruby>$1<rt>$2</ruby>#gi;
   $comm =~ s#<ruby>(.+?)(?:<rp>\(</rp>)?<rt>(.*?)(?:<rp>\)</rp>)?</ruby>#<ruby>$1<rt>$2</ruby>#gi;
@@ -262,9 +263,18 @@ sub tagConvertUnit {
   return $comm;
 }
 #リスト
-sub listCreate {
+sub listCreateByNakaguro {
   my $text = shift;
-  $text =~ s/^・/<li>/gm;
+  return listCreate_Core($text, '・');
+}
+sub listCreateByAsterisk {
+  my $text = shift;
+  return listCreate_Core($text, '*');
+}
+sub listCreate_Core {
+  my $text = shift;
+  my $sign = shift;
+  $text =~ s/^\s*[$sign]\s*/<li>/gm;
   my $needLinefeed = $text =~ /\n$/;
   $text =~ s/\n//g;
   return "<ul>$text</ul>" . ($needLinefeed ? "\n" : '');
