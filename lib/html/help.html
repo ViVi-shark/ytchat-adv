@@ -158,12 +158,16 @@
 
   <details>
     <summary>通常ダイス</summary>
-    <p><span style="color:#ee7777;">ダイスの数</span><b>D</b><span style="color:#eebb77;">面の数</span><span style="color:#77ee77;">+修正値</span><span style="color:#eebb77;">@C値</span><span style="color:#77bbee;">目標値</span><span style="color:#cc77ee;">:繰返し回数</span></p>
+    <p><span style="color:#ee7777;">ダイスの数</span><b>D</b><span style="color:#eebb77;">面の数</span><span style="color:#ffff00;">条件つき増減</span><span style="color:#77ee77;">+修正値</span><span style="color:#eebb77;">@C値</span><span style="color:#77bbee;">目標値</span><span style="color:#cc77ee;">:繰返し回数</span></p>
     <p>
-      　<span style="color:#77ee77;">+修正値</span>・<span style="color:#eebb77;">@C値</span>・<span style="color:#cc77ee;">:繰返し回数</span>、<span style="color:#77bbee;">目標値</span>は省略できます。<br>
+      　<span style="color:#ffff00;">条件つき増減</span>・<span style="color:#77ee77;">+修正値</span>・<span style="color:#eebb77;">@C値</span>・<span style="color:#cc77ee;">:繰返し回数</span>、<span style="color:#77bbee;">目標値</span>は省略できます。<br>
       　修正値の末尾に「<span style="color:#77ee77;">//</span>」をつけると半減した結果になります。<br>
       　半減した上でさらに修正がある場合、「<span style="color:#77ee77;">//</span>」の後ろにさらに付け足します（「<span style="color:#77ee77;">//</span>」など）。<br>
       　また、半減と同様に「<span style="color:#77ee77;">**</span>」と*を2つ重ねることで倍化した結果になります。<br>
+    </p>
+    <p>
+      　<span style="color:#ffff00;">条件つき増減</span>とは、『ソード・ワールド2.x』の「痛恨撃」のような処理をあらわします。<br>
+      　<span style="color:#ffff00;">[>=x:+y]</span> のように記述し、この場合は「出目が <span style="color:#ffff00;">x</span> 以上ならば、結果を <span style="color:#ffff00;">+y</span> する」ことを意味します。
     </p>
     <p>
       　<span style="color:#77bbee;">目標値</span>は以下のように記述してください。<br>
@@ -206,7 +210,11 @@
       　<span style="color:#ee7777;">2</span><b>D</b><span style="color:#eebb77;">6</span><span style="color:#77ee77;">+22</span><span style="color:#eebb77;">@10</span><br>
     </p>
     <p>
-      例7:「打撃点 2d+10 のダメージを頭部・胴体・尻尾それぞれに算出」<br>
+      例7：「痛恨撃」――打撃点2d+22、出目が10以上なら＋20<br>
+      　<span style="color:#ee7777;">2</span><b>d</b><span style="color:#ffff00;">[>=10:+20]</span><span style="color:#77ee77;">+22</span><br>
+    </p>
+    <p>
+      例8:「打撃点 2d+10 のダメージを頭部・胴体・尻尾それぞれに算出」<br>
       　<span style="color:#ee7777;">2</span><b>d</b><span style="color:#77ee77;">+10</span><span style="color:#cc77ee;">:頭部,胴体,尻尾</span>
     </p>
   </details>
