@@ -311,4 +311,21 @@ sub makeRollIndexText {
   return $chars[$repeatId - 1];
 }
 
+sub lineAoECheck {
+  my $comm = shift;
+
+  if ($comm !~ /^\$(?:貫通|突破)(?:\s|$)/) {
+    return '';
+  }
+
+  my $screenCommand = '1d';
+  my $diceValue = int(rand(6)) + 1;
+  my $checkResult = $diceValue <= 3 ? '受ける' : '受けない';
+  my $checkResultClass = $checkResult eq '受ける' ? 'hit' : 'miss';
+
+  my $outputText = "${screenCommand} → ${diceValue} → <span class=\"${checkResultClass}\">${checkResult}</span>";
+
+  return $outputText;
+}
+
 1;
