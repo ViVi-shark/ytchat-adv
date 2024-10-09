@@ -308,6 +308,11 @@ img.icon { width: 1em; height: 1em; }
   font-size: 1.4em;
   line-height: 1.4;
 }
+.logs dl dd.info {
+  &.dice::before {
+    content: none;
+  }
+}
 .logs dl dd.info b {
   display: inline-block;
 }
