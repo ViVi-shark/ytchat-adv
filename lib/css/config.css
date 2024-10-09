@@ -470,6 +470,17 @@
 .logs dl dd.info.dice[data-game="sw"] em em em em em em em em em em { color: #ee3333; }
 .logs dl dd.info.dice[data-game="sw"] em.fail { color: #888; }
 
+/* チャットログ：貫通・突破 */
+.logs dl dd.info.dice[data-game="sw"] {
+  .hit {
+    font-weight: bold;
+  }
+
+  .miss {
+    color: gray;
+  }
+}
+
 /* チャットログ：ダブルクロス */
 .logs dl dd.info.dice[data-game="dx"] { color: #9999ff; }
 .logs dl dd.info.dice[data-game="dx"] em { color: #a18feb; }
