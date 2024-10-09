@@ -388,7 +388,7 @@ sub choiceRoll {
       close($FH);
     }
 
-    if($list[0] =~ /^[0-9]+D[0-9]+(?:\s+\d+){0,2}$/i){
+    if($list[0] =~ /^[0-9]+D[0-9](?:,\d+D\d+)?+(?:\s+\d+){0,2}$/i){
       return randomDiceTableRoll($rolls,$faces,$modifier,@list), 'choice:table';
     }
     else {
@@ -439,17 +439,33 @@ sub randomDiceTableRoll {
   }
   my $results;
   foreach(1 .. $repeat){
-    ($code, my $rolledTotal, my $rolledNums) = dice($rolls, $faces);
-    my $finalValue = defined($modifier) ? calc("$rolledTotal$modifier") : $rolledTotal;
-    $finalValue = $min if $finalValue < $min;
-    $finalValue = $max if $finalValue > $max;
-    $rolledNums =~ s/[\!\.]//g;
+    my $key = '';
+    my $values = '';
+    my $texts = '';
+    my @codeParts = split(',', $code);
+    error "この表に補正値は適用できません" if $#codeParts > 0 && $modifier;
+    for my $i (0 .. $#codeParts) {
+      my $codePart = $codeParts[$i];
+      ($codePart, my $rolledTotal, my $rolledNums) = dice(split(/D/i, $codePart));
+      my $finalValue = defined($modifier) ? calc("$rolledTotal$modifier") : $rolledTotal;
+      $finalValue = $min if $finalValue < $min;
+      $finalValue = $max if $finalValue > $max;
+      $rolledNums =~ s/[\!\.]//g;
+
+      $key .= ',' if $key ne '';
+      $key .= $finalValue;
+      $values .= ',' if $values ne '';
+      $values .= $rolledTotal;
+      $texts .= ',' if $texts ne '';
+      $texts .= $rolledNums;
+    }
+    $texts = '' if $texts eq $values;
     $results .= '<br>' if $results;
-    if(exists $data{$finalValue}){
-      $results .= "＠$name → $code" . (defined($modifier) ? "($modifier)" : '') . " → $rolledTotal\[$rolledNums\]$modifier : \[$data{$finalValue}\]";
+    if(exists $data{$key}){
+      $results .= "＠$name → $code" . (defined($modifier) ? "($modifier)" : '') . " → $values\[$texts\]$modifier : \[$data{$key}\]";
     }
     else {
-      error "合致する行がありませんでした（出目: $finalValue）";
+      error "合致する行がありませんでした（出目: $key）";
     }
   }
   return $results;
