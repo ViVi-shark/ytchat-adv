@@ -19,6 +19,10 @@ sub diceCheck {
   $comm =~ tr/ａ-ｚＡ-Ｚ０-９＋－＊／＾＠＄＃（）＜＞、＝！：｜/a-zA-Z0-9\+\-\*\/\^@\$#\(\)<>,=!:\|/;
   if   ($comm =~ /^[0-9\+\-\*\/()]*[0-9]+\)?D\(?([0-9\+\-\*\/@<>:=|\[]|\s|$)/i){ return diceRoll($comm), 'dice'; }
   elsif($comm =~ /^[0-9]*\@/){ return shuffleRoll($comm); }
+  elsif($::in{'game'} eq 'sw2' && $comm =~ /^\$(?:貫通|突破)/) {
+    require './lib/pl/dice/sw2.pl';
+    return lineAoECheck($comm), 'dice:sw';
+  }
   elsif($comm =~ /^[0-9]*\$/){ return  choiceRoll($comm); }
   elsif($comm =~ /^[0-9]*\#/){ return drawDeck($comm), 'deck'; }
   elsif($comm =~ /^set\#/   ){ return setDeck($comm), 'deck'; }
