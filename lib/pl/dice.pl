@@ -17,7 +17,7 @@ sub diceCheck {
   $comm =~ s/&lt;/</;
   $comm =~ s/<br>/ /;
   $comm =~ tr/ａ-ｚＡ-Ｚ０-９＋－＊／＾＠＄＃（）＜＞、＝！：｜/a-zA-Z0-9\+\-\*\/\^@\$#\(\)<>,=!:\|/;
-  if   ($comm =~ /^[0-9\+\-\*\/()]*[0-9]+\)?D\(?([0-9\+\-\*\/@<>:=|]|\s|$)/i){ return diceRoll($comm), 'dice'; }
+  if   ($comm =~ /^[0-9\+\-\*\/()]*[0-9]+\)?D\(?([0-9\+\-\*\/@<>:=|\[]|\s|$)/i){ return diceRoll($comm), 'dice'; }
   elsif($comm =~ /^[0-9]*\@/){ return shuffleRoll($comm); }
   elsif($comm =~ /^[0-9]*\$/){ return  choiceRoll($comm); }
   elsif($comm =~ /^[0-9]*\#/){ return drawDeck($comm), 'deck'; }
@@ -75,6 +75,9 @@ sub diceRoll {
       \)?
       D
       [0-9(]*
+      (\[[>=<]=\d+:[-+]\d+\])?
+      \+?
+      [0-9(]*
       [0-9\+\-\*\/()⌈⌉D@]*?
     )
     (?:(\/\/|\*\*) ([0-9]*) ([+-][0-9()][0-9\+\-\*()⌈⌉]*)? )?
@@ -87,13 +90,15 @@ sub diceRoll {
   }
   
   my $base      = $1;
-  my $halfType  = $2;
-  my $halfNum   = $3;
-  my $add       = $4;
-  my $rel       = $5;
-  my $target    = $6;
-  my $repeat    = $7;
+  my $burst     = $2;
+  my $halfType  = $3;
+  my $halfNum   = $4;
+  my $add       = $5;
+  my $rel       = $6;
+  my $target    = $7;
+  my $repeat    = $8;
   
+  $base =~ s/\[.+?\]// if $burst;
   $base = parenthesisCalc($base);
   if($base eq ''){ return ''; }
   if($add){
@@ -123,6 +128,7 @@ sub diceRoll {
     push(@result,
       ($label ne '' ? "〚$label〛 " : '') . diceCalc(
         $base      ,
+        $burst    ,
         $halfType ,
         $halfNum  ,
         $add       ,
@@ -136,6 +142,7 @@ sub diceRoll {
 
 sub diceCalc {
   my $base      = shift;
+  my $burst     = shift;
   my $halfType  = shift;
   my $halfNum   = shift;
   my $add       = shift;
@@ -143,6 +150,7 @@ sub diceCalc {
   my $targets   = shift;
   
   my $total = 0;
+  my $dice_value = 0;
   my @code;
   # xDyを処理
   while ($base =~ s/([0-9]+)D([0-9]*)(@[0-9]+)?/<dice>/i){
@@ -151,6 +159,7 @@ sub diceCalc {
     return "$code → ∞" if $num eq '∞';
     push(@code, $code);
     $base =~ s/<dice>/ $num\[$text\] /;
+    $dice_value += $num;
   }
   $base =~ s/[\.\+\-\*\/\s]+$//gi; # 末尾の演算子は消す
 
@@ -164,6 +173,20 @@ sub diceCalc {
     $base =~ /\Q2[1,1...]\E/
   ) {
     $fumble = '自動失敗';
+  }
+  
+  if ($burst && $burst =~ /^\[([>=<]=)(\d+):([-+]\d+)\]$/) {
+    my $comparison = $1;
+    my $border = $2;
+    my $offset = $3;
+    if (
+        $comparison eq '>=' && $dice_value >= $border ||
+        $comparison eq '==' && $dice_value == $border ||
+        $comparison eq '<=' && $dice_value <= $border
+    ) {
+      $code[$#code] .= "($offset)";
+      $base .= $offset;
+    }
   }
   
   ## 基本合計値計算
