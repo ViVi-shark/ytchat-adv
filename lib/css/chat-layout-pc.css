@@ -45,7 +45,7 @@ body {
 /* チャットエリア */
 #chat-area {
   display: grid;
-  grid-template-columns: 7fr;
+  grid-template-columns: 6fr;
   grid-template-rows: 1fr 1fr;
   grid-auto-columns: 3fr;
   grid-auto-flow: column dense;
@@ -83,7 +83,7 @@ body {
   overflow: auto;
   position: relative;
 }
-#sidebar:not([data-layout="row"]) { width: 14em; }
+#sidebar:not([data-layout="row"]) { width: 17em; }
 
 #sidebar:not([data-layout="row"]).close { width: 2em; }
 #sidebar[data-layout="row"].close { height: 2em; }
@@ -92,7 +92,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 !important;
   padding: .5em 0 !important;
 }
 #sidebar:not([data-layout="row"]).close > * {
@@ -102,13 +101,13 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 2rem;
 }
 #sidebar[data-layout="row"].close > * {
   flex-grow: 0;
   flex-basis: 2em;
 }
 #sidebar:not([data-layout="row"]).close > * + * {
-  margin-top: .3rem !important;
 }
 #sidebar[data-layout="row"].close > * + * {
   margin-left: .3rem !important;
@@ -121,6 +120,10 @@ body {
   font-family: "Material Symbols Outlined";
   font-variation-settings: 'FILL' 1;
 }
+#sidebar[data-layout="row"] > .button.toggle {
+  width: 2rem;
+  height: 100%;
+}
 #sidebar.close #status::before { content:"\f233"; }
 #sidebar.close #memo::before   { content:"\e06f"; }
 #sidebar.close #status::after { content:attr(data-num); font-weight:bold; }
@@ -130,8 +133,18 @@ body {
 #sidebar.close .button.toggle::before { content:"\f1ce"; }
 
 #sidebar:not([data-layout="row"]).close #round { overflow: hidden; }
-#sidebar[data-layout="row"].close > .box { flex-basis: 4em; white-space: nowrap; overflow: hidden; }
+#sidebar[data-layout="row"].close > .box {
+  flex-basis: 4em;
+  white-space: nowrap;
+  overflow: hidden;
+  height: 100%;
+  width: 5.5rem;
+  padding: 0;
+}
 #sidebar.close #round #round-value { display: inline-block !important; }
+#sidebar[data-layout="row"].close #round #round-value {
+  margin: 0;
+}
 #sidebar:not([data-layout="row"]).close #round #round-value { width: 1em; }
 
 #sidebar > .box { margin: .5rem 0; }
@@ -147,6 +160,12 @@ body {
   #sidebar[data-layout="bottom"] > .box:last-child  { margin-top: 0; }
   #sidebar[data-layout="row"] {
     flex-direction: row;
+    height: 18rem;
+    width: 100%;
+    display: block;
+  }
+  #sidebar[data-layout="row"] > * {
+    float: left;
   }
   #sidebar[data-layout="row"] > .box { margin: 0 .5rem; }
   #sidebar[data-layout="row"] > .box:first-child { margin-left: 0; }
@@ -154,6 +173,19 @@ body {
 }
 #round {
   flex-shrink: 0;
+  height: 2.9rem;
+}
+#sidebar.close #round {
+  height: 3.5rem;
+}
+#sidebar[data-layout="row"].close #round {
+  height: 100%;
+}
+#round .round-buttons .button {
+  height: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* // ヘッダ
@@ -697,21 +729,80 @@ body {
   content:"\eb49";
 }
 [data-layout="row"] #round {
-  flex-basis: max-content;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  padding: 1em 0 .1em 0;
+  width: 2.9rem;
+  height: 100%;
+  position: relative;
+  overflow-x: visible;
+  overflow-y: hidden;
+}
+#sidebar:not(.close)[data-layout="row"] #round #round-value {
+  width: 100%;
+  overflow-x: visible;
+  overflow-y: hidden;
+  margin: 0;
+  display: inline-flex;
+  flex-flow: column;
   justify-content: center;
-  padding: .1em;
+  align-items: center;
 }
 #sidebar:not(.close)[data-layout="row"] #round #round-value::before {
   content: 'ラウンド';
   display: block;
+  writing-mode: vertical-rl;
+}
+#sidebar[data-layout="row"] #round .round-buttons {
+  width: 100%;
+  height: auto;
+  flex-flow: column;
+  position: relative;
+  top: 2px;
+}
+#sidebar[data-layout="row"] #round .round-buttons .button:first-child {
+  border-top-right-radius: 0.8rem;
+  border-bottom-left-radius: 0;
+}
+#sidebar[data-layout="row"] #round .round-buttons .button:not(:first-child):not(:last-child) {
+  border-width: 0 0.1rem;
+}
+#sidebar[data-layout="row"] #round .round-buttons .button:last-child {
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0.8rem;
 }
 /* // ステータス
 ---------------------------------------------------------------------------------------------------- */
 #status {
   padding-right: 0;
+  height: calc((100% - (2rem + 0.5rem + 2.9rem + 0.5rem + 0.5rem)) * 0.75);
+  display: block;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+#sidebar #status {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+#sidebar[data-layout="bottom"] #status {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+#sidebar[data-layout="row"] #status {
+  height: 100%;
+  width: calc((100% - (2rem + 0.5rem + 2.9rem + 0.5rem + 0.5rem)) * 0.75);
+  margin: 0;
+}
+#sidebar.close #status {
+  height: calc((100% - (2rem + 0.5rem + 3.5rem + 0.5rem + 0.5rem)) * 0.75);
+}
+#sidebar[data-layout="row"].close #status {
+  height: 100%;
+  width: auto;
+  padding-left: 2.5em !important;
+  padding-right: 2.5em !important;
 }
 #status #status-body {
 }
@@ -745,22 +836,33 @@ body {
   font-size: 1.2em;
   line-height: 1;
 }
+#status #status-body > dl > dd[data-stt][data-row-index][data-label-size="large"] {
+  width: 100%;
+}
+#status #status-body > dl[data-name][data-image-url] > dd[data-stt][data-row-index][data-label-size="large"] {
+  width: calc(100% - 35%);
+}
 [data-layout="row"] #status {
-  flex-grow: 5;
   padding-bottom: 0;
   padding-right: 2em;
+  padding-left: 0.5rem;
 }
 [data-layout="row"] #status #status-body {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-start;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 [data-layout="row"] #status #status-body > dl {
+  display: block;
+  flex-shrink: 0;
   align-content: start;
   border: 0;
 }
 [data-layout="row"] #status .edit.button {
   position: absolute;
-  display: block;
+  /*display: block;*/
   height: 1.4em;
   z-index: 1;
 }
@@ -782,8 +884,26 @@ body {
 #memo {
   position: relative;
   padding-bottom: 1.9em;
-  overflow: auto;
+  overflow: hidden;
   flex-shrink: 0;
+  display: block;
+  height: calc((100% - (2rem + 0.5rem + 2.9rem + 0.5rem + 0.5rem)) * 0.25);
+}
+#sidebar #memo {
+  margin-top: 0;
+}
+#sidebar[data-layout="row"] #memo {
+  height: 100%;
+  width: calc((100% - (2rem + 0.5rem + 2.9rem + 0.5rem + 0.5rem)) * 0.25);
+}
+#sidebar.close #memo {
+  height: calc((100% - (2rem + 0.5rem + 3.5rem + 0.5rem + 0.5rem)) * 0.25);
+}
+#sidebar[data-layout="row"].close #memo {
+  height: 100%;
+  width: auto;
+  padding-left: 2.5em !important;
+  padding-right: 2.5em !important;
 }
 #memo #memo-list {
 }
@@ -803,20 +923,25 @@ body {
   flex-basis: 16em;
 }
 [data-layout="row"] #memo ul#memo-list {
-  position: absolute;
-  width: auto;
+  width: 100%;
   height: 100%;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: block;
 }
 [data-layout="row"] #memo ul#memo-list li {
-  display: inline-block;
-  max-width: 8em;
-  margin-right: .3rem;
-  padding: .3em;
+  display: inline-flex;
+  align-items: center;
+  height: 2.5rem;
+  width: calc((100% - 0.4rem - 0.5rem) / 2);
+  margin-right: 0.4rem;
+  margin-bottom: 0.6rem;
+  padding: 0 .3em;
   background-color: rgba(127,127,127,0.15);
   border: .1rem solid var(--border-color-pale);
   border-radius: .8em;
   font-size: 90%;
+  float: left;
 }
 
 /* // ユニットシート
