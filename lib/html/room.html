@@ -81,7 +81,7 @@
             <option value="0" selected></option>
           </select>
         </div>
-        <div>
+        <div class="message-main">
           <div class="comm-config-area">
             <div class="name-area">
               <input type="text" id="main-name1" class="main-name bold chara-name" title="現在の名前" placeholder="名前は空欄です" readonly>
@@ -133,18 +133,10 @@
           <div class="check-buttons">
             <button onclick="unitCheckSubmit()"><span class="small">行動済</span></button>
           </div>
-          <div class="form-dice" id="form-dice-0">
-            <span class="del edit button" onclick="diceDel(0);" title="ダイス欄を削除">－</span>
-            <span class="add edit button" onclick="diceAdd(0);" title="ダイス欄を追加">＋</span>
-            <span class="shrink edit button" onclick="diceScale(0,'shrink');" title="ダイス欄を狭める">⇐</span>
-            <span class="expand edit button" onclick="diceScale(0,'expand');" title="ダイス欄を拡げる">⇒</span>
-          </div>
         </div>
         <div class="form-dice" id="form-dice-1">
           <span class="del edit button" onclick="diceDel(1);" title="ダイス欄を削除">－</span>
           <span class="add edit button" onclick="diceAdd(1);" title="ダイス欄を追加">＋</span>
-          <span class="shrink edit button" onclick="diceScale(1,'shrink');" title="ダイス欄を狭める">⇐</span>
-          <span class="expand edit button" onclick="diceScale(1,'expand');" title="ダイス欄を拡げる">⇒</span>
         </div>
       </div>
       <span class="help button" onclick="boxOpen('help-window','help-sub-form');" title="サブ発言欄のヘルプ"></span>
