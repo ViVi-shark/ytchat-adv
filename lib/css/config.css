@@ -644,6 +644,9 @@ dd[data-stt*="侵蝕"] .gauge[data-signal="monster"] i::before { background: non
   border-image-slice: 1;
   background-image: linear-gradient(to right, transparent, #fff1, transparent);
 }
+#logviewer .logs dl.system.round .comm > h4 {
+  font-size: 110%;
+}
 .logs h5 {
   margin: 1em 0 .5em;
   padding: .4em;

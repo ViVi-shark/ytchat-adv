@@ -193,7 +193,7 @@ foreach (<$FH>){
   }
   elsif($system =~ /^round:(.+?)$/){
     if($1){
-      $comm = '<span data-headline="4">ラウンド: '.$1.'</span>';
+      $comm = '<h4 data-headline="4" class="round">ラウンド: '.$1.'</h4>';
       $info = '';
     }
   }
