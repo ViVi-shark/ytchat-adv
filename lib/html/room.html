@@ -25,6 +25,8 @@
   <TMPL_IF customCSS><link rel="stylesheet" media="all" href="<TMPL_VAR customCSS>"></TMPL_IF>
   <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+  <script src="./lib/js/lib/rx.all.js?<TMPL_VAR ver>" defer></script>
+  <script src="./lib/js/lib/rxx.js?<TMPL_VAR ver>" defer></script>
   <script src="./lib/js/ui.js?<TMPL_VAR ver>" defer></script>
   <script src="./lib/js/ui-sp.js?<TMPL_VAR ver>" defer></script>
   <script src="./lib/js/chat.js?<TMPL_VAR ver>" defer></script>
@@ -135,6 +137,8 @@
             <button onclick="unitCheckSubmit()"><span class="small">行動済</span></button>
           </div>
         </div>
+        <div class="open-message-templates" data-source="<TMPL_VAR messageTemplates>">発言テンプレート</div>
+        <script src="./lib/js/message_template.js?<TMPL_VAR ver>" defer></script>
         <div class="form-dice" id="form-dice-1">
           <span class="del edit button" onclick="diceDel(1);" title="ダイス欄を削除">－</span>
           <span class="add edit button" onclick="diceAdd(1);" title="ダイス欄を追加">＋</span>
@@ -806,6 +810,7 @@
   </div>
 
   <dialog id="dialog-memo" class="box logs modal"></dialog>
+  <dialog id="message-templates" class="box modal"></dialog>
   
   <!-- / FLOAT-BOXES -->
   <!-- LIST -->
