@@ -1170,7 +1170,7 @@ body.rom #main-form > .help.button {
   }
 }
 #rewrite-form textarea {
-  margin-top: .1rem;
+  margin: 0;
 }
 #rewrite-name-form {
   top: auto;
