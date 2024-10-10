@@ -335,6 +335,7 @@ dd[data-stt*="侵蝕"] .gauge[data-signal="monster"] i::before { background: non
 .logs dl.system.exit   dd.comm::before { color: #89a; content: "\e9ba"; transform: scaleX(-1); }
 .logs dl.system.topic  dd.comm::before { color: #7f7; content: "\f88d"; }
 .logs dl.system.memo   dd.comm::before { color: #7f7; content: "\f1c6"; }
+.logs dl.system.map    dd.comm::before { color: #7f7; content: "\e9b0"; }
 .logs dl.system.ready  dd.comm::before { color: #f77; content: "\e6b1"; }
 .logs dl.system.round  dd.comm::before { color: #f90; content: "\eb49"; }
 .logs dl.system.change dd.comm::before { color: #f55; content: "\f1b8"; }

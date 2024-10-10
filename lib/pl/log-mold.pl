@@ -63,6 +63,7 @@ $ROOM->param(roomId => $id);
 $ROOM->param(isPresent => !$::in{'log'} ? 1 : 0);
 $ROOM->param(title => $rooms{$id}{'name'});
 $ROOM->param(subtitle => $::in{'log'}?$::in{'log'}:'現行ログ');
+$ROOM->param(gameName => $game);
 
 $ROOM->param(liteMode => ($::in{'type'} eq 'lite') ? 1 : 0);
 $ROOM->param(dlMode => ($::in{'type'} eq 'download') ? 1 : 0);
@@ -182,6 +183,9 @@ foreach (<$FH>){
   }
   elsif($system =~ /^tab:([0-9]+)=(.*?)$/){
     if($2){ $tabs[$1-1] = "$2"; }
+  }
+  elsif($system =~ /^map/) {
+    $info = "<span class=\"map-update\" data-map-source=\"$info\" />";
   }
   elsif($system =~ /^unit:.*(?:\(|\|\s+)url>(http.+?)(?:\)|\s+\|)/) {
     my $sheetUrl = $1;

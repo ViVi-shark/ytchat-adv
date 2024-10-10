@@ -16,6 +16,8 @@
     @layer lib, base, logs;
     @import url('./lib/css/base.css?<TMPL_VAR ver>') layer(base);
     @import url('./lib/css/logs.css?<TMPL_VAR ver>') layer(logs);
+    @import url('./diaclock/css/diaclock.css?<TMPL_VAR ver>');
+    @import url('./diaclock/css/bloodorium.css?<TMPL_VAR ver>');
     @import url('./lib/css/games/bloodorium.css?<TMPL_VAR ver>');
     @import url('./lib/css/config.css?<TMPL_VAR ver>');
   </style>
@@ -24,7 +26,9 @@
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jszip-utils@0.1.0/dist/jszip-utils.min.js"></script>
   </TMPL_UNLESS>
+  <script src="./diaclock/js/map_event.js?<TMPL_VAR ver>" defer></script>
   <script src="./lib/js/logs.js?<TMPL_VAR ver>" defer></script>
+  <script type="module" src="./lib/js/logs-map.js?<TMPL_VAR ver>" defer></script>
   <script>
     <TMPL_IF liteMode>var liteMode = 1;</TMPL_IF>
     <TMPL_UNLESS dlMode>
@@ -32,7 +36,7 @@
     </TMPL_UNLESS>
   </script>
 </head>
-<body id="logviewer" <TMPL_IF liteMode>class="lite"</TMPL_IF>>
+<body id="logviewer" <TMPL_IF liteMode>class="lite"</TMPL_IF> data-game-name="<TMPL_VAR gameName>">
   <div class="bg-image bg-front"></div>
   <div class="bg-image bg-back"></div>
   <div class="bg-image bg-next"></div>
