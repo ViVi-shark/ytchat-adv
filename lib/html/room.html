@@ -20,6 +20,8 @@
     @import url('./lib/css/chat-layout-sp.css?<TMPL_VAR ver>') layer(sp) screen and (max-width:600px);
     @import url('./lib/css/config.css?<TMPL_VAR ver>');
     @import url('./lib/css/macro.css?<TMPL_VAR ver>');
+    @import url('./diaclock/css/diaclock.css?<TMPL_VAR ver>');
+    @import url('./diaclock/css/bloodorium.css?<TMPL_VAR ver>');
     @import url('./lib/css/games/storyteller.css?<TMPL_VAR ver>');
     @import url('./lib/css/games/bloodorium.css?<TMPL_VAR ver>');
       
@@ -33,8 +35,10 @@
   <script src="./lib/js/ui.js?<TMPL_VAR ver>" defer></script>
   <script src="./lib/js/ui-sp.js?<TMPL_VAR ver>" defer></script>
   <script src="./lib/js/chat.js?<TMPL_VAR ver>" defer></script>
+  <script src="./diaclock/js/map_event.js?<TMPL_VAR ver>" defer></script>
   <script src="./lib/js/macro.js?<TMPL_VAR ver>" defer></script>
   <script src="./lib/js/games/storyteller.js?<TMPL_VAR ver>" defer></script>
+  <script src="./lib/js/games/bloodorium.js?<TMPL_VAR ver>" defer type="module"></script>
   <TMPL_INCLUDE NAME="script.html">
 </head>
 <body>
@@ -57,6 +61,7 @@
       <li id="menu-button-user"><a onclick="boxOpen('config-user');">個人設定</a></li>
       <li id="menu-button-room"><a onclick="boxOpen('config-room');">ルーム設定</a></li>
       <li id="menu-button-macro"><a onclick="boxOpen('macro-window');">マクロ</a></li>
+      <li id="menu-button-map"><a>マップ</a></li>
       <li id="menu-button-help"><a onclick="boxOpen('help-window');">ヘルプ</a></li>
       <li id="menu-button-exit"><a onclick="boxOpen('exit-form');">退室</a></li>
     </ul>
