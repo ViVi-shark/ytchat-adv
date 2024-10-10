@@ -1156,6 +1156,7 @@ body.rom #main-form > .help.button {
   bottom: 8em;
   max-height: 40vh;
   min-height: 12rem;
+  min-width: 42vw;
 
   > .comm-area {
     height: calc(100% - (0.5rem * 2) - (3rem + ((2rem * 2) + 0.1rem)));
@@ -1169,9 +1170,6 @@ body.rom #main-form > .help.button {
   }
 }
 #rewrite-form textarea {
-  width: 40vw;
-  max-width: 90vw;
-  max-height: 80vh;
   margin-top: .1rem;
 }
 #rewrite-name-form {
