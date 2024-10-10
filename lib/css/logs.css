@@ -181,6 +181,43 @@ article#contents {
   clear: both;
 }
 
+.logs dl.contains-picture {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  --picture-size: 6em;
+  min-height: var(--picture-size);
+}
+.logs dl.contains-picture:not(.main) {
+  --picture-size: 3em;
+}
+.logs dl.contains-picture > dt.picture {
+  width: var(--picture-size);
+  max-width: initial;
+  grid-column: 1;
+  grid-row: 1 / 1000;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0.3em 0.3em 0.3em 0;
+}
+.logs dl.contains-picture > dt.picture > span {
+  display: block;
+  width: var(--picture-size);
+  height: var(--picture-size);
+  border-radius: calc(var(--picture-size) / 2);
+  background-size: contain;
+  background-position: center;
+  cursor: zoom-in;
+}
+.logs dl.contains-picture > dt.picture > span:hover {
+  filter: brightness(85%);
+}
+.logs dl.contains-picture > dt:not(.picture),
+.logs dl.contains-picture > dd {
+  grid-column: 2;
+}
+
 /* 挿絵 */
 .logs dl dd.image {
   margin: none;
