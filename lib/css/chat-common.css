@@ -88,6 +88,8 @@ html,body {
 #menu-button-room > a::before { content: "\f1b8"; }
 #macro-window > h2::before,
 #menu-button-macro > a::before { content: "\f0c8"; }
+#map-window > h2::before,
+#menu-button-map > a::before { content: "\e9b0"; }
 #help-window > h2::before,
 #menu-button-help > a::before { content: "\e887"; font-variation-settings: 'FILL' 0 !important; }
 #exit-room > h2::before,
@@ -103,6 +105,10 @@ html,body {
 .mute-button.mute-on::before {
   content: "\e04f";
   color: #f00;
+}
+
+#menubar #menu-button-map {
+  display: none;
 }
 
 /* // トピック
