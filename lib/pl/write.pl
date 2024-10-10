@@ -88,6 +88,16 @@ else {
     delete $::in{'color'};
     delete $::in{'address'};
   }
+  # マップ ----------
+  elsif($::in{'comm'} =~ s<^/map(\s|$)><>i){
+    mapEdit($::in{'comm'});
+    $::in{'system'} = 'map';
+    $::in{'name'} = "!SYSTEM";
+    $::in{'info'} = "$::in{'comm'}";
+    $::in{'comm'} = "マップ状態を更新 by $::in{'player'}";
+    delete $::in{'color'};
+    delete $::in{'address'};
+  }
   # メモ処理 ----------
   elsif($::in{'comm'} =~ s<^/memo([0-9]*)(\s|$)><>i){
     my $new = $1 eq '' ? 1 : 0;
@@ -448,6 +458,21 @@ sub topicEdit {
   
   $data{'topic'} = $topic;
   
+  print $FH decode('utf8', encode_json \%data);
+  truncate($FH, tell($FH));
+  close($FH);
+}
+# マップ ----------
+sub mapEdit {
+  my $mapSourceText = shift;
+
+  sysopen(my $FH, $dir.'room.dat', O_RDWR) or error "room.datが開けません";
+  flock($FH, 2);
+  my %data = %{ decode_json(encode('utf8', (join '', <$FH>))) };
+  seek($FH, 0, 0);
+
+  $data{'map'} = $mapSourceText;
+
   print $FH decode('utf8', encode_json \%data);
   truncate($FH, tell($FH));
   close($FH);
