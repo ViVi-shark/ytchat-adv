@@ -1030,7 +1030,7 @@ body {
   right: auto;
   bottom: auto;
   --button-size: 5rem;
-  min-width: 60vw;
+  min-width: 35vw;
   height: min(20vh, 12rem);
 }
 #edit-topic .comm-area {
