@@ -228,7 +228,7 @@ article#contents {
   display: none;
 }
 .logs dl dd.image img,
-.logs dl dd.comm img.picture {
+.logs dl dd:is(.comm, .info) img.picture {
   display: block;
   margin: auto;
   max-width: 100%;
