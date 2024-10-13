@@ -209,6 +209,9 @@ $ROOM->param(replaceRegex => decode('utf-8', encode_json \@set::replace_regex ) 
 
 $ROOM->param(tooltips => decode('utf-8', encode_json \%set::tooltips) );
 
+require './lib/pl/state-templates.pl';
+$ROOM->param(stateTemplates => decode('utf-8', encode_json \@StateTemplate::stateTemplates) );
+
 $ROOM->param(base64Mode => $set::base64mode );
 
 ###################
