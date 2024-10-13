@@ -629,8 +629,9 @@ body.rom .sheet#sheet-unit-memo { display: grid; }
 body.rom .sheet#sheet-unit-memo textarea { pointer-events : none; }
 body.rom .sheet#sheet-unit-memo button { display: none; }
 
-/* 拡大 */
-#dialog-memo {
+/* // モーダルのダイアログ
+---------------------------------------------------------------------------------------------------- */
+dialog.box.modal {
   min-width: 30em;
   max-width: 45vw;
   min-height: 25vh;
@@ -643,7 +644,7 @@ body.rom .sheet#sheet-unit-memo button { display: none; }
   color: var(--text-color);
   line-height: 1.8;
 }
-#dialog-memo::backdrop {
+dialog.box.modal::backdrop {
   background-color: #000a;
 }
 
