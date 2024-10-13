@@ -1,0 +1,213 @@
+#macro-window {
+    width: 40rem;
+    height: 42rem;
+}
+#macro-window h2 {
+    height: 3rem;
+}
+#macro-window .macro-list {
+    list-style-type: none;
+    padding: 0 1.5rem;
+    margin: 1rem 0 1.5rem 0;
+    width: 100%;
+    height: calc(100% - 3rem - 1rem - 1.5rem - 3rem);
+    overflow-y: auto;
+}
+#macro-window .macro-list > li {
+    width: 100%;
+    min-height: 2rem;
+    margin: 0 0 0.85rem 0;
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1.5em;
+    border: 1px solid var(--border-color-pale);
+    border-radius: 2rem;
+    position: relative;
+}
+#macro-window .macro-list > li:last-child {
+    margin-bottom: 0;
+}
+#macro-window .macro-list > li::before {
+    content: "№" attr(data-macro-number);
+}
+#macro-window .macro-list > li[data-macro-name]:not([data-macro-name=""])::after {
+    content: ":" attr(data-macro-name);
+}
+#macro-window .macro-list > li .macro-number {
+    width: 1.3rem;
+}
+#macro-window .macro-list > li .macro-name {
+    width: calc(100% - 1.3rem - ((4rem + 1rem) * 2));
+}
+#macro-window .macro-list > li .macro-name:not(:empty)::before {
+    content: ":";
+}
+#macro-window .macro-list > li button {
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2rem;
+    margin: 0 0 0 1rem;
+}
+#macro-window .meta-commands {
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+#macro-window .meta-commands > button, #macro-window .meta-commands > label {
+    height: 100%;
+    width: 3rem;
+    margin-right: 0.35rem;
+    display: inline-flex;
+}
+#macro-window .meta-commands > button, #macro-window .meta-commands > label .button {
+    justify-content: center;
+    align-items: center;
+}
+#macro-window .meta-commands > label .button {
+    width: 100%;
+    height: 100%;
+    display: inline-flex;
+}
+#macro-window .meta-commands > label input {
+    display: none !important;
+}
+
+.float-box.macro-edit-window {
+    width: 50rem;
+    height: 40rem;
+    z-index: 11;
+}
+.float-box.macro-edit-window h2 {
+    height: 3rem;
+    margin-bottom: 0.3rem;
+}
+.float-box.macro-edit-window h2[data-macro-id]::after {
+    content: "№" attr(data-macro-id);
+    color: #cccccc;
+    font-size: 80%;
+    margin-left: 0.5em;
+}
+.float-box.macro-edit-window .macro-name {
+    display: block;
+    height: 4rem;
+    margin-bottom: 2.2rem;
+}
+.float-box.macro-edit-window .macro-name > .headline {
+    display: flex;
+    height: 50%;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+}
+.float-box.macro-edit-window .macro-name > input {
+    height: 50%;
+    width: 100%;
+}
+.float-box.macro-edit-window .macro-contents-area {
+    width: 100%;
+    height: calc(100% - (3rem + 0.3rem) - (4rem + 2.2rem) - 2.2rem - 3rem);
+    margin-bottom: 2.2rem;
+}
+.float-box.macro-edit-window .macro-contents-area > .headline {
+    height: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+.float-box.macro-edit-window .macro-contents-area > .macro-contents {
+    width: 100%;
+    height: calc(100% - (2rem + 0.75rem));
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    list-style-type: none;
+}
+.float-box.macro-edit-window .macro-contents-area > .macro-contents > li {
+    margin: 0 0 0.75rem 0;
+    padding: 0.25rem;
+    width: 100%;
+    height: 4rem;
+    display: flex;
+}
+.float-box.macro-edit-window .macro-contents-area > .macro-contents > li::before {
+    content: "#" attr(data-index);
+    display: inline-flex;
+    width: 1.7rem;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 80%;
+    opacity: 0.9;
+    padding-right: 0.2rem;
+}
+.float-box.macro-edit-window .macro-contents-area > .macro-contents > li:last-child {
+    margin-bottom: 0;
+}
+.float-box.macro-edit-window .macro-contents-area > .macro-contents > li .command {
+    height: 100%;
+    width: calc(100% - 1.7rem - 0.75rem - 10.5rem);
+    position: relative;
+    display: flex;
+    margin: 0 0.75rem 0 0;
+}
+.float-box.macro-edit-window .macro-contents-area > .macro-contents > li .command textarea {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    resize: none;
+    font-size: 80%;
+}
+.float-box.macro-edit-window .macro-contents-area > .macro-contents > li .after-wait {
+    height: 100%;
+    width: 10.5rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.float-box.macro-edit-window .macro-contents-area > .macro-contents > li .after-wait select {
+    width: 100%;
+    height: 100%;
+    font-size: 80%;
+}
+.float-box.macro-edit-window .meta-commands {
+    width: 100%;
+    height: 3rem;
+    display: block;
+}
+.float-box.macro-edit-window .meta-commands > * {
+    width: 3rem;
+    height: 100%;
+    margin-left: 0.35rem;
+    display: inline-flex;
+}
+.float-box.macro-edit-window .meta-commands > *:first-child {
+    margin-left: 0;
+}
+.float-box.macro-edit-window .meta-commands .button, .float-box.macro-edit-window .meta-commands button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+.float-box.macro-edit-window .meta-commands > label .button {
+    width: 100%;
+    height: 100%;
+}
+.float-box.macro-edit-window .meta-commands .import input[type="file"] {
+    display: none !important;
+}
+.float-box.macro-edit-window .meta-commands > .import, .float-box.macro-edit-window .meta-commands > .export {
+    float: left;
+}
+.float-box.macro-edit-window .meta-commands > .play {
+    float: right;
+    border-radius: 1.5rem;
+}
