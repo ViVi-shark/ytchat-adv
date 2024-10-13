@@ -1065,6 +1065,124 @@
   }
 }
 
+/* チャットログ：ユニット参照 */
+.logs, #topic {
+  span.unit-reference {
+    border-radius: 0.3em;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    --background-opacity: 0.1;
+    background: rgba(255, 255, 255, var(--background-opacity));
+    text-shadow: none;
+    margin-left: 0.15em;
+    margin-right: 0.15em;
+    cursor: default;
+
+    &:hover {
+      --background-opacity: 0.2;
+    }
+  }
+}
+.popup-unit-view {
+  display: block;
+  position: fixed;
+  z-index: 3;
+  background-color: rgba(11, 11, 36, 0.60);
+  padding: 1rem;
+  border-radius: 1rem;
+  cursor: default;
+
+  span, ul, li {
+    pointer-events: none;
+  }
+
+  > .unit-name {
+    display: block;
+    font-weight: bold;
+    padding-bottom: 0.1em;
+    border-bottom: 0.125em solid white;
+    margin-bottom: 0.5em;
+  }
+
+  .status-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: 90%;
+
+    > .status-item {
+      margin: 0;
+      padding: 0 0 0.25em 0;
+      position: relative;
+      display: grid;
+      min-width: 6em;
+      grid-template-rows: 1em;
+      grid-template-columns: max-content 1fr max-content;
+
+      &:not(:last-child) {
+        margin-bottom: 0.6rem;
+      }
+
+      > .status-name,
+      > .value {
+        grid-row: 1 / -1;
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        z-index: 1;
+        line-height: 100%;
+      }
+
+      > .status-name {
+        grid-column: 1 / 2;
+        margin-right: 1em;
+        padding-left: 3px;
+      }
+
+      > .value {
+        grid-column: 3 / 4;
+        padding-right: 3px;
+
+        .current,
+        .max {
+          display: inline;
+        }
+
+        .max {
+          &::before {
+            content: "/";
+          }
+        }
+
+        .current + .max {
+          margin-left: 0.125em;
+          opacity: 0.9;
+          font-size: 90%;
+        }
+      }
+
+      > .gauge {
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 1rem;
+        background-color: #333;
+
+        > .fill {
+          display: block;
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          background-color: #095;
+        }
+      }
+    }
+  }
+}
+
 /* // カラー設定：サイドバー
 ---------------------------------------------------------------------------------------------------- */
 /* ステータス欄 */
