@@ -917,6 +917,109 @@
   list-style-type: square;
 }
 
+/* チャットログ：グリッド */
+.logs, #topic {
+  .content-grid {
+    display: grid;
+    width: max-content;
+    height: max-content;
+    font-size: 90%;
+
+    > .grid-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem 1.0rem;
+      min-width: 3em;
+      min-height: 3em;
+
+      --side-thin-width: 1px;
+      --side-thin-style: solid;
+      --side-thin-color: rgba(128, 128, 128, 0.15);
+
+      --side-bold-width: 2px;
+      --side-bold-style: solid;
+      --side-bold-color: rgba(240, 240, 240, 0.9);
+
+      --side-dash-width: 1px;
+      --side-dash-style: dashed;
+      --side-dash-color: rgba(240, 240, 240, 0.9);
+
+      &[data-top-side="thin"] {
+        border-top-width: var(--side-thin-width);
+        border-top-style: var(--side-thin-style);
+        border-top-color: var(--side-thin-color);
+      }
+
+      &[data-top-side="bold"] {
+        border-top-width: var(--side-bold-width);
+        border-top-style: var(--side-bold-style);
+        border-top-color: var(--side-bold-color);
+      }
+
+      &[data-top-side="dash"] {
+        border-top-width: var(--side-dash-width);
+        border-top-style: var(--side-dash-style);
+        border-top-color: var(--side-dash-color);
+      }
+
+      &[data-right-side="thin"] {
+        border-right-width: var(--side-thin-width);
+        border-right-style: var(--side-thin-style);
+        border-right-color: var(--side-thin-color);
+      }
+
+      &[data-right-side="bold"] {
+        border-right-width: var(--side-bold-width);
+        border-right-style: var(--side-bold-style);
+        border-right-color: var(--side-bold-color);
+      }
+
+      &[data-right-side="dash"] {
+        border-right-width: var(--side-dash-width);
+        border-right-style: var(--side-dash-style);
+        border-right-color: var(--side-dash-color);
+      }
+
+      &[data-bottom-side="thin"] {
+        border-bottom-width: var(--side-thin-width);
+        border-bottom-style: var(--side-thin-style);
+        border-bottom-color: var(--side-thin-color);
+      }
+
+      &[data-bottom-side="bold"] {
+        border-bottom-width: var(--side-bold-width);
+        border-bottom-style: var(--side-bold-style);
+        border-bottom-color: var(--side-bold-color);
+      }
+
+      &[data-bottom-side="dash"] {
+        border-bottom-width: var(--side-dash-width);
+        border-bottom-style: var(--side-dash-style);
+        border-bottom-color: var(--side-dash-color);
+      }
+
+      &[data-left-side="thin"] {
+        border-left-width: var(--side-thin-width);
+        border-left-style: var(--side-thin-style);
+        border-left-color: var(--side-thin-color);
+      }
+
+      &[data-left-side="bold"] {
+        border-left-width: var(--side-bold-width);
+        border-left-style: var(--side-bold-style);
+        border-left-color: var(--side-bold-color);
+      }
+
+      &[data-left-side="dash"] {
+        border-left-width: var(--side-dash-width);
+        border-left-style: var(--side-dash-style);
+        border-left-color: var(--side-dash-color);
+      }
+    }
+  }
+}
+
 /* チャットログ：数式 */
 .logs, #topic, .chat-palette {
   span.formula {
