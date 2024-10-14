@@ -11,6 +11,7 @@ use open ":utf8";
 use open ":std";
 use CGI;
 use CGI::Carp qw(fatalsToBrowser);
+use POSIX;
 
 ### バージョン #######################################################################################
 our $ver = "1.02.006";
@@ -228,6 +229,8 @@ sub tagConvert {
   $comm =~ s#([♠♤♥♡♣♧♦♢]+)#<span class="trump">$1</span>#gi;
   $comm =~ s#:([a-z0-9_]+?):#<span class="material-symbols-outlined"><i>:</i>$1<i>:</i></span>#g;
 
+  $comm = makeGridByBoxDrawingCharacters($comm);
+
   # ユーザー定義
   foreach my $hash (@set::replace_regex){
     foreach my $key (keys %{$hash}){
@@ -434,6 +437,185 @@ sub resolveFormula {
   my $result = resolve_core($formula);
 
   return "<span class=\"formula\"><span class=\"left\">${formula}</span><i class=\"equals-sign\">=</i><span class=\"right\">${result}</span></span>";
+}
+
+sub makeGridByBoxDrawingCharacters {
+  my $source = shift;
+
+  if ($source !~ /[┌┏][─━┄┅┈┉┬┭┮┯┰┱┲┳]+[┐┓]/) {
+    return $source;
+  }
+
+  sub makeGridBox {
+    my @sourceLines = @{shift;};
+
+    my @parts = ();
+
+    foreach (0 .. $#sourceLines) {
+      my $sourceLineIndex = $_;
+      my $sourceLine = $sourceLines[$sourceLineIndex];
+
+      if ($sourceLineIndex % 2 == 1) {
+        sub splitToParts1 {
+          my $text = shift;
+          my @parts = ();
+
+          while ($text ne '') {
+            last unless $text =~ s/^(.*?)([│┃┆┇┊┋╎╏])//;
+
+            push(@parts, $1) if $1 ne '';
+            push(@parts, $2);
+          }
+
+          push(@parts, $text) if $text ne '';
+
+          foreach (@parts) {
+            $_ =~ s/^[\s　]+$//;
+          }
+
+          return \@parts;
+        }
+
+        push(@parts, splitToParts1($sourceLine));
+      }
+      else {
+        sub splitToParts2 {
+          my $text = shift;
+          my @parts = ();
+
+          while ($text ne '') {
+            last unless $text =~ s/^(.*?)([┌┍┎┏┐┑┒┓└┕┖┗┘┙┚┛├┝┞┟┠┡┢┣┤┥┦┧┨┩┪┫┬┭┮┯┰┱┲┳┴┵┶┷┸┹┺┻┼┽┾┿╀╁╂╃╄╅╆╇╈╉╊╋])//;
+
+            push(@parts, $1) if $1 ne '';
+            push(@parts, $2);
+          }
+
+          push(@parts, $text) if $text ne '';
+
+          foreach (@parts) {
+            $_ =~ s/^[\s　]+$//;
+          }
+
+          return \@parts;
+        }
+
+        push(@parts, splitToParts2($sourceLine));
+      }
+    }
+
+    sub getItem {
+      my @list = @{shift;};
+      my $rowIndex = shift;
+      my $columnIndex = shift;
+
+      return undef unless $list[$rowIndex];
+
+      my @row = @{$list[$rowIndex]};
+      return $row[$columnIndex];
+    }
+
+    sub makeElementHtml {
+      my $elementName = shift;
+      my %attributes = %{shift;};
+      my $content = shift;
+
+      my $attributesText = '';
+
+      foreach (keys %attributes) {
+        my $key = $_;
+        my $value = $attributes{$key};
+
+        $attributesText .= " ${key}=\"${value}\"";
+      }
+
+      return "<${elementName}${attributesText}>${content}</${elementName}>";
+    }
+
+    my $gridContentsHtml = '';
+
+    my $sourceRowIndex = 1;
+    while ($sourceRowIndex <= $#parts) {
+      my @row = @{$parts[$sourceRowIndex]};
+      my $destinationRowIndex = ceil($sourceRowIndex / 2);
+
+      my $sourceColumnIndex = 1;
+      while ($sourceColumnIndex <= $#row) {
+        my $destinationColumnIndex = ceil($sourceColumnIndex / 2);
+
+        my $content = getItem(\@parts, $sourceRowIndex, $sourceColumnIndex);
+        my $leftSide = getItem(\@parts, $sourceRowIndex, $sourceColumnIndex - 1) // '│';
+        my $rightSide = getItem(\@parts, $sourceRowIndex, $sourceColumnIndex + 1) // '│';
+        my $topSide = getItem(\@parts, $sourceRowIndex - 1, $sourceColumnIndex) // '─';
+        my $bottomSide = getItem(\@parts, $sourceRowIndex + 1, $sourceColumnIndex) // '─';
+
+        my %attributes = ();
+        $attributes{'class'} = 'grid-item';
+        $attributes{'style'} = "grid-row-start: ${destinationRowIndex}; grid-column-start: ${destinationColumnIndex};";
+
+        sub getHorizontalSideCodeByCharacter {
+          my $character = shift;
+
+          return 'thin' if $character eq '│';
+          return 'bold' if $character eq '┃';
+          return 'dash' if $character =~ /^[┆┇┊┋╎╏]$/;
+          return '';
+        }
+
+        sub getVerticalSideCodeByCharacter {
+          my $character = shift;
+
+          return 'thin' if $character eq '─';
+          return 'bold' if $character eq '━';
+          return 'dash' if $character =~ /^[┄┅┈┉╌╍]$/;
+          return '';
+        }
+
+        $attributes{'data-left-side'} = getHorizontalSideCodeByCharacter($leftSide);
+        $attributes{'data-right-side'} = getHorizontalSideCodeByCharacter($rightSide);
+        $attributes{'data-top-side'} = getVerticalSideCodeByCharacter($topSide);
+        $attributes{'data-bottom-side'} = getVerticalSideCodeByCharacter($bottomSide);
+
+        $gridContentsHtml .= makeElementHtml('div', \%attributes, $content);
+
+        $sourceColumnIndex += 2;
+      }
+
+      $sourceRowIndex += 2;
+    }
+
+    return makeElementHtml('div', { 'class' => 'content-grid' }, $gridContentsHtml);
+  }
+
+  my @destinationLines = ();
+  my @gridSourceLines = ();
+
+  foreach (split("\n", $source)) {
+    my $sourceLine = $_;
+
+    sub trim {
+      my $source = shift;
+      $source =~ s/^\s*//;
+      $source =~ s/\s*$//;
+      return $source;
+    }
+
+    if ($sourceLine =~ /^\s*[┌┏][─━┄┅┈┉┬┭┮┯┰┱┲┳]+[┐┓]\s*$/) {
+      push(@gridSourceLines, trim($sourceLine));
+    }
+    elsif ($sourceLine =~ /^\s*[└┗][─━┄┅┈┉┴┵┶┷┸┹┺┻]+[┘┛]\s*$/) {
+      push(@gridSourceLines, trim($sourceLine));
+      push(@destinationLines, makeGridBox(\@gridSourceLines));
+      @gridSourceLines = ();
+    }
+    elsif (@gridSourceLines) {
+      push(@gridSourceLines, trim($sourceLine));
+    }
+    else {
+      push(@destinationLines, $sourceLine);
+    }
+  }
+
+  return join("\n", @destinationLines);
 }
 
 ## 山括弧エスケープ
