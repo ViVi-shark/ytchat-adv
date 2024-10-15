@@ -294,6 +294,9 @@ sub tagConvert {
   1 while $comm =~ s#&lt;f&gt;(.+?)&lt;/f&gt;#&lt;formula&gt;$1&lt;/formula&gt;#gis;
   1 while $comm =~ s#&lt;formula&gt;(.+?)&lt;/formula&gt;#&resolveFormula($1)#egis;
   
+  1 while $comm =~ s#&lt;unit:\s*([^\/]+?)\s*\/&gt;#&lt;unit:$1&gt;$1&lt;/unit&gt;#g;
+  1 while $comm =~ s#&lt;unit:\s*(.+?)\s*&gt;(.+?)&lt;\/unit&gt;#<span class="unit-reference" data-unit-name="$1">$2</span>#g;
+  
   1 while $comm =~ s#&lt;tip&gt;(.*?)=&gt;(.*?)&lt;\/tip&gt;#$1#gis;
   1 while $comm =~ s#&lt;snippet&gt;(.+?)&lt;\/snippet&gt;#$1#gis;
   

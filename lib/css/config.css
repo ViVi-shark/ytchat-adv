@@ -1076,6 +1076,10 @@
 
     &:hover {
       --background-opacity: 0.2;
+
+      #logviewer & {
+        --background-opacity: 0.1;
+      }
     }
   }
 }
