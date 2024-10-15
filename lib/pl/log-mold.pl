@@ -104,6 +104,7 @@ my $before_name;
 my $before_color;
 my $before_user;
 my $before_address;
+my $before_picture;
 my @bgms; my %bgms;
 my @bgis; my %bgis;
 my @sheet_names; my %sheets;
@@ -111,6 +112,7 @@ my %stat;
 my %stat_count;
 my %user_color;
 my $tagconvert_on = %logconfig ? 1 : $::in{"log"} ? 0 : 1;
+my %messagePictures;
 
 sysopen (my $FH, $logfile, O_RDONLY) or $error_flag = 1;
 foreach (<$FH>){
@@ -144,10 +146,24 @@ foreach (<$FH>){
     }
   }
   
+  my $pictureId;
+  if ($comm =~ s/\s*(?:<|&lt;)picture:\s*(.+?)\s*(?:>|&gt;)\s*//) {
+    my $pictureUrl = $1;
+    if ($pictureUrl ne 'none') {
+      $pictureUrl = resolveCloudAssetUrl($pictureUrl, 'log');
+
+      $messagePictures{$pictureUrl} = scalar(keys(%messagePictures)) + 1 unless ($messagePictures{$pictureUrl});
+      $pictureId = $messagePictures{$pictureUrl};
+    }
+  }
+  
   $comm = tagConvert($comm) if $tagconvert_on; #文字装飾
   $comm =~ s#<h([1-6])>(.+?)</h\1>#<h$1 data-headline="$1">$2</h$1>#ig;
 
   if($system =~ /^palette$/){
+    next;
+  }
+  elsif($system =~ /^picture-settings$/){
     next;
   }
   elsif($system =~ /^ready-/){
@@ -305,12 +321,14 @@ foreach (<$FH>){
      $class .= $address   ? 'secret '    : '';
      $class .= $openlater ? 'openlater ' : '';
      $class .= $tab == 1 ? 'main ' : '';
+     $class .= $pictureId ? 'contains-picture ' : '';
   
   if ( $before_tab     ne $tab
     || $before_name    ne $name
     || $before_color   ne $color
     || $before_user    ne $user
     || $before_address ne $address.$openlater
+    || $before_picture ne $pictureId
     || ($name eq '!SYSTEM')
   ){
     push(@logs, {
@@ -324,6 +342,7 @@ foreach (<$FH>){
       "CLASS" => $class,
       "LogsDD" => [],
       "BORDER" => ((scalar(@logs)+1) % 1000 == 0 ? 1 : 0),
+      "PICTURE_ID" => $pictureId,
     });
   }
   
@@ -341,6 +360,7 @@ foreach (<$FH>){
   $before_color = $color;
   $before_user  = $user;
   $before_address  = $address.$openlater;
+  $before_picture = $pictureId;
 }
 close($FH);
 
@@ -356,6 +376,10 @@ $ROOM->param(BgiList => \@bgi_list);
 my @sheet_list;
 push(@sheet_list,{ 'NAME' => $_, 'URL' => $sheets{$_} }) foreach @sheet_names;
 $ROOM->param(SheetList => \@sheet_list);
+
+my @message_picture_list;
+push(@message_picture_list, { 'PICTURE_ID' => $messagePictures{$_}, 'URL' => $_ }) foreach keys(%messagePictures);
+$ROOM->param(MessagePictureList => \@message_picture_list);
 
 ## 出目統計
 {
