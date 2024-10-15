@@ -37,6 +37,11 @@
     var customCSS = "<TMPL_VAR customCSS />";
     </TMPL_UNLESS>
   </script>
+  <style>
+  <TMPL_LOOP MessagePictureList>
+    .picture[data-picture-id="<TMPL_VAR PICTURE_ID>"] > span { background-image: url("<TMPL_VAR URL>"); }
+  </TMPL_LOOP>
+  </style>
 </head>
 <body id="logviewer" <TMPL_IF liteMode>class="lite"</TMPL_IF> data-game-name="<TMPL_VAR gameName>">
   <div class="bg-image bg-front"></div>
@@ -138,6 +143,7 @@
   <div class="logs logs-font">
     <TMPL_LOOP Logs>
     <dl id="line-<TMPL_VAR NUM>"<TMPL_IF CLASS> class="<TMPL_VAR CLASS>"</TMPL_IF> data-user="<TMPL_VAR USER>" data-user-id="<TMPL_VAR USER_ID>" data-tab="<TMPL_VAR TAB>" data-tab-name="<TMPL_VAR TABNAME>">
+      <TMPL_IF PICTURE_ID><dt class="picture" data-picture-id="<TMPL_VAR PICTURE_ID>"><span></span></dt></TMPL_IF>
       <dt <TMPL_IF COLOR>style="color:<TMPL_VAR COLOR>"</TMPL_IF>><TMPL_VAR NAME></dt>
 <TMPL_LOOP LogsDD><TMPL_IF COMM>      <dd class="comm" data-date="<TMPL_VAR DATE>"><TMPL_VAR COMM></dd>
 </TMPL_IF><TMPL_IF INFO>      <dd class="info <TMPL_VAR TYPE>" data-date="<TMPL_VAR DATE>"<TMPL_IF GAME> data-game="<TMPL_VAR GAME>"</TMPL_IF>><TMPL_VAR INFO></dd>

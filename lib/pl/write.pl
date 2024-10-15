@@ -206,6 +206,11 @@ else {
     paletteUpdate($::in{'name'}, $1);
     $::in{'system'} = 'palette';
   }
+  # 発言者画像の設定 ----------
+  elsif($::in{'comm'} =~ s<^/picture-settings-update\s(.*)$><>is){
+    pictureSettingsUpdate($::in{'name'}, $1);
+    $::in{'system'} = 'picture-settings';
+  }
   # タブ追加 ----------
   elsif($::in{'comm'} =~ s<^/tab-add\s+(.+?)(?:\s|$)><>i){
     my $num = tabAdd($1);
@@ -297,6 +302,9 @@ else {
   # ダイス処理 ----------
   elsif(diceCodeCheck()){
     #なんもないよ
+  }
+  else{
+    $::in{'comm'} .= "<picture:$::in{'picture'}>" if $::in{'picture'};
   }
 }
 
@@ -935,6 +943,23 @@ sub paletteUpdate {
   $set_text =~ s/&gt;/>/g;
   $data{'unit'}{$set_name}{'palette'} = $set_text;
   
+  print $FH decode('utf8', encode_json \%data);
+  truncate($FH, tell($FH));
+  close($FH);
+}
+
+# 発言者画像の設定 ----------
+sub pictureSettingsUpdate {
+  my $unitName = shift;
+  my $encodedSettings = shift;
+
+  sysopen(my $FH, $dir.'room.dat', O_RDWR) or error "room.datが開けません";
+  flock($FH, 2);
+  my %data = %{ decode_json(encode('utf8', (join '', <$FH>))) };
+  seek($FH, 0, 0);
+
+  $data{'unit'}{$unitName}{'pictures'} = $encodedSettings;
+
   print $FH decode('utf8', encode_json \%data);
   truncate($FH, tell($FH));
   close($FH);
