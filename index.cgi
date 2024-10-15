@@ -120,6 +120,44 @@ sub getFileNameDate {
   return "${filename}_${num}";
 }
 
+sub resolveCloudAssetUrl {
+  my $url = shift;
+  my $_mode = shift;
+  $url = resolveGoogleDriveAssetUrl($url, $_mode);
+  $url = resolveDropboxAssetUrl($url);
+  return $url;
+}
+# GoogleドライブURL変換 ----------
+sub resolveGoogleDriveAssetUrl {
+  my $url = shift;
+  my $_mode = shift;
+
+  if ($_mode ne 'log') {
+    if ($url =~ /^https?:\/\/drive\.google\.com\/file\/d\/(.+)\/view\?usp=(?:sharing|(?:share|drive)_link)$/) {
+      return 'https://drive.google.com/uc?id=' . $1;
+    }
+  } else {
+    if (
+        $url =~ /^https?:\/\/drive\.google\.com\/file\/d\/(.+)\/view\?usp=(?:sharing|(?:share|drive)_link)$/ ||
+        $url =~ /^https?:\/\/drive\.google\.com\/uc\?(?:.+&)?(.+?)(?:$|&)/
+    ) {
+      return './lib/php/download_asset.php?url=' . $url;
+    }
+  }
+
+  return $url;
+}
+sub resolveDropboxAssetUrl {
+  my $url = shift;
+
+  if ($url =~ /^https?:\/\/www\.dropbox\.com\/.+[?&]dl=0$/) {
+    $url =~ s/dl=0$/dl=1/;
+    return $url;
+  }
+
+  return $url;
+}
+
 ## 文字装飾変換
 sub quoteConvert_Core {
   my $comm = shift;
@@ -252,7 +290,7 @@ sub tagConvert {
   $comm =~ s{<!a#([0-9]+)>}{'<a href="'.$linkURL[$1-1].'" target="_blank">'.$linkURL[$1-1].'</a>'}ge;
 
   # 画像記法・後処理
-  $comm =~ s{<!img#([0-9]+)>}{'<img class="picture" alt="picture" src="'.@pictureURL[$1-1].'" onclick="imgView(this.src)" />'}ge;
+  $comm =~ s{<!img#([0-9]+)>}{'<img class="picture" alt="picture" src="'.resolveCloudAssetUrl(@pictureURL[$1-1], 'log').'" onclick="imgView(this.src)" />'}ge;
   
   $comm =~ s#(</ul>)\n#$1#;
   
