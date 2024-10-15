@@ -392,15 +392,15 @@ sub randomDiceTableRoll {
   chomp $code;
   my ($rolls, $faces) = split(/D/i, $code);
   my %data;
-  my $min = $rolls;
-  my $max = $rolls * $faces;
+  my $min;
+  my $max;
   foreach (@_){
     chomp $_;
     $_=~ s/\\n/<br>/g;
     if($_ =~ /^(-?[0-9]+):/){
       $data{$1} = $_;
-      $min = $1 if $1 < $min;
-      $max = $1 if $1 > $max;
+      $min = $1 if !defined($min) || $1 < $min;
+      $max = $1 if !defined($max) || $1 > $max;
     }
   }
   my $results;
