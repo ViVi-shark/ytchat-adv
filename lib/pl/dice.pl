@@ -435,6 +435,7 @@ sub randomDiceTableRoll {
       $data{$1} = $_;
       $min = $1 if !defined($min) || $1 < $min;
       $max = $1 if !defined($max) || $1 > $max;
+      $data{$1} =~ s/^(-?[0-9]+)://;
     }
     else {
       my $key = $_;
