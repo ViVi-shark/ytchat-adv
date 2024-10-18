@@ -1102,7 +1102,7 @@ body.rom #main-form > .help.button {
 ---------------------------------------------------------------------------------------------------- */
 #sheet-area {
   position: relative;
-  width: 18.5em;
+  width: 27.5em;
   transition-property: left, right, opacity;
   transition-duration: 0.25s;
   transition-timing-function: ease-in;
@@ -1114,12 +1114,12 @@ body.rom #main-form > .help.button {
   margin-left: -2rem;
 }
 #sheet-area:not(.left).closed {
-  margin-left: calc(-18.5em + 2rem);
-  right: calc(-18.5em + 2rem);
+  margin-left: calc(-27.5em + 2rem);
+  right: calc(-27.5em + 2rem);
 }
 #sheet-area.left.closed {
-  margin-right: calc(-18.5em + 2rem);
-  left: calc(-18.5em + 2rem);
+  margin-right: calc(-27.5em + 2rem);
+  left: calc(-27.5em + 2rem);
 }
 
 #sheet-area:not(.left) .sheet {
