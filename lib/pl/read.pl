@@ -93,7 +93,7 @@ foreach($reverseOn ? (reverse <$FH>) : <$FH>) {
     $info =~ s#\[(.*?)\](?=\[|<br>|$)#<b class='result'>$1</b>#g;
   }
   elsif($system =~ /^(choice:table)/){
-    $info =~ s#(?<=:) \[(.*?)\](?=.+? → |$)#<b class='result'>$1</b>#g;
+    $info =~ s#(?<=:) \[(.*?)\](?=.+? → |$)#<b class='chart-result'>$1</b>#g;
   }
   
   if($system eq 'palette'){
