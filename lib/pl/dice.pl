@@ -484,7 +484,7 @@ sub randomDiceTableRoll {
     $texts = '' if $texts eq $values;
     $results .= '<br>' if $results;
     if(exists $data{$key}){
-      $results .= "＠$name → $code" . (defined($modifier) ? "($modifier)" : '') . " → $values" . ($texts ne '' ? "\[$texts\]" : '') . "$modifier : \[$data{$key}\]";
+      $results .= "＠$name → $code" . (defined($modifier) ? "($modifier)" : '') . " → $values" . ($texts ne '' ? "\[$texts\]" : '') . ($modifier ? "${modifier} = ${key}" : '') . " : \[$data{$key}\]";
     }
     else {
       error "合致する行がありませんでした（出目: $key）";
