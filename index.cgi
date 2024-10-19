@@ -11,6 +11,7 @@ use open ":utf8";
 use open ":std";
 use CGI;
 use CGI::Carp qw(fatalsToBrowser);
+use HTML::Entities;
 
 ### バージョン #######################################################################################
 our $ver = "1.02.000b";
@@ -207,6 +208,25 @@ sub quoteConvert {
 sub tagConvert {
   my $comm = shift;
   $comm =~ s/<br>/\n/g;
+
+  sub toCharacterReference {
+    my $text = shift;
+    return encode_entities($text, $text) if $text !~ /&/;
+
+    my $destination = '';
+    while ($text ne '') {
+      if ($text =~ s/^&[a-z0-9]+;//) {
+        $destination .= $&;
+      }
+      else {
+        $text =~ s/^.//;
+        $destination .= encode_entities($&, $&);
+      }
+    }
+    return $destination;
+  }
+
+  $comm =~ s{`([^`]+)`}{'&lt;snippet&gt;' . toCharacterReference($1) . '&lt;/snippet&gt;'}ge;
 
   # 画像記法・前処理
   my @pictureURL;

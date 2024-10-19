@@ -1539,7 +1539,8 @@ body.rom .input-form { display: none !important; }
 
 .chat .logs dl dd:is(.comm, .info),
 #memo-view,
-#dialog-memo {
+#dialog-memo,
+.help-text-rule-table .logs {
   code.snippet[onclick] {
     background-color: rgba(0, 255, 100, 0.15);
     cursor: copy;
@@ -2370,7 +2371,7 @@ body.rom .input-form { display: none !important; }
   display: grid;
   grid-template-rows: max-content 1fr;
 }
-#help-window code,
+#help-window code:not(.snippet),
 #help-window pre.code {
   margin: .1em 0;
   padding: .2em .5rem;
@@ -2378,7 +2379,7 @@ body.rom .input-form { display: none !important; }
   border-radius: .5rem;
   font-size: 85%;
 }
-#help-window code {
+#help-window code:not(.snippet) {
   display: inline-block;
 }
 #help-window h3:nth-child(n+2) {
