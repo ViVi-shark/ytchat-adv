@@ -474,6 +474,10 @@
 .logs dl dd.info.dice[data-game="sw"] {
   .hit {
     font-weight: bold;
+
+    &:has(.hit-labels) {
+      filter: brightness(200%);
+    }
   }
 
   .miss {
