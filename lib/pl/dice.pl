@@ -388,7 +388,7 @@ sub choiceRoll {
       close($FH);
     }
 
-    if($list[0] =~ /^[0-9]+D[0-9](?:,\d+D\d+)?+(?:\s+\d+){0,2}$/i){
+    if($list[0] =~ /^[0-9]+D[0-9](?:,\d+D\d+)*+(?:\s+\d+){0,2}$/i){
       return randomDiceTableRoll($rolls,$faces,$modifier,@list), 'choice:table';
     }
     else {
@@ -436,6 +436,12 @@ sub randomDiceTableRoll {
       $min = $1 if !defined($min) || $1 < $min;
       $max = $1 if !defined($max) || $1 > $max;
     }
+    else {
+      my $key = $_;
+      $key =~ s/^(.+?):.*$/$1/s;
+      $data{$key} = $_;
+      $data{$key} =~ s/^([-0-9]+(,[-0-9]+)*)://;
+    }
   }
   my $results;
   foreach(1 .. $repeat){
@@ -448,8 +454,8 @@ sub randomDiceTableRoll {
       my $codePart = $codeParts[$i];
       ($codePart, my $rolledTotal, my $rolledNums) = dice(split(/D/i, $codePart));
       my $finalValue = defined($modifier) ? calc("$rolledTotal$modifier") : $rolledTotal;
-      $finalValue = $min if $finalValue < $min;
-      $finalValue = $max if $finalValue > $max;
+      $finalValue = $min if defined($min) && $finalValue < $min;
+      $finalValue = $max if defined($max) && $finalValue > $max;
       $rolledNums =~ s/[\!\.]//g;
 
       $key .= ',' if $key ne '';
