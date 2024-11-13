@@ -442,7 +442,8 @@
   font-style: normal;
 }
 .logs dl dd.info.unit .minus,
-#status #status-body > dl[data-name] > dd.details > ul.details > li > dl dd .value .minus {
+#status #status-body > dl[data-name] > dd.details > ul.details > li > dl dd .value .minus,
+.popup-unit-view .status-list > .status-item > .value .minus {
   color: #CD5C5C;
 }
 /* チャットログ：チョイス */
