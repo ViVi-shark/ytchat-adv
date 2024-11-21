@@ -682,7 +682,7 @@ sub tagDelete {
 sub stylizeSuccessAndFailure {
   my @array = split('／', shift);
   foreach (@array){
-    if($_ eq '成功'){ $_ = "<strong>成功</strong>" }
+    if($_ =~ /^(自動)?成功$/){ $_ = "<strong>$&</strong>" }
     elsif($_ =~ /^(自動)?失敗$/){ $_ = "<strong class='fail'>$&</strong>" }
   }
   return join('／', @array);
