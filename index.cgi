@@ -209,6 +209,39 @@ sub tagConvert {
   my $comm = shift;
   $comm =~ s/<br>/\n/g;
 
+  sub toCharacterReference {
+    sub convertOne {
+      my $character = shift;
+      return '&#' . ord($character);
+    }
+
+    sub convertAll {
+      my $source = shift;
+      my $destination = '';
+      foreach (split(//, $source)) {
+        $destination .= convertOne($_);
+      }
+      return $destination;
+    }
+
+    my $text = shift;
+    return convertAll($text) if $text !~ /&/;
+
+    my $destination = '';
+    while ($text ne '') {
+      if ($text =~ s/^&[a-z0-9]+;//) {
+        $destination .= $&;
+      }
+      else {
+        $text =~ s/^.//;
+        $destination .= convertAll($&);
+      }
+    }
+    return $destination;
+  }
+
+  $comm =~ s{`([^`]+)`}{'&lt;snippet&gt;' . toCharacterReference($1) . '&lt;/snippet&gt;'}ge;
+
   # 画像記法・前処理
   my @pictureURL;
   $comm =~ s{&lt;picture&gt;(.+?)&lt;/picture&gt;}{ push(@pictureURL, $1); "<!img#".scalar(@pictureURL).">" }ge;
