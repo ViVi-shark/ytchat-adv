@@ -171,7 +171,7 @@ sub diceCalc {
   $base =~ s/[\.\+\-\*\/\s]+$//gi; # 末尾の演算子は消す
 
   # ファンブル／自動失敗チェック
-  my $fumble;
+  my $fumble, my $success;
   if( #SW2：2D6＆大なり記号あり＆1ゾロ
     ($::in{'game'} eq 'sw2') &&
     $#code == 0 &&
@@ -180,6 +180,15 @@ sub diceCalc {
     $base =~ /\Q2[1,1...]\E/
   ) {
     $fumble = '自動失敗';
+  }
+  elsif ( #SW2：2D6＆大なり記号あり＆6ゾロ
+    ($::in{'game'} eq 'sw2') &&
+    $#code == 0 &&
+    $code[0] =~ /^2D6$/i &&
+    $rel =~ /^>=?$/ &&
+    $base =~ /\Q12[6,6!!]\E/
+  ) {
+    $success = '自動成功';
   }
   
   if ($burst && $burst =~ /^\[([>=<]=)(\d+):([-+]\d+)\]$/) {
@@ -220,6 +229,10 @@ sub diceCalc {
   ## ファンブル処理
   if($fumble){
     $result .= ' → '.$fumble;
+  }
+  ## 自動成功処理
+  elsif ($success){
+    $result .= ' → '.$success;
   }
   ## 目標値成否
   elsif($rel && $targets ne '' && $targets ne '|'){
