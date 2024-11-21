@@ -224,6 +224,12 @@ sub diceCalc {
   if($result =~ /[\+\-\*\/\,]/){ $result .= ' = ' . $total; }
   else { $result = $total; }
   
+  if ($success) {
+    # SW2.5 の自動成功は達成値を＋５する.
+    $result =~ s/12\Q[6,6!!]\E(?:\s+[-+]\d+)?\s+=\s+\d+/($&)/;
+    $result .= '+5 → ' . ($total + 5);
+  }
+  
   my $code = join('+',@code);
   
   ## ファンブル処理
