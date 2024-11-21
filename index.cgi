@@ -12,7 +12,6 @@ use open ":std";
 use CGI;
 use CGI::Carp qw(fatalsToBrowser);
 use POSIX;
-use HTML::Entities;
 
 ### バージョン #######################################################################################
 our $ver = "1.02.000";
@@ -211,8 +210,22 @@ sub tagConvert {
   $comm =~ s/<br>/\n/g;
 
   sub toCharacterReference {
+    sub convertOne {
+      my $character = shift;
+      return '&#' . ord($character);
+    }
+
+    sub convertAll {
+      my $source = shift;
+      my $destination = '';
+      foreach (split(//, $source)) {
+        $destination .= convertOne($_);
+      }
+      return $destination;
+    }
+
     my $text = shift;
-    return encode_entities($text, $text) if $text !~ /&/;
+    return convertAll($text) if $text !~ /&/;
 
     my $destination = '';
     while ($text ne '') {
@@ -221,7 +234,7 @@ sub tagConvert {
       }
       else {
         $text =~ s/^.//;
-        $destination .= encode_entities($&, $&);
+        $destination .= convertAll($&);
       }
     }
     return $destination;
