@@ -350,6 +350,10 @@
       content: "\e5d6";
     }
 
+    &[open] > summary > .title {
+      display: none;
+    }
+
     > summary {
       position: absolute;
       top: 0;
