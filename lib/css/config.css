@@ -863,15 +863,10 @@
   span.formula {
     margin-left: 0.35em;
     margin-right: 0.35em;
-    display: inline-flex;
-    flex-flow: row;
-    justify-content: center;
-    align-content: center;
-    flex-wrap: wrap;
+    display: inline;
     line-height: 1em;
     height: 1.625em;
     position: relative;
-    top: 2px;
 
     .chat-palette & {
       height: 1em;
@@ -883,6 +878,8 @@
       font-variation-settings: 'FILL' 0;
       opacity: 0.5;
       text-shadow: none;
+      position: relative;
+      top: 2px;
     }
 
     > .left {
