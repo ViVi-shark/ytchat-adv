@@ -778,6 +778,29 @@ body.rom .sheet { display: none; }
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
+.sheet-body .status-remocon-area.quick-mode ul.status-remocon-list li {
+  > input:first-child {
+    display: none;
+  }
+
+  > .label {
+    grid-column: 1 / 2;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 0.25em;
+  }
+
+  > textarea {
+    grid-column: 2 / -1;
+  }
+
+  > button:last-child {
+    display: none;
+  }
+}
+.sheet-body .status-remocon-area:not(.quick-mode) ul.status-remocon-list li > .label {
+  display: none;
+}
 .sheet-body .status-remocon-area ul.status-remocon-list li:hover {
   border-bottom: .1rem solid #d90;
 }
