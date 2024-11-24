@@ -488,6 +488,30 @@
         }
       }
     }
+
+    &:not([open]) > summary {
+      display: grid;
+      height: 1.5em;
+      grid-template-rows: 100%;
+      grid-template-columns: max-content 1fr max-content;
+
+      &::before {
+        grid-column: 1 / 2;
+      }
+
+      .code {
+        grid-column: 2 / 3;
+
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .row-count {
+        grid-column: 3 / 4;
+      }
+    }
   }
 }
 .logs dl dd.info.dice i {
