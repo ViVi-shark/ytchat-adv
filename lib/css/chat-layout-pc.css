@@ -1156,10 +1156,29 @@ body.rom #main-form > .help.button {
 
     .status-remocon-area {
       display: grid;
-      grid-template-rows: max-content max-content 1fr max-content;
-      grid-template-columns: 1fr;
+      grid-template-rows: auto max-content max-content 1fr max-content;
+      grid-template-columns: max-content max-content 1fr;
       height: auto;
       max-height: max(calc(100vh - 44rem), 18rem);
+
+      > h3 {
+        grid-row: 1 / 3;
+        grid-column: 1 / 2;
+      }
+
+      .mode-switcher {
+        grid-row: 2 / 3;
+        grid-column: 2 / 3;
+        width: max-content;
+        height: max-content;
+        align-items: flex-end;
+        margin-left: 1em;
+      }
+
+      > select,
+      > ul {
+        grid-column: 1 / -1;
+      }
 
       .status-remocon-list {
         max-height: 20vh;
