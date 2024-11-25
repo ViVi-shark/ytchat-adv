@@ -34,7 +34,8 @@ sub rateRoll {
     (?: (?:[kr]|威力) ( [0-9]+ | \([0-9\+\-]+\) | $unique_reg ) )
     (?:\[([0-9\+\-]+)\])?
     ([0-9a-z\+\-\*\/\@\$~()><\#!PAVC値必殺首切出目難半減威力確実化聖王の冠]*)
-    (?:\:([0-9]+|.+,.+))?
+    (?:\:([0-9]+))?
+    (?:\:([^,]+,.+))?
     (?:\s|$)
   /ix){
     return "";
@@ -43,7 +44,8 @@ sub rateRoll {
   my $unique = (exists $unique{$rate}) ? $unique{$rate}{'name'} : '';
   my $crit   = $2;
   my $form   = $3;
-  my $repeat = $4;
+  my $repeatCount = $4;
+  my $repeatLabels = $5;
   my $rate_up;
   my $crit_atk;
   my $crit_ray;
@@ -69,52 +71,57 @@ sub rateRoll {
   if($rate > 100){ $rate = 100; } elsif($rate < 0){ $rate = 0; }
   if($crit <= 0){ $crit = 0; } elsif($crit < 3){ $crit = 3; }
 
+  my @repeatCountLabels = ();
   my @repeatLabels;
-  if ($repeat !~ /,/) {
+
+  if ($repeatCount > 0) {
     @repeatLabels = ();
-    $repeat = ($repeat > 50) ? 50 : (!$repeat) ? 1 : $repeat;
-    for my $i (1 .. $repeat) {
-      push(@repeatLabels, makeRollIndexText($i));
+    $repeatCount = ($repeatCount > 50) ? 50 : (!$repeatCount) ? 1 : $repeatCount;
+    for my $i (1 .. $repeatCount) {
+      push(@repeatCountLabels, makeRollIndexText($i));
     }
-  } else {
-    @repeatLabels = split(/\s*,\s*/, $repeat);
-    $repeat = @repeatLabels;
-    $repeat = 50 if $repeat > 50;
-    @repeatLabels = @repeatLabels[0 .. ($repeat - 1)];
+  }
+
+  if (($repeatLabels // '') ne '') {
+    @repeatLabels = split(/\s*,\s*/, $repeatLabels);
+    @repeatLabels = @repeatLabels[0 .. 49] if $#repeatLabels > 49;
   }
 
   my @result;
-  foreach my $i (1 .. ($repeat || 1)){
-    my $resultRow = '';
+  my $count;
+  foreach my $repeatLabel (@repeatLabels ? @repeatLabels : ('')) {
+    foreach my $i (1 .. ($repeatCount || 1)){
+      my $resultRow = '';
 
-    foreach my $j (1 .. ($powerAccurate ? 2 : 1)) {
-      (my $currentResultRow, my $criticalCount, my $lastNumber) = rateCalc(
-          $rate    ,
-          $crit    ,
-          $form    ,
-          $rate_up ,
-          $crit_atk,
-          $crit_ray,
-        $witch_blaze,
-          $fixed   ,
-          $curse   ,
-          $virtuousCrown,
-          $gf      ,
-          $repeat > 1 && $j == 1 ? $repeatLabels[$i - 1] : undef,
-          $repeat && $j == 1 ? $i : undef
-      );
+      foreach my $j (1 .. ($powerAccurate ? 2 : 1)) {
+        (my $currentResultRow, my $criticalCount, my $lastNumber) = rateCalc(
+            $rate    ,
+            $crit    ,
+            $form    ,
+            $rate_up ,
+            $crit_atk,
+            $crit_ray,
+            $witch_blaze,
+            $fixed   ,
+            $curse   ,
+            $virtuousCrown,
+            $gf      ,
+            ($repeatLabel ne '' || $repeatCount > 1) && $j == 1 ? $repeatLabel . $repeatCountLabels[$i - 1] : undef,
+            ++$count
+        );
 
-      # 威力確実化
-      if ($j == 1 && $powerAccurate && !$criticalCount && $lastNumber <= $powerAccurate) {
-        $resultRow = "$currentResultRow | 振り直し: ";
-        next;
-      } else {
-        $resultRow .= $currentResultRow;
-        last;
+        # 威力確実化
+        if ($j == 1 && $powerAccurate && !$criticalCount && $lastNumber <= $powerAccurate) {
+          $resultRow = "$currentResultRow | 振り直し: ";
+          next;
+        } else {
+          $resultRow .= $currentResultRow;
+          last;
+        }
       }
-    }
 
-    push(@result, $resultRow);
+      push(@result, $resultRow);
+    }
   }
   return join('<br>',@result);
 }
