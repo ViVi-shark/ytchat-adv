@@ -971,6 +971,7 @@ sub unitCalcEdit {
   seek($FH, 0, 0);
   
   my $result_info; my $result_system; my $memo_flag; my $url_flag;
+  my @diceResults = ();
   $set_text =~ tr/０-９＋－÷＊＝：！/0-9\+\-\/\*=:!/;
   while($set_text =~ s/^($stt_commands|メモ|memo|url)([+\-\*\/=\:])(?:"(.*?)"|(.*?))(?:\s|$)//s){
     my ($type, $op, $text, $num) = ($1,$2,$3,$4);
@@ -1000,12 +1001,13 @@ sub unitCalcEdit {
       if($num eq '' && $text){ $num = $text; }
       if($op =~ /^[+\-\*\/=]$/){
         $num = parenthesisCalc($num);
-        my ($result, $diff, $over) = sttCalc($type,$num,$op,$data{'unit'}{$set_name}{'status'}{$type});
+        my ($result, $diff, $over, @_diceResults) = sttCalc($type,$num,$op,$data{'unit'}{$set_name}{'status'}{$type});
         $data{'unit'}{$set_name}{'status'}{$type} = $result;
         $diff .= "(over${over})" if $over;
         $result =~ s{^-\d+}{<span class="minus">$&</span>};
         $result_info .= ($result_info ? '　' : '') . "<b>$type</b>:$result";
         $result_info .= " [$diff]" if ($diff ne '');
+        push(@diceResults, @_diceResults) if @_diceResults;
       }
       elsif($op =~ /^:$/){
         my $result = $num;
@@ -1035,6 +1037,7 @@ sub unitCalcEdit {
   truncate($FH, tell($FH));
   close($FH);
   
+  $result_info = join("\n", @diceResults) . "\n" . $result_info if @diceResults;
   return ($result_info, $result_system);
 }
 
@@ -1046,6 +1049,23 @@ sub sttCalc {
   my $break;
   
   if($num =~ s/!$//){ $break = 1; }
+
+  # ダイスを解決する.
+  my @diceResultRows = ();
+  1 while $num =~ s{
+    \d+d\d*
+  }{
+    my $diceCommand = $&;
+    require './lib/pl/dice.pl';
+    my $diceResultText = diceRoll($diceCommand);
+    $diceResultText =~ /^(\d+D\d+)\s*→\s*(?:\d+\[([\d,]+)]\s*=)?\s*(\d+)$/;
+    $diceCommand = $1;
+    my $diceValues = $2;
+    my $diceTotal = $3;
+    push(@diceResultRows, "${diceCommand} → " . ($diceValues ? "${diceValues} = " : '') . $diceTotal);
+    $diceTotal;
+  }xie;
+
   if($op ne '=' && $op ne '*'){ $num =  $op.$num; }
 
   
@@ -1085,7 +1105,7 @@ sub sttCalc {
   }
   foreach my $i (0..1){ $diff[$i] = ($diff[$i] >= 0 ? '+' : '') . $diff[$i] if ($diff[$i] ne ''); }
   
-  return (join('/', @base), join('/', @diff)), $over[0];
+  return (join('/', @base), join('/', @diff)), $over[0], @diceResultRows;
 }
 
 sub parenthesisCalc {
