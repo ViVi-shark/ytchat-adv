@@ -79,11 +79,27 @@ sub getRoomList {
 ## 計算処理
 sub calc {
   my $formula = shift;
-  $formula =~ s/[^0-9\.\+\-\*\/\(\)%⌈⌉]//gi; #数字と括弧と算術演算子と関数記号以外は消す
+  $formula =~ s/[❲⟮]/〔/g; # 開き亀甲括弧を統一
+  $formula =~ s/[❳⟯]/〕/g; # 閉じ亀甲括弧を統一
+  # todo: チルダを統一
+  $formula =~ s/[^0-9\.\+\-\*\/\(\)%⌈⌉〔~〕minmax]//gi; #数字と括弧と算術演算子と関数記号と亀甲括弧とチルダ以外は消す
   $formula =~ tr/\+\-\/%//s; #指定記号の連続は一つにまとめる
   $formula =~ s/⌈(.+?)⌉/ceil($1)/g;
+  $formula =~ s/〔min([^~]+?)~([^~]+?)~max([^~]+?)〕/_max($1, _min($2, $3))/g;
+  $formula =~ s/〔([^~]+?)~max([^~]+?)〕/_min($1, $2)/g;
+  $formula =~ s/〔min([^~]+?)~([^~]+?)〕/_max($1, $2)/g;
   
   return eval($formula);
+}
+sub _min {
+  my $x = shift;
+  my $y = shift;
+  return $x < $y ? $x : $y;
+}
+sub _max {
+  my $x = shift;
+  my $y = shift;
+  return $x > $y ? $x : $y;
 }
 
 ## 暗号化 
