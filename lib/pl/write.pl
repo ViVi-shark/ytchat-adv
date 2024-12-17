@@ -371,6 +371,18 @@ else {
     ($::in{'info'}, $::in{'system'}) = unitCalcEdit($::in{'name'}, '');
     delete $::in{'address'};
   }
+  elsif ($::in{'game'} eq 'sw2' && $::in{'comm'} =~ s/^[\@＠][+＋](?:睡眠(?:回復)?|rest)[*×x]?(\d+(?:h|時間)?)//i) {
+    my $restScale = $1;
+    my $roomId = $::in{'room'};
+    my $unitName = $::in{'name'};
+    require './lib/pl/command/sw2.pl';
+    my $command = makeRestCommand($roomId, $unitName, $restScale);
+
+    if (defined($command) && $command ne '') {
+      ($::in{'info'}, $::in{'system'}) = unitCalcEdit($unitName, $command);
+      delete $::in{'address'};
+    }
+  }
   #変更
   elsif($::in{'comm'} =~ s/^[@＠](((?:$stt_commands|メモ|memo|url)[\+＋\-－\*＊\/／=＝:：](?:"(?:.*?)"|(?:.*?))(?:\s|$))+)//s){
     ($::in{'info'}, $::in{'system'}) = unitCalcEdit($::in{'name'}, $1);
