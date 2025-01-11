@@ -444,7 +444,8 @@
 .logs dl dd.info.unit :is(.minus, .zero.hp),
 #status #status-body > dl[data-name] > dd.details > ul.details > li > dl dd .value .minus,
 #status #status-body > dl[data-name] > dd.details > ul.details > li:is([data-stt="HP"], [data-stt$=":HP"]) > dl dd .value .zero,
-.popup-unit-view .status-list > .status-item > .value .minus {
+.popup-unit-view .status-list > .status-item > .value .minus,
+.popup-unit-view .status-list > .status-item:is([data-status-name="HP"], [data-status-name$=":HP"]) > .value .zero {
   color: #CD5C5C;
 }
 /* チャットログ：チョイス */
