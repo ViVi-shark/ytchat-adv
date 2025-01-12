@@ -23,7 +23,7 @@ sub dataConvert {
   my $game = $::in{'game'};
   
   {
-    my $sheetHtml = dataGet($set_url) or error 'URLを開けませんでした';
+    my $sheetHtml = dataGet($set_url) or error "URLを開けませんでした: ${set_url}";
     my $bodyUrl;
     my $gameName;
     my $bodyFilter = undef;
