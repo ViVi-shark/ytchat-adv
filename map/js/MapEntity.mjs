@@ -49,6 +49,13 @@ export class MapEntity {
     }
 
     /**
+     * @return {boolean}
+     */
+    get hasName() {
+        return true;
+    }
+
+    /**
      * @return {MapPosition}
      */
     get position() {
