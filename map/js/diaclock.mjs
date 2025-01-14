@@ -3,24 +3,15 @@ import {DiaclockSystemEntityListParser} from "./DiaclockSystemEntityListParser.m
 import {DiaclockMapPosition} from "./positions/diaclock_map_position.mjs";
 import {DiaclockMapQuoterPosition} from "./positions/diaclock_map_quoter_position.mjs";
 import {DiaclockSystemEntityList} from "./DiaclockSystemEntityList.mjs";
+import {MapRenderer} from "./MapRenderer.mjs";
+import {MapBase} from "./MapBase.mjs";
 
-export class DiaclockMapCore {
+export class DiaclockMapCore extends MapBase {
     /** @var {int} */
     #cellCountInCircle;
 
     /** @var {int} */
     #circleCount;
-
-    #entities = new DiaclockSystemEntityList();
-
-    /** @var {DiaclockMapRendererInternal[]} */
-    #renderers = [];
-
-    /** @var {DiaclockSystemEntityListParser} */
-    #entityListParser;
-
-    /** @var {string[]} */
-    #additionalClassNames = [];
 
     /**
      * @param {int} cellCountInCircle
@@ -32,53 +23,10 @@ export class DiaclockMapCore {
         circleCount,
         positionParser
     ) {
+        super(new DiaclockSystemEntityListParser(positionParser));
+
         this.#cellCountInCircle = cellCountInCircle;
         this.#circleCount = circleCount;
-        this.#entityListParser = new DiaclockSystemEntityListParser(positionParser);
-    }
-
-    /**
-     * @return {DiaclockSystemEntityListParser}
-     */
-    get entityListParser() {
-        return this.#entityListParser;
-    }
-
-    /**
-     * @param {DiaclockSystemEntityList} entities
-     */
-    setEntities(entities) {
-        this.#entities = entities;
-
-        this.#renderers.forEach(x => x.updateEntities(this.#entities));
-    }
-
-    /**
-     * @param {HTMLElement} node
-     * @return {DiaclockMapRenderer}
-     */
-    renderTo(node) {
-        const renderer = new DiaclockMapRendererInternal(node, this.#cellCountInCircle, this.#circleCount);
-
-        for (const className of this.#additionalClassNames) {
-            renderer.addClass(className);
-        }
-        renderer.updateEntities(this.#entities);
-        this.#renderers.push(renderer);
-
-        return renderer;
-    }
-
-    /**
-     * @param {string} className
-     * @protected
-     */
-    _addClassToRenderer(className) {
-        for (const renderer of this.#renderers) {
-            renderer.addClass(className);
-        }
-
-        this.#additionalClassNames.push(className);
     }
 
     /**
@@ -87,17 +35,20 @@ export class DiaclockMapCore {
     _hideCenter() {
         this._addClassToRenderer('hide-center');
     }
+
+    _instantiateRenderer(node) {
+        return new DiaclockMapRenderer(node, this.#cellCountInCircle, this.#circleCount);
+    }
 }
 
-class DiaclockMapRenderer {
-    /** @var {HTMLElement} */
-    #node;
-
+class DiaclockMapRenderer extends MapRenderer {
     /** @var {int} */
     #cellCountInCircle;
 
     /** @var {int} */
     #circleCount;
+
+    #lastEntities = new DiaclockSystemEntityList();
 
     /**
      * @param {HTMLElement} node
@@ -105,12 +56,13 @@ class DiaclockMapRenderer {
      * @param {int} circleCount
      */
     constructor(node, cellCountInCircle, circleCount) {
-        this.#node = node;
+        super(node);
+
         this.#cellCountInCircle = cellCountInCircle;
         this.#circleCount = circleCount;
 
-        this.#node.classList.add('diaclock-map');
-        this.#node.dataset.cellCountInCircle = this.#cellCountInCircle.toString();
+        this._node.classList.add('diaclock-map');
+        this._node.dataset.cellCountInCircle = this.#cellCountInCircle.toString();
 
         function createCellNode() {
             const outerRoot = document.createElement('div');
@@ -169,7 +121,7 @@ class DiaclockMapRenderer {
                         ? `${circleName}-${cellIndexInCircle}`
                         : cellIndexInCircle.toString();
 
-                this.#node.appendChild(cellNode);
+                this._node.appendChild(cellNode);
             }
         }
 
@@ -177,33 +129,16 @@ class DiaclockMapRenderer {
             const centerCell = createCellNode();
             centerCell.classList.add('center');
             centerCell.dataset.cellId = 'center';
-            this.#node.appendChild(centerCell);
+            this._node.appendChild(centerCell);
         }
-
-        this.#node.addEventListener(
-            MapResizeEvent.type,
-            () => this.resize()
-        );
 
         this.resize();
     }
 
-    /**
-     * @return {HTMLElement}
-     * @protected
-     */
-    get _node() {
-        return this.#node;
-    }
-
-    resize() {
-        const canvasSize = this.#node.clientWidth;
+    _resize(canvasSize) {
         const circleSize = canvasSize * 0.8;
 
-        this.#node.dataset.canvasSize = canvasSize.toString();
-        this.#node.style.fontSize = `${Math.round(canvasSize * 0.025)}px`;
-
-        this.#node.querySelectorAll('.cell-outer-root').forEach(
+        this._node.querySelectorAll('.cell-outer-root').forEach(
             cell => {
                 const circleWidth = (circleSize * 0.3) * ((4 / this.#circleCount) / 4);
 
@@ -257,21 +192,14 @@ class DiaclockMapRenderer {
             }
         );
     }
-}
 
-const classForAnimation = 'animation-updated';
-
-class DiaclockMapRendererInternal extends DiaclockMapRenderer {
-    #lastEntities = new DiaclockSystemEntityList();
-
-    #animationDisposerHandle = null;
-
+    // noinspection JSCheckFunctionSignatures
     /**
      * @param {DiaclockSystemEntityList} entities
      */
-    updateEntities(entities) {
+    _updateEntities(entities) {
         if (this.#lastEntities.toJson() === entities.toJson()) {
-            return;
+            return false;
         }
 
         this._node.querySelectorAll('.cell-outer-root .content .entities .text').forEach(
@@ -304,40 +232,9 @@ class DiaclockMapRendererInternal extends DiaclockMapRenderer {
             }
         );
 
-        {
-            if (this.#animationDisposerHandle != null) {
-                clearTimeout(this.#animationDisposerHandle);
-                this.#animationDisposerHandle = null;
-            }
-
-            this._node.classList.remove(classForAnimation);
-
-            this.#animationDisposerHandle = setTimeout(
-                () => {
-                    if (this.#animationDisposerHandle != null) {
-                        clearTimeout(this.#animationDisposerHandle);
-                        this.#animationDisposerHandle = null;
-                    }
-
-                    this._node.classList.add(classForAnimation);
-
-                    this.#animationDisposerHandle = setTimeout(
-                        () => this._node.classList.remove(classForAnimation),
-                        1000
-                    );
-                },
-                1
-            );
-        }
-
         this.#lastEntities = entities;
-    }
 
-    /**
-     * @param {string} className
-     */
-    addClass(className) {
-        this._node.classList.add(className);
+        return true;
     }
 }
 

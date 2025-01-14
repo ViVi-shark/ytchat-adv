@@ -1,13 +1,17 @@
 import {DiaclockSystemPosition} from "./DiaclockSystemPosition.mjs";
+import {MapPositionParser} from "./MapPositionParser.mjs";
 
-export class DiaclockSystemPositionParser {
+/**
+ * @abstract
+ */
+export class DiaclockSystemPositionParser extends MapPositionParser {
     /**
+     * @abstract
      * @param {string} source
      * @param {boolean} allowInvalidPosition
      * @return {DiaclockSystemPosition|null}
      */
     parse(source, allowInvalidPosition = false) {
-        throw new Error();
     }
 
     /**
