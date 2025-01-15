@@ -30,6 +30,10 @@
     <TMPL_IF isDragBride>
     @import url('./map/css/drag-bride.css?<TMPL_VAR ver>');
     </TMPL_IF>
+    <TMPL_IF isFFXIVTTRPG>
+    @import url('./map/css/square-map.css?<TMPL_VAR ver>');
+    @import url('./map/css/ffxivttrpg.css?<TMPL_VAR ver>');
+    </TMPL_IF>
     @import url('./lib/css/games/storyteller.css?<TMPL_VAR ver>');
     <TMPL_IF isBloodorium>
     @import url('./lib/css/games/bloodorium.css?<TMPL_VAR ver>');
@@ -56,6 +60,9 @@
   </TMPL_IF>
   <TMPL_IF isDragBride>
   <script src="./lib/js/games/drag-bride.js?<TMPL_VAR ver>" defer type="module"></script>
+  </TMPL_IF>
+  <TMPL_IF isFFXIVTTRPG>
+  <script src="./lib/js/games/ffxivttrpg.js?<TMPL_VAR ver>" defer type="module"></script>
   </TMPL_IF>
   <TMPL_INCLUDE NAME="script.html">
 </head>
