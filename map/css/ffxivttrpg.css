@@ -1,0 +1,32 @@
+
+.square-map-root .cell.body .entity-list .nameplate {
+    &:has(.icon) {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    > .icon {
+        display: inline-block;
+        width: 1.5em;
+        height: 1.5em;
+        margin-right: 0.2em;
+
+        &.role-icon {
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center center;
+
+            &[data-role="TANK"] {
+                background-image: url("assets/TANK.png");
+            }
+
+            &[data-role="HEALER"] {
+                background-image: url("assets/HEALER.png");
+            }
+
+            &[data-role="DPS"] {
+                background-image: url("assets/DPS.png");
+            }
+        }
+    }
+}
