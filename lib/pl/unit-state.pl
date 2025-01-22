@@ -86,10 +86,10 @@ sub parseStateSettings {
     if ($source =~ s/\{\s*icon\s*=\s*(.+?)\s*\}//) {
         my $icon = $1;
 
-        if ($icon =~ /^(.+?):(buff|debuff|other)$/) {
+        if ($icon =~ /^(.+?):(buff|debuff|other)?$/) {
             my %icon = ();
             $icon{category} = $1;
-            $icon{direction} = $2;
+            $icon{direction} = $2 if $2 ne '';
             $stateSettings{icon} = \%icon;
         }
         else {
