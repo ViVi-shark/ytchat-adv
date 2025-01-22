@@ -383,6 +383,20 @@ else {
       delete $::in{'address'};
     }
   }
+  elsif ($::in{'game'} eq 'FinalFantasyXIV' && $::in{'comm'} =~ s/^([^\@＠]+?)?[\@＠][-－][DＤｄ][OＯｏ][TＴｔ]//i) {
+    my $roomId = $::in{'room'};
+    my $unitName = $1 // $::in{'name'};
+    require './lib/pl/command/ffxivttrpg.pl';
+    my $command = makeDoTCommand($roomId, $unitName);
+
+    if (defined($command) && $command ne '') {
+      ($::in{'info'}, $::in{'system'}) = unitCalcEdit($unitName, $command);
+      delete $::in{'address'};
+    }
+    else {
+      return;
+    }
+  }
   #変更
   elsif($::in{'comm'} =~ s/^[@＠](((?:$stt_commands|メモ|memo|url)[\+＋\-－\*＊\/／=＝:：](?:"(?:.*?)"|(?:.*?))(?:\s|$))+)//s){
     ($::in{'info'}, $::in{'system'}) = unitCalcEdit($::in{'name'}, $1);
