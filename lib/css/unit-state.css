@@ -110,6 +110,58 @@ dialog.state-template-selector {
     & .state-icon[data-icon-category="SW2/陣率"] {
         background-image: url("icons/sw2/陣率.png");
     }
+
+    & .state-icon[data-icon-category="FFXIVTTRPG/アストラルファイア"] {
+        background-image: url("icons/FFXIVTTRPG/ファイア.png");
+    }
+
+    & .state-icon[data-icon-category="FFXIVTTRPG/アドル"] {
+        background-image: url("icons/FFXIVTTRPG/アドル.png");
+    }
+
+    & .state-icon[data-icon-category="FFXIVTTRPG/アンブラルブリザード"] {
+        background-image: url("icons/FFXIVTTRPG/ブリザド.png");
+    }
+
+    & .state-icon[data-icon-category="FFXIVTTRPG/エアロ"] {
+        background-image: url("icons/FFXIVTTRPG/エアロ.png");
+    }
+
+    & .state-icon[data-icon-category="FFXIVTTRPG/サンダー系"] {
+        background-image: url("icons/FFXIVTTRPG/サンダー系.png");
+    }
+
+    & .state-icon[data-icon-category="FFXIVTTRPG/サンダー系Proc"] {
+        background-image: url("icons/FFXIVTTRPG/サンダー系魔法実行可.png");
+    }
+
+    & .state-icon[data-icon-category="FFXIVTTRPG/スタン"] {
+        background-image: url("icons/FFXIVTTRPG/スタン.png");
+    }
+
+    & .state-icon[data-icon-category="FFXIVTTRPG/バーサク"] {
+        background-image: url("icons/FFXIVTTRPG/バーサク.png");
+    }
+
+    & .state-icon[data-icon-category="FFXIVTTRPG/ランパート"] {
+        background-image: url("icons/FFXIVTTRPG/ランパート.png");
+    }
+
+    & .state-icon[data-icon-category="FFXIVTTRPG/リプライザル"] {
+        background-image: url("icons/FFXIVTTRPG/リプライザル.png");
+    }
+
+    & .state-icon[data-icon-category="FFXIVTTRPG/ルーシッドドリーム"] {
+        background-image: url("icons/FFXIVTTRPG/ルーシッドドリーム.png");
+    }
+
+    & .state-icon[data-icon-category="FFXIVTTRPG/生還"] {
+        background-image: url("icons/FFXIVTTRPG/生還.png");
+    }
+
+    & .state-icon[data-icon-category="FFXIVTTRPG/衰弱"] {
+        background-image: url("icons/FFXIVTTRPG/衰弱.png");
+    }
 }
 
 #status #status-body > dl[data-name] ul.details > .state,
