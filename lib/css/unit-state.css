@@ -31,10 +31,6 @@ dialog.state-template-selector {
         opacity: 0.5;
     }
 
-    & .state-icon[data-icon-direction=""] {
-        filter: invert(100%);
-    }
-
     & .state-icon[data-icon-direction="buff"] {
         filter: invert(100%) sepia(100%) saturate(2000%) hue-rotate(-57deg);
     }
@@ -1279,7 +1275,7 @@ dialog.state-template-selector {
             padding: 0.3em;
         }
 
-        :is(.state-icon, .state-name, .state-duration, .state-description):not(.header) {
+        :is(.state-name, .state-duration, .state-description):not(.header) {
             border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
             cursor: pointer;
         }
