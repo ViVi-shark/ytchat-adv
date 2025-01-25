@@ -356,7 +356,7 @@ sub tagConvert {
   $comm =~ s{<!a#([0-9]+)>}{'<a href="'.$linkURL[$1-1].'" target="_blank">'.$linkURL[$1-1].'</a>'}ge;
 
   # 画像記法・後処理
-  $comm =~ s{<!img#([0-9]+)>}{'<img class="picture" alt="picture" src="'.resolveCloudAssetUrl(@pictureURL[$1-1], 'log').'" onclick="imgView(this.src)" />'}ge;
+  $comm =~ s{<!img#([0-9]+)>}{'<img class="picture" loading="lazy" alt="picture" src="'.resolveCloudAssetUrl(@pictureURL[$1-1], 'log').'" onclick="imgView(this.src)" />'}ge;
   
   $comm =~ s#(</ul>)\n#$1#;
   
