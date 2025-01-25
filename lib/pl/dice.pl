@@ -80,7 +80,7 @@ sub diceRoll {
     (?:(\/\/|\*\*) ([0-9]*) ([+-][0-9()][0-9\+\-\*()⌈⌉]*)? )?
     (?:(>=?|<=?|==) ([0-9\+\-\*()|]*) )?
     =?
-    (?:\:([0-9]+|.+,.+))?
+    (?:\:([0-9]+|.+))?
     (?:\s|$)
   /ix){
     return "";
@@ -107,7 +107,10 @@ sub diceRoll {
   }
 
   my @repeatLabels;
-  if ($repeat !~ /,/) {
+  if ($repeat eq '') {
+    @repeatLabels = ('');
+  }
+  elsif ($repeat =~ /^\d+$/) {
     @repeatLabels = ();
     $repeat = ($repeat > 20) ? 20 : (!$repeat) ? 1 : $repeat;
     push(@repeatLabels, '') foreach (1 .. $repeat);
