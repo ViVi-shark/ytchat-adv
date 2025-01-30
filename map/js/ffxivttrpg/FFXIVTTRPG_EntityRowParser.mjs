@@ -51,12 +51,15 @@ export class FFXIVTTRPG_EntityRowParser extends MapEntityRowParser {
     }
 
     /**
-     * @param {string} form
+     * @param {string} formSource
      * @param {'固定予兆'|'移動予兆'} mode
      * @return {null|FFXIVTTRPG_EntitySource}
      */
-    #parseIndicationForm(form, mode) {
+    #parseIndicationForm(formSource, mode) {
         const name = `__${mode}__`;
+
+        const reverse = formSource.startsWith('^');
+        const form = formSource.replace(/^\^/, '');
 
         let m;
 
@@ -72,7 +75,7 @@ export class FFXIVTTRPG_EntityRowParser extends MapEntityRowParser {
                 return null;
             }
 
-            return {name, form: 'square', size, origin};
+            return {reverse, name, form: 'square', size, origin,};
         }
 
         if ((m = form.match(/^cross(?:[~～](\d+))?(?:@([A-Z]+\d+))?$/i))) {
@@ -87,29 +90,29 @@ export class FFXIVTTRPG_EntityRowParser extends MapEntityRowParser {
                 return null;
             }
 
-            return {name, form: 'cross', size, origin};
+            return {reverse, name, form: 'cross', size, origin};
         }
 
         if (mode === '固定予兆' && (m = form.match(/^(\d+)$/))) {
             const row = parseInt(m[1]);
-            return {name, form: 'row', row};
+            return {reverse, name, form: 'row', row};
         }
 
         if (mode === '固定予兆' && (m = form.match(/^(\d+)[:：](\d+)$/))) {
             const start = parseInt(m[1]);
             const end = parseInt(m[2]);
-            return {name, form: 'rows', start, end};
+            return {reverse, name, form: 'rows', start, end};
         }
 
         if (mode === '固定予兆' && (m = form.match(/^([A-Z]+)$/i))) {
             const column = m[1].toUpperCase();
-            return {name, form: 'column', column};
+            return {reverse, name, form: 'column', column};
         }
 
         if (mode === '固定予兆' && (m = form.match(/^([A-Z]+)[:：]([A-Z]+)$/i))) {
             const start = m[1].toUpperCase();
             const end = m[2].toUpperCase();
-            return {name, form: 'columns', start, end};
+            return {reverse, name, form: 'columns', start, end};
         }
 
         if ((m = form.match(/^([A-Z]+\d+)$/i))) {
@@ -123,7 +126,7 @@ export class FFXIVTTRPG_EntityRowParser extends MapEntityRowParser {
                 return null;
             }
 
-            return {name, form: 'point', position};
+            return {reverse, name, form: 'point', position};
         }
 
         if (mode === '固定予兆' && (m = form.match(/^([A-Z]+\d+)[:：]([A-Z]+\d+)$/i))) {
@@ -134,7 +137,7 @@ export class FFXIVTTRPG_EntityRowParser extends MapEntityRowParser {
                 return null;
             }
 
-            return {name, form: 'direct-rect', start, end};
+            return {reverse, name, form: 'direct-rect', start, end};
         }
 
         if ((m = form.match(/^([A-Z]+\d+)\s*to\s*(UP|DOWN|RIGHT|LEFT)(?:\s*[~～]\s*(\d+))?$/i))) {
@@ -150,7 +153,7 @@ export class FFXIVTTRPG_EntityRowParser extends MapEntityRowParser {
                 return null;
             }
 
-            return {name, form: 'linear', origin, direction, size};
+            return {reverse, name, form: 'linear', origin, direction, size};
         }
 
         return null;

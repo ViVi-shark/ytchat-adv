@@ -15,9 +15,11 @@ import {Range_OriginatedRow} from "../square-map-range/Range_OriginatedRow.mjs";
 import {Range_OriginatedColumn} from "../square-map-range/Range_OriginatedColumn.mjs";
 import {OriginatedRangeBuilder} from "../square-map-range/OriginatedRangeBuilder.mjs";
 import {SquareMapPosition} from "../positions/SquareMapPosition.mjs";
+import {ReversedRange} from "../square-map-range/ReversedRange.mjs";
 
 /**
  * @typedef FFXIVTTRPG_EntitySource
+ * @property {boolean} reverse
  * @property {string} name
  * @property {SquareMapPosition} [position]
  * @property {string} [role]
@@ -67,7 +69,9 @@ export class FFXIVTTRPG_EntityList extends SquareMapEntityList {
                 }
             })(source);
 
-            return new FFXIVTTRPG_ImmobileIndication(range);
+            return new FFXIVTTRPG_ImmobileIndication(
+                source.reverse ? new ReversedRange(range) : range
+            );
         } else if (source.name === '__移動予兆__') {
             if (source.anchor == null) {
                 throw new Error(`Anchor must be specified to mobile indication.`);
@@ -79,7 +83,7 @@ export class FFXIVTTRPG_EntityList extends SquareMapEntityList {
 
             const anchor = this.#locators[source.anchor];
 
-            const toBuild = (source => {
+            const toBuild = (/** @return {OriginatedRangeBuilder~toBuild} */source => {
                 switch (source.form) {
                     case 'square':
                         return x => new Range_OriginatedSquare(x, source.size);
@@ -98,7 +102,15 @@ export class FFXIVTTRPG_EntityList extends SquareMapEntityList {
                 }
             })(source);
 
-            return new FFXIVTTRPG_MobileIndication(anchor, new OriginatedRangeBuilder(toBuild));
+            return new FFXIVTTRPG_MobileIndication(
+                anchor,
+                new OriginatedRangeBuilder(
+                    origin => {
+                        const range = toBuild(origin);
+                        return source.reverse ? new ReversedRange(range) : range;
+                    }
+                )
+            );
         } else if ('role' in source) {
             return new FFXIVTTRPG_Character(source.name, source.position, source.role);
         }
