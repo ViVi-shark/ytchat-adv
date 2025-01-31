@@ -3,41 +3,46 @@ import {Range_OriginatedRect} from "./Range_OriginatedRect.mjs";
 
 export class Range_OriginatedSquare extends Range_OriginatedRect {
     /** @var {int} */
-    #size;
+    #width;
+
+    /** @var {int} */
+    #height;
 
     /**
      * @param {SquareMapPosition} origin
-     * @param {int} size allow only odd value
+     * @param {int} width allow only odd value
+     * @param {int} height allow only odd value
      */
-    constructor(origin, size) {
+    constructor(origin, width, height) {
         super(origin);
-        this.#size = size;
+        this.#width = width;
+        this.#height = height;
     }
 
     _calcLeft() {
         return SquareMapPosition.intToCharacter(
             Math.max(
                 1,
-                this.origin.horizontalInt - Math.floor(this.#size / 2)
+                this.origin.horizontalInt - Math.floor(this.#width / 2)
             )
         );
     }
 
     _calcRight() {
         return SquareMapPosition.intToCharacter(
-            this.origin.horizontalInt + Math.floor(this.#size / 2)
+            this.origin.horizontalInt + Math.floor(this.#width / 2)
         );
     }
 
     _calcTop() {
         return Math.max(
             1,
-            this.origin.vertical - Math.floor(this.#size / 2)
+            this.origin.vertical - Math.floor(this.#height / 2)
         );
     }
 
     _calcBottom() {
-        return this.origin.vertical + Math.floor(this.#size / 2);
+        return this.origin.vertical + Math.floor(this.#height / 2);
     }
 
     toText() {
@@ -45,6 +50,6 @@ export class Range_OriginatedSquare extends Range_OriginatedRect {
     }
 
     makeFormText() {
-        return `${this.#size}x${this.#size}`;
+        return `${this.#width}x${this.#height}`;
     }
 }

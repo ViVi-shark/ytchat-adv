@@ -27,6 +27,8 @@ import {ReversedRange} from "../square-map-range/ReversedRange.mjs";
  * @property {'square'|'cross'|'row'|'rows'|'column'|'columns'|'point'|'direct-rect'|'linear'} [form]
  * @property {SquareMapPosition} [origin]
  * @property {int} [size]
+ * @property {int} [width]
+ * @property {int} [height]
  * @property {int} [row]
  * @property {string} [column]
  * @property {int|string|SquareMapPosition} [start]
@@ -47,7 +49,7 @@ export class FFXIVTTRPG_EntityList extends SquareMapEntityList {
             const range = (source => {
                 switch (source.form) {
                     case 'square':
-                        return new Range_OriginatedSquare(source.origin, source.size);
+                        return new Range_OriginatedSquare(source.origin, source.width, source.height);
                     case 'cross':
                         return new Range_Cross(source.origin, source.size);
                     case 'row':
@@ -86,7 +88,7 @@ export class FFXIVTTRPG_EntityList extends SquareMapEntityList {
             const toBuild = (/** @return {OriginatedRangeBuilder~toBuild} */source => {
                 switch (source.form) {
                     case 'square':
-                        return x => new Range_OriginatedSquare(x, source.size);
+                        return x => new Range_OriginatedSquare(x, source.width, source.height);
                     case 'cross':
                         return x => new Range_Cross(x, source.size);
                     case 'row':
