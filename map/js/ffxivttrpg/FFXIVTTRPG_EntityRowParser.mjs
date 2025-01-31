@@ -63,9 +63,10 @@ export class FFXIVTTRPG_EntityRowParser extends MapEntityRowParser {
 
         let m;
 
-        if ((m = form.match(/^(\d+)x\d+(?:@([A-Z]+\d+))?$/i))) {
-            const size = parseInt(m[1]);
-            const origin = m[2] != null ? this._positionParser.parse(m[2]) : null;
+        if ((m = form.match(/^(\d+)x(\d+)(?:@([A-Z]+\d+))?$/i))) {
+            const width = parseInt(m[1]);
+            const height = parseInt(m[2]);
+            const origin = m[3] != null ? this._positionParser.parse(m[3]) : null;
 
             if (origin == null && mode === '固定予兆') {
                 return null;
@@ -75,7 +76,7 @@ export class FFXIVTTRPG_EntityRowParser extends MapEntityRowParser {
                 return null;
             }
 
-            return {reverse, name, form: 'square', size, origin,};
+            return {reverse, name, form: 'square', width, height, origin};
         }
 
         if ((m = form.match(/^cross(?:[~～](\d+))?(?:@([A-Z]+\d+))?$/i))) {
