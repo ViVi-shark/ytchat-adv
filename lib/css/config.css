@@ -294,7 +294,7 @@
 .logs dl:hover {
   background-color: rgba(0,0,0, 0.3);
 }
-.logs dl dd:hover {
+.logs dl dd:not(.commands):hover {
   box-shadow: 0 0 0 .1rem rgba(100,200,255,0.2) inset;
 }
 /* チャットログ：リンク */

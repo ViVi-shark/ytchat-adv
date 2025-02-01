@@ -1573,6 +1573,13 @@ body.rom .input-form { display: none !important; }
 .chat .logs dl dd.comm:hover button.rewrite {
   display: inline-block;
 }
+.chat .logs dl dd.commands {
+  height: max-content;
+
+  button {
+    margin: 0.2em;
+  }
+}
 
 .chat .logs dl dd:is(.comm, .info),
 #memo-view,
