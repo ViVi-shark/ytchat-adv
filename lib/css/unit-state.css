@@ -83,6 +83,10 @@ dialog.state-template-selector {
         background-image: url("icons/sw2/召異魔法.png");
     }
 
+    & .state-icon[data-icon-category="SW2/奈落魔法"] {
+        background-image: url("icons/sw2/奈落魔法.png");
+    }
+
     & .state-icon[data-icon-category="SW2/練技"] {
         background-image: url("icons/sw2/練技.png");
     }
