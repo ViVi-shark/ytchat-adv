@@ -326,7 +326,7 @@ body.rom #status #status-body > dl > dt {
 
 #status #status-body > dl[data-name] {
   font-size: 1.4rem;
-  padding: 0 0.35em;
+  padding: 0 0.35em 0 0.5em;
   box-sizing: border-box;
   margin-bottom: 0.7em;
   width: 100%;
