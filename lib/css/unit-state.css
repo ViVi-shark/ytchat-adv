@@ -1,15 +1,80 @@
-#status #status-body > dl[data-name] ul.details > .state {
-    width: calc(100%);
-    display: flex;
-    flex-flow: row;
-    align-items: center;
-    padding: 0;
-    border-bottom: none;
-    background-image: linear-gradient(to bottom, transparent 0%, transparent 85%, rgba(128, 128, 128, 0.15) 85%, rgba(128, 128, 128, 0.25) calc(100% - 1px), transparent calc(100% - 1px), transparent 100%);
-    cursor: pointer;
+#status #status-body > dl[data-name] ul.details > .states {
+    width: 100%;
+    height: max-content;
+
+    &:has(details:not([open])) {
+        padding-top: 0.5em;
+    }
+
+    > details {
+        position: relative;
+
+        > summary {
+            position: relative;
+
+            &::marker {
+                font-family: "Material Symbols Outlined", sans-serif;
+                font-variation-settings: 'FILL' 1;
+                font-size: 1.2em;
+            }
+        }
+
+        &:not([open]) {
+            > summary {
+                &::marker {
+                    content: "\e5d7";
+                }
+
+                > .content {
+                    position: relative;
+                    top: -0.15em;
+                }
+            }
+        }
+
+        &[open] {
+            > summary {
+                height: 0;
+                overflow-y: visible;
+                left: -1em;
+                width: calc(100% + 1em);
+
+                &::marker {
+                    content: "\e5d6";
+                }
+
+                > .content {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .state-list:empty {
+        display: none;
+    }
+
+    .state-list > .state {
+        width: calc(100%);
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        padding: 0;
+        border-bottom: none;
+        background-image: linear-gradient(
+                to bottom,
+                transparent 0%,
+                transparent 85%,
+                rgba(128, 128, 128, 0.15) 85%,
+                rgba(128, 128, 128, 0.25) calc(100% - 1px),
+                transparent calc(100% - 1px),
+                transparent 100%
+        );
+        cursor: pointer;
+    }
 }
 
-#status #status-body > dl[data-name] ul.details > .state,
+#status #status-body > dl[data-name] ul.details > .states .state-list > .state,
 .state-controller,
 #unit-state-window .state-selector-area,
 dialog.state-template-selector {
@@ -168,7 +233,7 @@ dialog.state-template-selector {
     }
 }
 
-#status #status-body > dl[data-name] ul.details > .state,
+#status #status-body > dl[data-name] ul.details > .states .state-list > .state,
 .state-controller,
 #unit-state-window .state-selector-area {
     --row-height: 2rem;
@@ -196,10 +261,14 @@ dialog.state-template-selector {
     }
 }
 
-#status #status-body > dl[data-name] ul.details > .state {
+#status #status-body > dl[data-name] ul.details > .states .state-list > .state {
     & .state-name {
         width: calc(100% - var(--icon-size) - var(--duration-width));
         font-size: 1.1rem;
+
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
     }
 
     & .state-duration {
@@ -214,13 +283,7 @@ dialog.state-template-selector {
     }
 }
 
-#status #status-body > dl[data-name] ul.details > .state > .state-name {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-#status #status-body > dl[data-name] ul.details > .state .tooltip-text,
+#status #status-body > dl[data-name] ul.details > .states .state-list > .state .tooltip-text,
 .state-controller,
 #unit-state-window .state-selector-area {
     & .state-header {
@@ -302,7 +365,7 @@ dialog.state-template-selector {
     }
 }
 
-#status #status-body > dl[data-name] ul.details > .state .tooltip-text,
+#status #status-body > dl[data-name] ul.details > .states .state-list > .state .tooltip-text,
 .state-controller {
     & .state-name {
         font-size: 1.4rem;
@@ -334,37 +397,47 @@ dialog.state-template-selector {
     }
 }
 
-#status #status-body > dl[data-name] ul.details > .state:hover,
-#status #status-body > dl[data-name] ul.details > .state.state-selected {
-    --background-color: rgba(146, 137, 120, 0.3);
-    background-image: linear-gradient(to bottom, transparent 0%, transparent calc(0% + 1px), var(--background-color) calc(0% + 1px), var(--background-color) calc(100% - 1px), transparent calc(100% - 1px), transparent 100%);
-}
-
-#status #status-body > dl[data-name] ul.details > .state.state-selected {
-    pointer-events: none;
-}
-
-#status #status-body > dl[data-name] ul.details > .state .tooltip-text {
-    & .state-header {
-        display: flex;
-        flex-flow: row;
-        justify-content: flex-start;
-        align-items: center;
-
-        & .state-name {
-            display: inline-block;
-            width: calc(100% - var(--icon-size) - var(--duration-width));
-            height: fit-content;
-            justify-content: flex-start;
-            align-items: center;
-        }
+#status #status-body > dl[data-name] ul.details > .states .state-list > .state {
+    &:hover,
+    &.state-selected {
+        --background-color: rgba(146, 137, 120, 0.3);
+        background-image: linear-gradient(
+                to bottom,
+                transparent 0%,
+                transparent calc(0% + 1px),
+                var(--background-color) calc(0% + 1px),
+                var(--background-color) calc(100% - 1px),
+                transparent calc(100% - 1px),
+                transparent 100%
+        );
     }
 
-    & .state-duration {
-        display: block;
+    &.state-selected {
+        pointer-events: none;
+    }
 
-        & .occurrence-round {
-            font-size: 65%;
+    .tooltip-text {
+        & .state-header {
+            display: flex;
+            flex-flow: row;
+            justify-content: flex-start;
+            align-items: center;
+
+            & .state-name {
+                display: inline-block;
+                width: calc(100% - var(--icon-size) - var(--duration-width));
+                height: fit-content;
+                justify-content: flex-start;
+                align-items: center;
+            }
+        }
+
+        & .state-duration {
+            display: block;
+
+            & .occurrence-round {
+                font-size: 65%;
+            }
         }
     }
 }
