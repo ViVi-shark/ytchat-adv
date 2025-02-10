@@ -64,6 +64,9 @@ $ROOM->param(isPresent => !$::in{'log'} ? 1 : 0);
 $ROOM->param(title => $rooms{$id}{'name'});
 $ROOM->param(subtitle => $::in{'log'}?$::in{'log'}:'現行ログ');
 $ROOM->param(gameName => $game);
+$ROOM->param(isBloodorium => $game =~ /^bloodorium/i ? 1 : 0);
+$ROOM->param(isDragBride => $game eq 'drag-bride-2' ? 1 : 0);
+$ROOM->param(isFFXIVTTRPG => $game eq 'FinalFantasyXIV' ? 1 : 0);
 
 $ROOM->param(liteMode => ($::in{'type'} eq 'lite') ? 1 : 0);
 $ROOM->param(dlMode => ($::in{'type'} eq 'download') ? 1 : 0);
