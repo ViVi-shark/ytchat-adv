@@ -67,6 +67,29 @@ sub diceCheck {
       return bloodoriumDiceCheck($comm), 'dice:bloodorium', $code;
     }
   }
+  # 倚鬼刀豪
+  elsif ($::in{'game'} eq 'fantastic-freaky-fencers') {
+    require './lib/pl/dice/fantastic-freaky-fencers.pl';
+
+    if ($comm =~ /^(A)?([0-9\+\-\*\/()]+)F([0-9\+\-\*\/()]+)D(?:\s|$)/i) { # 汎用ダイスロールならびに攻撃
+      my $action = $1;
+      my $faces = $2;
+      my $count = $3;
+
+      $action = '攻撃' if $action =~ /^A$/i;
+
+      (my $message,) = fffDiceCheck($action, $faces, $count);
+      return $message;
+    }
+    elsif ($comm =~ /^E([0-9\+\-\*\/()]+)F([0-9\+\-\*\/()]+)D(?:>=(\?|\d+))?(?:\s|$)/i) { # 回避
+      my $faces = $1;
+      my $count = $2;
+      my $damage = $3;
+
+      (my $message,) = fffDiceCheck('回避', $faces, $count, $damage);
+      return $message;
+    }
+  }
 }
 
 sub diceRoll {

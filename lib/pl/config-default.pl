@@ -112,6 +112,10 @@ our %games = (
     'status'   => [ 'ブースト値', 'シールド枚数', '消耗レベル', 'ドラグマニューバ', 'フローレス・リンク', ],
     'chatTabs' => [ 'メイン', 'サブ' ]
   },
+  'fantastic-freaky-fencers' => {
+      name   => '倚鬼刀豪',
+      status => [ '耐久力', '間合', '闘気', '一時的闘気' ],
+  },
 );
 
 our $default_game = 'sw2';
