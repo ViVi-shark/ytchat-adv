@@ -67,6 +67,9 @@
   <TMPL_IF isFFXIVTTRPG>
   <script src="./lib/js/games/ffxivttrpg.js?<TMPL_VAR ver>" defer type="module"></script>
   </TMPL_IF>
+  <TMPL_IF isFantasticFreakyFencers>
+  <script src="./lib/js/games/fantastic-freaky-fencers.js?<TMPL_VAR ver>" defer type="module"></script>
+  </TMPL_IF>
   <TMPL_INCLUDE NAME="script.html">
 </head>
 <body data-game="<TMPL_VAR gameSystem>">

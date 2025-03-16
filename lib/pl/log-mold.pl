@@ -67,6 +67,7 @@ $ROOM->param(gameName => $game);
 $ROOM->param(isBloodorium => $game =~ /^bloodorium/i ? 1 : 0);
 $ROOM->param(isDragBride => $game eq 'drag-bride-2' ? 1 : 0);
 $ROOM->param(isFFXIVTTRPG => $game eq 'FinalFantasyXIV' ? 1 : 0);
+$ROOM->param(isFantasticFreakyFencers => $game eq 'fantastic-freaky-fencers' ? 1 : 0);
 
 $ROOM->param(liteMode => ($::in{'type'} eq 'lite') ? 1 : 0);
 $ROOM->param(dlMode => ($::in{'type'} eq 'download') ? 1 : 0);

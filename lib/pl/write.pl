@@ -397,6 +397,21 @@ else {
       return;
     }
   }
+  elsif ($::in{'game'} eq 'fantastic-freaky-fencers' && $::in{'comm'} =~ s#^[\@＠](闘気|気焔)([=+])([0-9\+\-\*\/()]+)F([0-9\+\-\*\/()]+)D(?:\s|$)##i) {
+    my $statusName = $1;
+    my $operator = $2;
+    my $faces = $3;
+    my $count = $4;
+    my $unitName = $::in{name};
+
+    require './lib/pl/dice/fantastic-freaky-fencers.pl';
+    (my $message, my $value) = fffDiceCheck(undef, $faces, $count);
+
+    my $command = "${statusName}${operator}${value}";
+    ($::in{'info'}, $::in{'system'}) = unitCalcEdit($unitName, $command);
+    $::in{'info'} = $message . "\n" . $::in{'info'};
+    delete $::in{'address'};
+  }
   #変更
   elsif($::in{'comm'} =~ s/^
     [@＠]
