@@ -1012,6 +1012,7 @@ sub unitCalcEdit {
         my ($result, $diff, $over) = sttCalc($type,$num,$op,$data{'unit'}{$set_name}{'status'}{$type});
         $data{'unit'}{$set_name}{'status'}{$type} = $result;
         $diff .= "(over${over})" if $over;
+        $result =~ s{^-\d+}{<span style="color: #CD5C5C;">$&</span>};
 
         $result_info .= '<br>' if $result_info;
         $result_info .= $rolledText."　" if $rolledText;
@@ -1021,6 +1022,7 @@ sub unitCalcEdit {
       elsif($op =~ /^:$/){
         my $result = $num;
         $data{'unit'}{$set_name}{'status'}{$type} = $result;
+        $result =~ s{^-\d+}{<span style="color: #CD5C5C;">$&</span>};
         $result_info .= ($result_info ? '　' : '') . "<b>$type</b>:$result";
       }
       push(@status, $type);
