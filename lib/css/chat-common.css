@@ -440,10 +440,6 @@ body.rom #status #status-body > dl > dt {
 
     .value {
       z-index: 2;
-
-      .minus {
-        color: #CD5C5C;
-      }
     }
   }
 }

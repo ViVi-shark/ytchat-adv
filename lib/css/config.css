@@ -441,6 +441,10 @@
   opacity: 0.70;
   font-style: normal;
 }
+.logs dl dd.info.unit .minus,
+#status #status-body > dl[data-name] > dd.details > ul.details > li > dl dd .value .minus {
+  color: #CD5C5C;
+}
 /* チャットログ：チョイス */
 .logs dl dd.info.choice::before {
   color: #fe0;
