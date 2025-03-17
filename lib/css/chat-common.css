@@ -702,6 +702,10 @@ body.rom .sheet { display: none; }
   display: grid;
   grid-template-rows: auto 1fr auto;
   overflow: hidden;
+
+  &.hidden {
+    display: none;
+  }
 }
 .sheet h2 {
   margin-top: -.1em;

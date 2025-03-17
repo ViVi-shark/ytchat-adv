@@ -1146,7 +1146,7 @@ body.rom #main-form > .help.button {
   animation-duration: 0.25s;
   animation-timing-function: ease-out;
 }
-.sheet:has(.chat-palette-area) {
+.sheet:has(.chat-palette-area):not(.hidden) {
   display: grid;
   grid-template-rows: max-content 1fr;
   grid-template-columns: 1fr;
