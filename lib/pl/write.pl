@@ -1013,6 +1013,7 @@ sub unitCalcEdit {
         $data{'unit'}{$set_name}{'status'}{$type} = $result;
         $diff .= "(over${over})" if $over;
         $result =~ s{^-\d+}{<span class="minus">$&</span>};
+        $result =~ s{^(0)(/.+?)?$}{<span class="hp zero">$1</span>$2} if $type =~ /^(?:.+?:)?HP$/;
 
         $result_info .= '<br>' if $result_info;
         $result_info .= $rolledText."　" if $rolledText;
@@ -1023,6 +1024,7 @@ sub unitCalcEdit {
         my $result = $num;
         $data{'unit'}{$set_name}{'status'}{$type} = $result;
         $result =~ s{^-\d+}{<span class="minus">$&</span>};
+        $result =~ s{^(0)(/.+?)?$}{<span class="hp zero">$1</span>$2} if $type =~ /^(?:.+?:)?HP$/;
         $result_info .= ($result_info ? '　' : '') . "<b>$type</b>:$result";
       }
       push(@status, $type);
