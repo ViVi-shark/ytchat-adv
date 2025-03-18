@@ -71,22 +71,24 @@ sub diceCheck {
   elsif ($::in{'game'} eq 'fantastic-freaky-fencers') {
     require './lib/pl/dice/fantastic-freaky-fencers.pl';
 
-    if ($comm =~ /^(A)?([0-9\+\-\*\/()]+)F([0-9\+\-\*\/()]+)D(?:\s|$)/i) { # 汎用ダイスロールならびに攻撃
+    if ($comm =~ /^(A)?([0-9\+\-\*\/()]+)F([0-9\+\-\*\/()]+)D([-+][0-9\+\-\*\/()]+)?(?:\s|$)/i) { # 汎用ダイスロールならびに攻撃
       my $action = $1;
       my $faces = $2;
       my $count = $3;
+      my $modification = $4;
 
       $action = '攻撃' if $action =~ /^A$/i;
 
-      (my $message,) = fffDiceCheck($action, $faces, $count);
+      (my $message,) = fffDiceCheck($action, $faces, $count, $modification);
       return $message;
     }
-    elsif ($comm =~ /^E([0-9\+\-\*\/()]+)F([0-9\+\-\*\/()]+)D(?:>=(\?|\d+))?(?:\s|$)/i) { # 回避
+    elsif ($comm =~ /^E([0-9\+\-\*\/()]+)F([0-9\+\-\*\/()]+)D([-+][0-9\+\-\*\/()]+)?(?:>=(\?|\d+))?(?:\s|$)/i) { # 回避
       my $faces = $1;
       my $count = $2;
-      my $damage = $3;
+      my $modification = $3;
+      my $damage = $4;
 
-      (my $message,) = fffDiceCheck('回避', $faces, $count, $damage);
+      (my $message,) = fffDiceCheck('回避', $faces, $count, $modification, $damage);
       return $message;
     }
   }

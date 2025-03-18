@@ -114,7 +114,7 @@ our %games = (
   },
   'fantastic-freaky-fencers' => {
       name   => '倚鬼刀豪',
-      status => [ '耐久力', '間合', '闘気', '一時的闘気' ],
+      status => [ '耐久力', '間合', '闘気' ],
   },
 );
 

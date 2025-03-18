@@ -9,10 +9,12 @@ sub fffDiceCheck {
     my $action = shift;
     my $diceFacesExpression = shift;
     my $diceCountExpression = shift;
+    my $modificationExpression = shift;
     my $difficulty = shift;
 
     my $diceFaces = int(calc($diceFacesExpression));
     my $diceCount = int(calc($diceCountExpression));
+    my $modification = $modificationExpression ne '' ? int(calc($modificationExpression)) : '';
 
     if ($diceFaces < 1 || $diceFaces > 1000) {
         return '';
@@ -47,7 +49,7 @@ sub fffDiceCheck {
 
         if ($totalDiceValue >= ($diceFaces + $diceCount * 10)) {
             $message .= " → 最大値 ${maxDiceValue}, 合計値 ${totalDiceValue}〈閃撃〉";
-            $resultValue *= 2;
+            $resultValue = $totalDiceValue;
         }
     }
     elsif ($action eq '回避') {
@@ -57,7 +59,17 @@ sub fffDiceCheck {
         $resultName = '最大値';
     }
 
+    if ($modification ne '' && $resultName ne '最大値') {
+       $message .= "@{[$modification >= 0 ? '+' : '']}${modification}";
+        $resultValue += $modification;
+    }
+
     $message .= " → ${resultName} ${resultValue}";
+
+    if ($modification ne '' && $resultName eq '最大値') {
+        $resultValue += $modification;
+        $message .= "[@{[$modification >= 0 ? '+' : '']}${modification}] → ${resultValue}";
+    }
 
     if ($action eq '回避' && $difficulty ne '' && $difficulty ne '?') {
         if ($resultValue >= $difficulty) {
@@ -65,7 +77,7 @@ sub fffDiceCheck {
         }
         else {
             my $reduction = int($resultValue / 2);
-            $message .= " ＜ ダメージ ${difficulty} → 不完全回避（${reduction}点軽減） → @{[ $difficulty - $reduction ]}点消耗";
+            $message .= " ＜ ダメージ ${difficulty} → 部分回避（${reduction}点軽減） → @{[ $difficulty - $reduction ]}点消耗";
         }
     }
 
