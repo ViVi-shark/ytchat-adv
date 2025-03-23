@@ -34,6 +34,20 @@ export class DiaclockMapCore extends MapBase {
     /**
      * @protected
      */
+    get _cellCountInCircle() {
+        return this.#cellCountInCircle;
+    }
+
+    /**
+     * @protected
+     */
+    get _circleCount() {
+        return this.#circleCount;
+    }
+
+    /**
+     * @protected
+     */
     _hideCenter() {
         this._addClassToRenderer('hide-center');
     }
