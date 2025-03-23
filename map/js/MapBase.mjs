@@ -43,6 +43,13 @@ export class MapBase {
 
     /**
      * @final
+     */
+    refresh() {
+        this.#renderers.forEach(x => x.refresh())
+    }
+
+    /**
+     * @final
      * @param {HTMLElement} node
      * @return {MapRenderer}
      */

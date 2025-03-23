@@ -188,22 +188,43 @@ export class DiaclockMapRenderer extends MapRenderer {
                 entityNameNode.textContent = entity.name;
                 entityNameNode.dataset.entityId = entity.id;
 
-                this._setupEntityElement(entityNameNode, entity);
-
                 container.appendChild(entityNameNode);
             }
         );
 
         this.#lastEntities = entities;
 
+        this.#refreshEntities();
+
         return true;
+    }
+
+    _refresh() {
+        return this.#refreshEntities();
+    }
+
+    #refreshEntities() {
+        let changed = false;
+
+        for (const entityElement of this._node.querySelectorAll('[data-cell-id] .content .entities .text .entity-name')) {
+            const id = entityElement.dataset.entityId;
+            const entity = [...this.#lastEntities].find(x => x.id === id);
+
+            if (entity != null) {
+                changed |= this._refreshEntityElement(entityElement, entity);
+            }
+        }
+
+        return changed;
     }
 
     /**
      * @protected
      * @param {HTMLElement} entityElement
      * @param {DiaclockSystemEntity} entity
+     * @return {boolean}
      */
-    _setupEntityElement(entityElement, entity) {
+    _refreshEntityElement(entityElement, entity) {
+        return false;
     }
 }

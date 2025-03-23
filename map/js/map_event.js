@@ -1,3 +1,16 @@
+class MapRefreshEvent extends Event {
+    /**
+     * @return {string}
+     */
+    static get type() {
+        return 'map-refresh';
+    }
+
+    constructor() {
+        super(MapRefreshEvent.type);
+    }
+}
+
 class MapUpdateEvent extends Event {
     /** @var {string} */
     #encodedMapSourceText;

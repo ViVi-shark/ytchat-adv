@@ -66,31 +66,7 @@ export class MapRenderer {
      */
     updateEntities(entities) {
         if (this._updateEntities(entities)) {
-            if (this.#animationDisposerHandle != null) {
-                clearTimeout(this.#animationDisposerHandle);
-                this.#animationDisposerHandle = null;
-            }
-
-            const classForAnimation = 'animation-updated';
-
-            this._node.classList.remove(classForAnimation);
-
-            this.#animationDisposerHandle = setTimeout(
-                () => {
-                    if (this.#animationDisposerHandle != null) {
-                        clearTimeout(this.#animationDisposerHandle);
-                        this.#animationDisposerHandle = null;
-                    }
-
-                    this._node.classList.add(classForAnimation);
-
-                    this.#animationDisposerHandle = setTimeout(
-                        () => this._node.classList.remove(classForAnimation),
-                        1000
-                    );
-                },
-                1
-            );
+            this.#doAnimation();
         }
     }
 
@@ -101,5 +77,50 @@ export class MapRenderer {
      * @return {boolean}
      */
     _updateEntities(entities) {
+    }
+
+    /**
+     * @final
+     */
+    refresh() {
+        if (this._refresh()) {
+            this.#doAnimation();
+        }
+    }
+
+    /**
+     * @protected
+     * @return {boolean}
+     */
+    _refresh() {
+        return false;
+    }
+
+    #doAnimation() {
+        if (this.#animationDisposerHandle != null) {
+            clearTimeout(this.#animationDisposerHandle);
+            this.#animationDisposerHandle = null;
+        }
+
+        const classForAnimation = 'animation-updated';
+
+        this._node.classList.remove(classForAnimation);
+
+        this.#animationDisposerHandle = setTimeout(
+            () => {
+                if (this.#animationDisposerHandle != null) {
+                    clearTimeout(this.#animationDisposerHandle);
+                    this.#animationDisposerHandle = null;
+                }
+
+                this._node.classList.add(classForAnimation);
+
+                this.#animationDisposerHandle = setTimeout(
+                    () => this._node.classList.remove(classForAnimation),
+                    1000
+                );
+            },
+            1
+        );
     }
 }
