@@ -5,6 +5,7 @@ import {DiaclockMapQuoterPosition} from "./positions/diaclock_map_quoter_positio
 import {DiaclockSystemEntityList} from "./DiaclockSystemEntityList.mjs";
 import {MapRenderer} from "./MapRenderer.mjs";
 import {MapBase} from "./MapBase.mjs";
+import {DiaclockMapQuoterPositionParser} from "./positions/diaclock_map_quoter_position_parser.mjs";
 
 export class DiaclockMapCore extends MapBase {
     /** @var {int} */
@@ -246,6 +247,6 @@ export class DiaclockMap extends DiaclockMapCore {
 
 export class DiaclockMapQuoter extends DiaclockMapCore {
     constructor() {
-        super(6, 1, DiaclockMapQuoterPosition.parser);
+        super(6, 1, new DiaclockMapQuoterPositionParser());
     }
 }
