@@ -188,6 +188,8 @@ export class DiaclockMapRenderer extends MapRenderer {
                 entityNameNode.textContent = entity.name;
                 entityNameNode.dataset.entityId = entity.id;
 
+                this._setupEntityElement(entityNameNode, entity);
+
                 container.appendChild(entityNameNode);
             }
         );
@@ -195,5 +197,13 @@ export class DiaclockMapRenderer extends MapRenderer {
         this.#lastEntities = entities;
 
         return true;
+    }
+
+    /**
+     * @protected
+     * @param {HTMLElement} entityElement
+     * @param {DiaclockSystemEntity} entity
+     */
+    _setupEntityElement(entityElement, entity) {
     }
 }
