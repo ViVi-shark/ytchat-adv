@@ -29,6 +29,9 @@
     </TMPL_IF>
     @import url('./lib/css/map.css?<TMPL_VAR ver>');
     @import url('./lib/css/games/bloodorium.css?<TMPL_VAR ver>');
+    <TMPL_IF isFantasticFreakyFencers>
+    @import url('./map/css/fantastic-freaky-fencers.css?<TMPL_VAR ver>');
+    </TMPL_IF>
     @import url('./lib/css/config.css?<TMPL_VAR ver>');
     @import url('./lib/css/data-structure.css?<TMPL_VAR ver>');
   </style>

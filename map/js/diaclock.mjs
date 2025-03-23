@@ -64,7 +64,10 @@ export class DiaclockMap extends DiaclockMapCore {
 }
 
 export class DiaclockMapQuoter extends DiaclockMapCore {
-    constructor() {
-        super(6, 1, new DiaclockMapQuoterPositionParser());
+    /**
+     * @param {DiaclockMapQuoterPositionParser|null} positionParser
+     */
+    constructor(positionParser = null) {
+        super(6, 1, positionParser ?? new DiaclockMapQuoterPositionParser());
     }
 }

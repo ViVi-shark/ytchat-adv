@@ -1,0 +1,37 @@
+.diaclock-map .content .entities .text .entity-name {
+    .property {
+        &::before {
+            content: "［" attr(data-property-name);
+        }
+
+        &::after {
+            content: "］";
+        }
+    }
+}
+
+.diaclock-map {
+    .cell-outer-root[data-cell-index-in-circle="1"] .content::before {
+        content: "壱";
+    }
+
+    .cell-outer-root[data-cell-index-in-circle="2"] .content::before {
+        content: "弐";
+    }
+
+    .cell-outer-root[data-cell-index-in-circle="3"] .content::before {
+        content: "参";
+    }
+
+    .cell-outer-root[data-cell-index-in-circle="4"] .content::before {
+        content: "肆";
+    }
+
+    .cell-outer-root[data-cell-index-in-circle="5"] .content::before {
+        content: "伍";
+    }
+
+    .cell-outer-root[data-cell-index-in-circle="6"] .content::before {
+        content: "陸";
+    }
+}
