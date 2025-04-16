@@ -941,7 +941,7 @@ sub unitMake {
       }
       else {
         $new{'status'}{$label} = $value;
-        $result .= ($result ? '　' : '') . "<b>$label</b>:$value";
+        $result .= ($result ? '　' : '') . "<b>$label</b>:@{[ commify($value) ]}";
         push(@{$new{'sttnames'}}, $label);
       }
     }
@@ -1059,7 +1059,7 @@ sub unitCalcEdit {
 
         $result_info .= '<br>' if $result_info;
         $result_info .= $rolledText."　" if $rolledText;
-        $result_info .= "<b>$type</b>:$result";
+        $result_info .= "<b>$type</b>:@{[ commify($result) ]}";
         $result_info .= " [$diff]" if ($diff ne '');
       }
       elsif($op =~ /^:$/){
@@ -1067,7 +1067,7 @@ sub unitCalcEdit {
         $data{'unit'}{$set_name}{'status'}{$type} = $result;
         $result =~ s{^-\d+}{<span class="minus">$&</span>};
         $result =~ s{^(0)(/.+?)?$}{<span class="hp zero">$1</span>$2} if $type =~ /^(?:.+?:)?HP$/;
-        $result_info .= ($result_info ? '　' : '') . "<b>$type</b>:$result";
+        $result_info .= ($result_info ? '　' : '') . "<b>$type</b>:@{[ commify($result) ]}";
       }
       push(@status, $type);
     }

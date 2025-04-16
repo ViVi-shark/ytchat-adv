@@ -695,6 +695,13 @@ sub tagDelete {
   return $text;
 }
 
+### 数値3桁区切り --------------------------------------------------
+sub commify {
+  my $num = shift;
+  $num=~s/([0-9]{1,3})(?=(?:[0-9]{3})+(?![0-9]))/$1,/g;
+  return $num;
+}
+
 # URL変換
 sub resolveCloudAssetUrl {
   my $url = shift;
