@@ -86,7 +86,6 @@ export class MapEntityList {
     }
 
     /**
-     * @final
      * @param {MapEntitySource} source
      */
     instantiateEntity(source) {
