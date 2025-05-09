@@ -76,3 +76,7 @@
         }
     }
 }
+
+#logviewer .system .info.map {
+    overflow: visible;
+}
