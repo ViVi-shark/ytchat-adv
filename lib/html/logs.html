@@ -17,6 +17,10 @@
     @import url('./lib/css/base.css?<TMPL_VAR ver>') layer(base);
     @import url('./lib/css/logs.css?<TMPL_VAR ver>') layer(logs);
     @import url('./map/css/diaclock.css?<TMPL_VAR ver>');
+    <TMPL_IF isSW2>
+    @import url('./map/css/sw2.css?<TMPL_VAR ver>');
+    @import url('./lib/css/games/sw2.css?<TMPL_VAR ver>');
+    </TMPL_IF>
     <TMPL_IF isBloodorium>
     @import url('./map/css/bloodorium.css?<TMPL_VAR ver>');
     </TMPL_IF>

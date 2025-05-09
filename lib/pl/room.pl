@@ -97,6 +97,7 @@ $ROOM->param(title => $room{'name'});
 
 $ROOM->param(gameSystem => $game);
 $ROOM->param(gameSystemName => $games{$game}{'name'} ? $games{$game}{'name'} : $game ? $game : '－');
+$ROOM->param(isSW2 => $game eq 'sw2' ? 1 : 0);
 $ROOM->param(isBloodorium => $game =~ /^bloodorium/ ? 1 : 0);
 $ROOM->param(isAvandner => $game eq 'Avandner' ? 1 : 0);
 $ROOM->param(isDragBride => $game eq 'drag-bride-2' ? 1 : 0);

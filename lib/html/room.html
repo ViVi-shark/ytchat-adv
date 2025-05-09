@@ -24,6 +24,10 @@
     @import url('./lib/css/unit-state.css?<TMPL_VAR ver>');
     @import url('./lib/css/map.css?<TMPL_VAR ver>');
     @import url('./map/css/diaclock.css?<TMPL_VAR ver>');
+    <TMPL_IF isSW2>
+    @import url('./map/css/sw2.css?<TMPL_VAR ver>');
+    @import url('./lib/css/games/sw2.css?<TMPL_VAR ver>');
+    </TMPL_IF>
     <TMPL_IF isBloodorium>
     @import url('./map/css/bloodorium.css?<TMPL_VAR ver>');
     </TMPL_IF>
@@ -58,6 +62,9 @@
   <script src="./lib/js/macro.js?<TMPL_VAR ver>" defer></script>
   <script src="./lib/js/map.js?<TMPL_VAR ver>" defer></script>
   <script src="./lib/js/games/storyteller.js?<TMPL_VAR ver>" defer></script>
+  <TMPL_IF isSW2>
+    <script src="./lib/js/games/sw2.js?<TMPL_VAR ver>" defer type="module"></script>
+  </TMPL_IF>
   <TMPL_IF isBloodorium>
   <script src="./lib/js/games/bloodorium.js?<TMPL_VAR ver>" defer type="module"></script>
   </TMPL_IF>

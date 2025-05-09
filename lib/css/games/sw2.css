@@ -1,0 +1,34 @@
+.logs .map-wrapper {
+    width: 100%;
+    height: 20rem;
+
+    > .map-wrapper-inner {
+        height: max-content;
+
+        > .map-container {
+            height: 20rem;
+        }
+    }
+}
+
+#map-window:has(.advanced-combat-map) {
+    .window-content-area {
+        flex-flow: column;
+
+        .map-area {
+            width: 100%;
+            height: 20rem;
+            padding: 0;
+            margin-right: 0;
+            margin-bottom: 2rem;
+        }
+    }
+
+    .buttons {
+        justify-content: flex-end;
+
+        .to-add-all-units {
+            display: none;
+        }
+    }
+}

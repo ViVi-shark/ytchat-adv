@@ -1270,6 +1270,10 @@
       width: 100%;
       height: 12rem;
       margin: 0.5em auto;
+
+      &.map.sw25.advanced-combat-map:has(.ranges:not(:empty)) {
+        padding-top: 0;
+      }
     }
   }
 }
