@@ -1,7 +1,15 @@
 /**
+ * @typedef MapRendererOptions
+ * @property {int} [maxFontSize]
+ */
+
+/**
  * @abstract
  */
 export class MapRenderer {
+    /** @var {MapRendererOptions} */
+    #options = {};
+
     /** @var {HTMLElement} */
     #node;
 
@@ -9,9 +17,14 @@ export class MapRenderer {
 
     /**
      * @param {HTMLElement} node
+     * @param {MapRendererOptions|null} options
      */
-    constructor(node) {
+    constructor(node, options = null) {
         this.#node = node;
+
+        if (options != null) {
+            Object.assign(this.#options, options);
+        }
 
         this.#node.classList.add('map');
 
@@ -39,7 +52,11 @@ export class MapRenderer {
         const canvasSize = this.#node.clientWidth;
 
         this.#node.dataset.canvasSize = canvasSize.toString();
-        this.#node.style.fontSize = `${Math.round(canvasSize * 0.025)}px`;
+
+        {
+            const fontSize = Math.round(canvasSize * 0.025);
+            this.#node.style.fontSize = `${this.#options.maxFontSize != null ? Math.min(this.#options.maxFontSize, fontSize) : fontSize}px`;
+        }
 
         this._resize(canvasSize);
     }
