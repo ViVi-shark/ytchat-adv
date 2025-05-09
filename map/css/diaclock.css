@@ -1,3 +1,5 @@
+@import "map-animation.css";
+
 .diaclock-map {
     display: block;
     padding: 0;
@@ -369,23 +371,4 @@
 }
 .diaclock-map .cell-outer-root .content .entities .text .entity-name:last-child {
     margin-bottom: 0;
-}
-
-.diaclock-map.animation-updated::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -75%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, .3) 100%);
-    transform: skewX(-25deg);
-}
-.diaclock-map.animation-updated::after {
-    animation: diaclock-map-shine 0.7s;
-}
-@keyframes diaclock-map-shine {
-    100% {
-        left: 125%;
-    }
 }
