@@ -79,4 +79,8 @@
 
 #logviewer .system .info.map {
     overflow: visible;
+
+    .map.animation-updated::after {
+        display: none;
+    }
 }
