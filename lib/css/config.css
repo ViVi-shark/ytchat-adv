@@ -1233,6 +1233,47 @@
   }
 }
 
+/* チャットログ：マップ埋め込み */
+.logs .embedded-map.not-initialized {
+  &::before {
+    content: "この場所ではマップ埋め込みを利用できません";
+    color: yellow;
+  }
+}
+.logs .system.topic .embedded-map.not-initialized {
+  &::before {
+    content: "埋め込みマップ";
+    color: #7a7a6c;
+    border: 1px solid #7a7a6c;
+    border-radius: 0.25em;
+    padding: 0.2em;
+  }
+}
+#topic {
+  .embedded-map {
+    width: 100%;
+
+    &.not-initialized {
+      height: 0;
+      overflow: hidden;
+
+      &::before {
+        content: none;
+      }
+
+      * {
+        visibility: hidden;
+      }
+    }
+
+    &:not(.not-initialized) {
+      width: 100%;
+      height: 12rem;
+      margin: 0.5em auto;
+    }
+  }
+}
+
 /* // カラー設定：サイドバー
 ---------------------------------------------------------------------------------------------------- */
 /* ステータス欄 */
