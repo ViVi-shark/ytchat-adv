@@ -1136,7 +1136,7 @@
 .popup-unit-view {
   display: block;
   position: fixed;
-  z-index: 3;
+  z-index: 11;
   background-color: rgba(11, 11, 36, 0.60);
   padding: 1rem;
   border-radius: 1rem;
