@@ -21,6 +21,42 @@ export class SW25_AdvancedCombatMapEntityListParser extends MapEntityListParser 
         /** @var {Object<string, {positionFromLeftEnd: int, name?: string}>} */
         const lastRanges = {};
 
+        /**
+         * @param {string} startOrEndChar
+         * @return {string}
+         */
+        function getRangeKey(startOrEndChar) {
+            switch (startOrEndChar) {
+                case '[':
+                case '［':
+                case ']':
+                case '］':
+                    return '[]';
+                case '{':
+                case '｛':
+                case '}':
+                case '｝':
+                    return '{}';
+                default:
+                    throw new Error(`Unexpected range part: ${startOrEndChar}`);
+            }
+        }
+
+        /**
+         * @param {'[]'|'{}'} key
+         * @return int
+         */
+        function getRangeLayerFromKey(key) {
+            switch (key) {
+                case '[]':
+                    return 0;
+                case '{}':
+                    return 1;
+                default:
+                    throw new Error(`Unexpected range key: '${key}'`);
+            }
+        }
+
         while (text !== '') {
             const m = text.match(/[\s　]*-+[\s　]*([^-]+)[\s　]*-+[\s　]*/);
 
@@ -32,32 +68,44 @@ export class SW25_AdvancedCombatMapEntityListParser extends MapEntityListParser 
                 const entitiesSource = trim(text.substring(0, end));
 
                 let m;
-                if ((m = entitiesSource.match(/^[\[［][\s　]*([^\]］]*)$/)) != null) {
-                    lastRanges['[]'] = {positionFromLeftEnd};
+                if (
+                    (m = entitiesSource.match(/^([\[［])[\s　]*([^\]］]*)$/)) != null ||
+                    (m = entitiesSource.match(/^([{｛])[\s　]*([^｝}]*)$/)) != null
+                ) {
+                    const key = getRangeKey(m[1]);
+                    const name = m[2];
 
-                    if (m[1] != null) {
-                        lastRanges['[]']['name'] = m[1];
+                    lastRanges[key] = {positionFromLeftEnd};
+
+                    if (name != null) {
+                        lastRanges[key]['name'] = name;
                     }
 
                     list.addPoint({positionFromLeftEnd});
-                } else if ((m = entitiesSource.match(/^[^\[［]*[\s　]*[\]］]$/)) != null) {
-                    if ('[]' in lastRanges) {
+                } else if (
+                    (m = entitiesSource.match(/^[^\[［]*[\s　]*([\]］])$/)) != null ||
+                    (m = entitiesSource.match(/^[^{｛]*[\s　]*([｝}])$/)) != null
+                ) {
+                    const key = getRangeKey(m[1]);
+
+                    if (key in lastRanges) {
                         list.addPoint({positionFromLeftEnd});
 
                         {
                             const o = {
-                                positionFromLeftEnd: lastRanges['[]'].positionFromLeftEnd,
-                                size: positionFromLeftEnd - lastRanges['[]'].positionFromLeftEnd
+                                layer: getRangeLayerFromKey(key),
+                                positionFromLeftEnd: lastRanges[key].positionFromLeftEnd,
+                                size: positionFromLeftEnd - lastRanges[key].positionFromLeftEnd
                             };
 
-                            if ('name' in lastRanges['[]']) {
-                                o['name'] = lastRanges['[]']['name'];
+                            if ('name' in lastRanges[key]) {
+                                o['name'] = lastRanges[key]['name'];
                             }
 
                             list.addRange(o);
                         }
 
-                        delete lastRanges['[]'];
+                        delete lastRanges[key];
                     }
                 } else {
                     for (const entity of parsePoint(entitiesSource)) {

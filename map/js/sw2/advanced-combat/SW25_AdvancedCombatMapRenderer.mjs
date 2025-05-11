@@ -158,20 +158,18 @@ export class SW25_AdvancedCombatMapRenderer extends MapRenderer {
                 );
 
                 {
-                    // todo: support multiple layers.
-
                     /** @var {HTMLElement} */
                     const layerElement =
-                        rangeContainerElement.querySelector('[data-layer="0"]') ??
-                        (container => {
+                        rangeContainerElement.querySelector(`[data-layer="${range.layerIndex}"]`) ??
+                        ((container, layerIndex) => {
                             const layerElement = document.createElement('div');
                             layerElement.classList.add('layer');
-                            layerElement.dataset.layer = '0';
+                            layerElement.dataset.layer = layerIndex.toString();
 
                             container.appendChild(layerElement);
 
                             return layerElement;
-                        })(rangeContainerElement);
+                        })(rangeContainerElement, range.layerIndex);
 
                     layerElement.appendChild(element);
                 }

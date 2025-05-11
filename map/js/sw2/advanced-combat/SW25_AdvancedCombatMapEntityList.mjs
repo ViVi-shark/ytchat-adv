@@ -14,6 +14,7 @@ import {SW25_AdvancedCombatMapRange} from "./SW25_AdvancedCombatMapRange.mjs";
  * @property {string?} name
  * @property {int} positionFromLeftEnd
  * @property {int} size
+ * @property {int} layer
  */
 
 /**
@@ -23,6 +24,7 @@ import {SW25_AdvancedCombatMapRange} from "./SW25_AdvancedCombatMapRange.mjs";
  * @property {int} positionFromLeftEnd
  * @property {int} [size]
  * @property {SW2_MapEntityColor} [color]
+ * @property {int} [layer]
  */
 
 /**
@@ -62,7 +64,8 @@ export class SW25_AdvancedCombatMapEntityList extends MapEntityList {
                 type: SW2_MapEntityType.range,
                 name: source.name ?? '',
                 positionFromLeftEnd: source.positionFromLeftEnd,
-                size: source.size
+                size: source.size,
+                layer: source.layer
             }
         );
     }
@@ -103,6 +106,7 @@ export class SW25_AdvancedCombatMapEntityList extends MapEntityList {
         if (source.type === SW2_MapEntityType.range) {
             return new SW25_AdvancedCombatMapRange(
                 source.name,
+                source.layer,
                 source.positionFromLeftEnd,
                 source.size
             );
