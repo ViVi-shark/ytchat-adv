@@ -51,7 +51,7 @@ export class SW25_AdvancedCombatMapRenderer extends MapRenderer {
         );
 
         this._node.querySelectorAll('.point').forEach(
-            x => x.style.width = `${(parseFloat(x.dataset.nextGapWeight) / totalWeight) * canvasSize}px`
+            x => x.style.width = `max(${(parseFloat(x.dataset.nextGapWeight) / totalWeight) * canvasSize}px, 2em)`
         );
 
         this._node.querySelectorAll('.range').forEach(

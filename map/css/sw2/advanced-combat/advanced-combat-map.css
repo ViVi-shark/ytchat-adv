@@ -1,6 +1,7 @@
 .map.sw25.advanced-combat-map {
     position: relative;
     padding-top: 2em;
+    overflow-x: hidden;
 
     > .ranges {
         display: block;
