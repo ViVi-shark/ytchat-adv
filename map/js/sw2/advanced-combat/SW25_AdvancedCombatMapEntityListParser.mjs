@@ -23,7 +23,7 @@ export class SW25_AdvancedCombatMapEntityListParser extends MapEntityListParser 
 
         /**
          * @param {string} startOrEndChar
-         * @return {string}
+         * @return {'[]'|'{}'|'【】'|'〚〛'}
          */
         function getRangeKey(startOrEndChar) {
             switch (startOrEndChar) {
@@ -37,13 +37,19 @@ export class SW25_AdvancedCombatMapEntityListParser extends MapEntityListParser 
                 case '}':
                 case '｝':
                     return '{}';
+                case '【':
+                case '】':
+                    return '【】';
+                case '〚':
+                case '〛':
+                    return '〚〛';
                 default:
                     throw new Error(`Unexpected range part: ${startOrEndChar}`);
             }
         }
 
         /**
-         * @param {'[]'|'{}'} key
+         * @param {'[]'|'{}'|'【】'|'〚〛'} key
          * @return int
          */
         function getRangeLayerFromKey(key) {
@@ -52,6 +58,10 @@ export class SW25_AdvancedCombatMapEntityListParser extends MapEntityListParser 
                     return 0;
                 case '{}':
                     return 1;
+                case '【】':
+                    return 2;
+                case '〚〛':
+                    return 3;
                 default:
                     throw new Error(`Unexpected range key: '${key}'`);
             }
@@ -70,7 +80,9 @@ export class SW25_AdvancedCombatMapEntityListParser extends MapEntityListParser 
                 let m;
                 if (
                     (m = entitiesSource.match(/^([\[［])[\s　]*([^\]］]*)$/)) != null ||
-                    (m = entitiesSource.match(/^([{｛])[\s　]*([^｝}]*)$/)) != null
+                    (m = entitiesSource.match(/^([{｛])[\s　]*([^｝}]*)$/)) != null ||
+                    (m = entitiesSource.match(/^(【)[\s　]*([^】]*)$/)) != null ||
+                    (m = entitiesSource.match(/^(〚)[\s　]*([^〛]*)$/)) != null
                 ) {
                     const key = getRangeKey(m[1]);
                     const name = m[2];
@@ -84,7 +96,9 @@ export class SW25_AdvancedCombatMapEntityListParser extends MapEntityListParser 
                     list.addPoint({positionFromLeftEnd});
                 } else if (
                     (m = entitiesSource.match(/^[^\[［]*[\s　]*([\]］])$/)) != null ||
-                    (m = entitiesSource.match(/^[^{｛]*[\s　]*([｝}])$/)) != null
+                    (m = entitiesSource.match(/^[^{｛]*[\s　]*([｝}])$/)) != null ||
+                    (m = entitiesSource.match(/^[^【]*[\s　]*(】)$/)) != null ||
+                    (m = entitiesSource.match(/^[^〚]*[\s　]*(〛)$/)) != null
                 ) {
                     const key = getRangeKey(m[1]);
 
