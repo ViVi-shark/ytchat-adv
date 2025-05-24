@@ -292,7 +292,7 @@ sub tagConvert {
         $key =~ s/&lt;/</g;
         $key =~ s/&gt;/>/g;
       }
-      $key =~ s/&lt;/</g; $key =~ s/&gt;/>/g;
+#      $key =~ s/&lt;/</g; $key =~ s/&gt;/>/g;
       $comm =~ s/${key}/"\"${value}\""/gee;
     }
   }
