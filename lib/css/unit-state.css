@@ -9,6 +9,10 @@
     > details {
         position: relative;
 
+        &:has(.state-list:empty) {
+            display: none;
+        }
+
         > summary {
             position: relative;
 
@@ -48,10 +52,6 @@
                 }
             }
         }
-    }
-
-    .state-list:empty {
-        display: none;
     }
 
     .state-list > .state {
