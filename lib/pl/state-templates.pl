@@ -837,9 +837,9 @@ our @stateTemplates = (
               {'name' => '【マルチプルアクター／ブレードストーム】', 'icon' => {'category' => 'SW2/森羅魔法', 'direction' => 'buff'}, 'duration' => '1R', 'description' => '擬似的な「[▶]３回攻撃（自在）」\nシンボリックロア'},
               {'name' => '【ボルト・エイミング】', 'icon' => {'category' => 'SW2/真語魔法', 'direction' => 'buff'}, 'duration' => '1R', 'description' => '１体のみに「形状：射撃」の魔法を行使するときの判定＋１', 'source' => '#self'},
               {'name' => '【ブルート・マジック】', 'icon' => {'category' => 'SW2/真語魔法', 'direction' => 'buff'}, 'duration' => '1R', 'description' => '《バイオレントキャストⅠ》を習得', 'source' => '#self'},
-              {'name' => '【コンサイン・インパクト】', 'icon' => {'category' => 'SW/操霊魔法', 'direction' => 'buff'}, 'duration' => '1R', 'description' => '一度だけ、近接攻撃に「術者のコンジャラー技能レベル」点の追加ダメージ\nその攻撃を魔法の武器によるものとみなす'},
-              {'name' => '【オーバープラス】', 'icon' => {'category' => 'SW/操霊魔法', 'direction' => 'buff'}, 'duration' => '1R', 'description' => 'ＭＰをより多く消費することと引き換えに魔法行使判定＋１', 'source' => '#self'},
-              {'name' => '【リファイン・コート】', 'icon' => {'category' => 'SW/操霊魔法', 'direction' => 'buff'}, 'duration' => '1R', 'description' => '防護点＋１', 'source' => '#self'},
+              {'name' => '【コンサイン・インパクト】', 'icon' => {'category' => 'SW2/操霊魔法', 'direction' => 'buff'}, 'duration' => '1R', 'description' => '一度だけ、近接攻撃に「術者のコンジャラー技能レベル」点の追加ダメージ\nその攻撃を魔法の武器によるものとみなす'},
+              {'name' => '【オーバープラス】', 'icon' => {'category' => 'SW2/操霊魔法', 'direction' => 'buff'}, 'duration' => '1R', 'description' => 'ＭＰをより多く消費することと引き換えに魔法行使判定＋１', 'source' => '#self'},
+              {'name' => '【リファイン・コート】', 'icon' => {'category' => 'SW2/操霊魔法', 'direction' => 'buff'}, 'duration' => '1R', 'description' => '防護点＋１', 'source' => '#self'},
             ],
           },
           {
