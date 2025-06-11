@@ -94,7 +94,7 @@ our @stateTemplates = (
               {'name' => '【プロテクションⅡ】', 'icon' => {'category' => 'SW2/操霊魔法', 'direction' => 'buff'}, 'duration' => '18R', 'description' => '毒、病気、呪い以外のダメージ－３'},
               {'name' => '【ポゼッション】', 'icon' => {'category' => 'SW2/操霊魔法', 'direction' => 'other'}, 'duration' => '18R', 'description' => '死者の魂を肉体に宿す', 'source' => '#self'},
               {'name' => '【コマンド】', 'icon' => {'category' => 'SW2/操霊魔法', 'direction' => 'other'}, 'duration' => '6R', 'description' => 'ゴーレムやアンデッドの支配権を奪う'},
-              {'name' => '【スケープ・ドール】', 'icon' => {'category' => 'SW2/操霊魔法', 'direction' => 'buff'}, 'duration' => '1日', 'description' => 'ＨＰへのダメージを人形に肩代わりさせる；１回だけ'},
+              {'name' => '【スケープ・ドール】', 'icon' => {'category' => 'SW2/操霊魔法', 'direction' => 'buff'}, 'duration' => '1日', 'description' => 'ＨＰへのダメージを人形に肩代わりさせる；１回だけ', 'source' => '#self'},
               {'name' => '【フィジカル・ギミック】', 'icon' => {'category' => 'SW2/操霊魔法', 'direction' => 'other'}, 'duration' => '永続', 'description' => '肉体的な欠損を人工的に補う'},
               {'name' => '【ペトロ・クラウド】途中', 'icon' => {'category' => 'SW2/操霊魔法', 'direction' => 'debuff'}, 'duration' => '6R', 'description' => '６Ｒ経過後に石化\n呪い'},
               {'name' => '【ペトロ・クラウド】完了', 'icon' => {'category' => 'SW2/操霊魔法', 'direction' => 'debuff'}, 'duration' => '永続', 'description' => '石化'},
