@@ -136,12 +136,18 @@ export class SW25_AdvancedCombatMapEntityListParser extends MapEntityListParser 
             text = text.substring(end + gapLength);
 
             if (gap != null) {
-                gapSerial++;
-
                 const m = gap.match(/([^\s　]+)[ｍmＭM]/);
 
-                if (m != null && /^\d+$/.test(m[1])) {
-                    positionFromLeftEnd += parseInt(m[1]);
+                const size = m != null && /^\d+$/.test(m[1]) ? parseInt(m[1]) : null;
+
+                if (size === 0) {
+                    continue;
+                }
+
+                gapSerial++;
+
+                if (size != null) {
+                    positionFromLeftEnd += size;
                 } else {
                     positionFromLeftEnd += 10; // dummy offset
                     list.setGapName(gapSerial, m != null ? `${m[1]}m` : gap);
