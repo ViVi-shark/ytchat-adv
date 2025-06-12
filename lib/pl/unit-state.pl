@@ -192,6 +192,49 @@ sub modifyUnitState {
                 }
             }
 
+            if ($condition{additional}) {
+                my %additionalCondition = %{$condition{additional}};
+
+                my $miss;
+
+                for my $key (keys(%additionalCondition)) {
+                    unless (exists($state{$key})) {
+                        $miss = 1;
+                        last;
+                    }
+
+                    my $stateValue = $state{$key};
+                    my $conditionValue = $additionalCondition{$key};
+                    $conditionValue =~ s/^&lt;/</;
+                    $conditionValue =~ s/^&gt;/>/;
+
+                    if ($conditionValue =~ /^<=(.+?)$/) {
+                        $miss = $stateValue <= $1 ? 0 : 1;
+                    }
+                    elsif ($conditionValue =~ /^<(.+?)$/) {
+                        $miss = $stateValue < $1 ? 0 : 1;
+                    }
+                    elsif ($conditionValue =~ /^>=(.+?)$/) {
+                        $miss = $stateValue >= $1 ? 0 : 1;
+                    }
+                    elsif ($conditionValue =~ /^>(.+?)$/) {
+                        $miss = $stateValue > $1 ? 0 : 1;
+                    }
+                    else {
+                        $miss = $stateValue eq $conditionValue ? 0 : 1;
+                    }
+
+                    if ($miss) {
+                        last;
+                    }
+                }
+
+                if ($miss) {
+                    push(@modifiedStates, \%state);
+                    next;
+                }
+            }
+
             my %modificationResult = %{applyStateModification(\%state, \%modification);};
             my %difference = %{$modificationResult{difference}};
             my $differenceCount = keys %difference;
@@ -293,6 +336,14 @@ sub parseStateModificationCondition {
             $condition{durationUnit} = $1;
         }
     }
+
+    my %additionalCondition = ();
+
+    while ($source =~ s/{\s*\+(.+?)\s*:\s*(.+?)\s*}//) {
+        $additionalCondition{$1} = $2;
+    }
+
+    $condition{additional} = \%additionalCondition if %additionalCondition;
 
     my @keys = keys %condition;
     my $count = @keys;
