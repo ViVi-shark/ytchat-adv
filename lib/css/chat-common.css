@@ -1016,6 +1016,9 @@ body.rom .sheet { display: none; }
   pointer-events: none;
   font-size: 1.1rem;
 }
+.chat-palette span .dash {
+  pointer-events: none;
+}
 .chat-palette span .formula {
   pointer-events: none;
 }
