@@ -418,7 +418,7 @@ else {
     [@＠]
     (
       (
-        (?:$stt_commands|メモ|memo|url)
+        (?:$stt_commands|\*:[HM]P|メモ|memo|url)
         (?:
           (?:[\+＋\-－\*＊\/／=＝] [\+＋\-－\*＊\/／=＝0-9０-９dｄDＤ（）()]*?)
           |
@@ -427,7 +427,24 @@ else {
         (?:\s|$)
       )+
     )//sx){
-    ($::in{'info'}, $::in{'system'}) = unitCalcEdit($::in{'name'}, $1);
+    my $set_text = $1;
+    if ($set_text =~ s#^\*:HP(\S+)##) {
+      my $modification = $1;
+      foreach my $statusName (@status) {
+        next if $statusName !~ /^.+?:HP$/;
+        $set_text .= ' ' if $set_text ne '';
+        $set_text .= "${statusName}${modification}";
+      }
+    }
+    if ($set_text =~ s#^\*:MP(\S+)##) {
+      my $modification = $1;
+      foreach my $statusName (@status) {
+        next if $statusName !~ /^.+?:MP$/;
+        $set_text .= ' ' if $set_text ne '';
+        $set_text .= "${statusName}${modification}";
+      }
+    }
+    ($::in{'info'}, $::in{'system'}) = unitCalcEdit($::in{'name'}, $set_text);
     delete $::in{'address'};
   }
   # BCDice処理 ----------
