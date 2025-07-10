@@ -563,6 +563,13 @@
 .logs dl dd.info.dice .division {
   filter: grayscale(50%);
 }
+.logs dl dd.info.dice .row {
+  display: block;
+
+  &:hover {
+    background-color: rgba(238, 170, 102, 0.1);
+  }
+}
 
 /* チャットログ：威力表 */
 .logs dl dd.info.dice[data-game="sw"] { color: #ea6; }
