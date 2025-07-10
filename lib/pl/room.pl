@@ -220,11 +220,11 @@ if ($#gameTooltips >= 0) {
     my %h = %{$_};
     for my $k (keys %h) {
       my $v = $h{$k};
-      $set::tooltips{$k} = $v;
+      push(@set::tooltips, {$k => $v});
     }
   }
 }
-$ROOM->param(tooltips => decode('utf-8', encode_json \%set::tooltips) );
+$ROOM->param(tooltips => decode('utf-8', encode_json \@set::tooltips) );
 
 require './lib/pl/state-templates.pl';
 $ROOM->param(stateTemplates => decode('utf-8', encode_json \@StateTemplate::stateTemplates) );
