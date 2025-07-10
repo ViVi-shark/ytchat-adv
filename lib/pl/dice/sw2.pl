@@ -30,6 +30,7 @@ $unique{'ダブルストンプ'}     = $unique{'DS'};
 my $unique_reg = join('|', keys %unique);
 sub rateRoll {
   my $comm = shift;
+  my $needSummation = $comm =~ s/^[Σ∑]// ? 1 : 0;
   if($comm !~ /^
     (?: (?:[kr]|威力) ( [0-9]+ | \([0-9\+\-]+\) | $unique_reg ) )
     (?:\[([0-9\+\-]+)\])?
@@ -89,12 +90,13 @@ sub rateRoll {
 
   my @result;
   my $count;
+  my $summation = 0;
   foreach my $repeatLabel (@repeatLabels ? @repeatLabels : ('')) {
     foreach my $i (1 .. ($repeatCount || 1)){
       my $resultRow = '';
 
       foreach my $j (1 .. ($powerAccurate ? 2 : 1)) {
-        (my $currentResultRow, my $criticalCount, my $lastNumber) = rateCalc(
+        (my $currentResultRow, my $criticalCount, my $lastNumber, my $damage) = rateCalc(
             $rate    ,
             $crit    ,
             $form    ,
@@ -116,6 +118,7 @@ sub rateRoll {
           next;
         } else {
           $resultRow .= $currentResultRow;
+          $summation += $damage;
           last;
         }
       }
@@ -123,7 +126,13 @@ sub rateRoll {
       push(@result, $resultRow);
     }
   }
-  return join('<br>',@result);
+  my $combinedResult = join('<br>',@result);
+
+  if ($needSummation) {
+    $combinedResult .= "<br>合計： ${summation}";
+  }
+
+  return $combinedResult;
 }
 
 sub rateCalc {
@@ -282,7 +291,7 @@ sub rateCalc {
   
   $result .= ' = ';
   $code .= " C値${crit}" if $crit;
-  return ($code . $gf. ' → '. $result . $total, $criticalCount, $lastNumber);
+  return ($code . $gf. ' → '. $result . $total, $criticalCount, $lastNumber, $total);
 }
 
 sub growRoll {
