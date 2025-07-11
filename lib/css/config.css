@@ -1278,6 +1278,33 @@
       height: 12rem;
       margin: 0.5em auto;
 
+      &.map.sw25.advanced-combat-map {
+        --range-layer-0-height: 0rem;
+        --range-layer-1-height: 0rem;
+        --range-layer-2-height: 0rem;
+        --range-layer-3-height: 0rem;
+        --map-height: calc(12rem + var(--range-layer-0-height) + var(--range-layer-1-height) + var(--range-layer-2-height) + var(--range-layer-3-height));
+        height: var(--map-height);
+
+        --layer-height: calc((1.5 + 0.75) * 16px);
+
+        &:has(.ranges .layer[data-layer="0"]:not(:empty)) {
+          --range-layer-0-height: var(--layer-height);
+        }
+
+        &:has(.ranges .layer[data-layer="1"]:not(:empty)) {
+          --range-layer-1-height: var(--layer-height);
+        }
+
+        &:has(.ranges .layer[data-layer="2"]:not(:empty)) {
+          --range-layer-2-height: var(--layer-height);
+        }
+
+        &:has(.ranges .layer[data-layer="3"]:not(:empty)) {
+          --range-layer-3-height: var(--layer-height);
+        }
+      }
+
       &.map.sw25.advanced-combat-map:has(.ranges:not(:empty)) {
         padding-top: 0;
       }
