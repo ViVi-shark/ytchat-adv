@@ -4,9 +4,35 @@
 
     > .map-wrapper-inner {
         height: max-content;
+    }
 
-        > .map-container {
-            height: 20rem;
+    &:has(.sw25.advanced-combat-map) {
+        --range-layer-0-height: 0rem;
+        --range-layer-1-height: 0rem;
+        --range-layer-2-height: 0rem;
+        --range-layer-3-height: 0rem;
+        --map-height: calc(20rem + var(--range-layer-0-height) + var(--range-layer-1-height) + var(--range-layer-2-height) + var(--range-layer-3-height));
+        --layer-height: calc((1.5 + 0.75) * 16px);
+        height: var(--map-height);
+
+        .map-container {
+            height: var(--map-height);
+        }
+
+        &:has(.sw25.advanced-combat-map .ranges .layer[data-layer="0"]:not(:empty)) {
+            --range-layer-0-height: var(--layer-height);
+        }
+
+        &:has(.sw25.advanced-combat-map .ranges .layer[data-layer="1"]:not(:empty)) {
+            --range-layer-1-height: var(--layer-height);
+        }
+
+        &:has(.sw25.advanced-combat-map.ranges .layer[data-layer="2"]:not(:empty)) {
+            --range-layer-2-height: var(--layer-height);
+        }
+
+        &:has(.sw25.advanced-combat-map .ranges .layer[data-layer="3"]:not(:empty)) {
+            --range-layer-3-height: var(--layer-height);
         }
     }
 }
