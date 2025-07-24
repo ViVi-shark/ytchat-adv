@@ -62,7 +62,7 @@ sub rateRoll {
   while($form =~ s/(?:[rck]|首切)(\-?[0-9]*)//gi)     { $rate_up  = $1 ne ''?$1:5 if !$rate_up; } #首切効果
   while($form =~ s/(?:[#b!]|必殺)([\+\-]?[0-9]*)//gi) { $crit_atk = $1 ne ''?$1:1 if !$crit_atk; }#必殺効果
   while($form =~ s/(?:[\$]|出目)(n?[0-9]+)//gi)       { $fixed    = $1 if !$fixed; }        #出目固定
-  while($form =~ s/(?:[\$]|出目)\+?([\+\-][0-9]+)//gi){ $crit_ray = $1 if !$crit_ray; }     #出目修正【クリティカルレイ】
+  while($form =~ s/(?:[\$]|出目)\+?([\+\-][0-9+\-()]+)//gi){ $crit_ray = $1 if !$crit_ray; }     #出目修正【クリティカルレイ】
   while($form =~ s/(?:[\$]|出目)~\+?([\+\-][0-9]+)//gi){ $witch_blaze = $1 if !$witch_blaze; } #出目修正［魔女の火］
   while($form =~ s/(?:PA|威力確実化)(\d+)?//gi)       { $powerAccurate = $1 || 4; }         #威力確実化
   while($form =~ s/(?:[<]|難)([0-9]+)//gi)            { $curse    = $1 if !$curse; }        #Aカース「難しい」
@@ -71,6 +71,8 @@ sub rateRoll {
   $crit = calc($crit);
   if($rate > 100){ $rate = 100; } elsif($rate < 0){ $rate = 0; }
   if($crit <= 0){ $crit = 0; } elsif($crit < 3){ $crit = 3; }
+
+  $crit_ray = calc($crit_ray) if $crit_ray;
 
   my @repeatCountLabels = ();
   my @repeatLabels;
