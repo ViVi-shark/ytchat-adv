@@ -28,9 +28,9 @@ sub diceCheck {
   elsif($comm =~ /^set\#/   ){ return setDeck($comm), 'deck'; }
   # 四則演算
   elsif($comm =~ /^
-    ( [(⌈]? \-? [0-9.]+ [\+\-\/*\^]
-      [0-9.\+\-\/*\^()⌈⌉]*
-      [0-9.] [)⌉]? )
+    ( [(⌈⌊]? \-? [0-9.]+ [\+\-\/*\^]
+      [0-9.\+\-\/*\^()⌈⌉⌊⌋]*
+      [0-9.] [)⌉⌋]? )
     \s*[=＝](?:\s|$)
     /ix){
     my $formula = $1;
@@ -40,6 +40,7 @@ sub diceCheck {
     $formula =~ s#\^#\*\*#g;
     $formula_perl =~ s#\*\*#\^#g;
     $formula =~ s/⌈(.+?)⌉/ceil($1)/g;
+    $formula =~ s/⌊(.+?)⌋/floor($1)/g;
     my $result = eval($formula);
     if($result eq ''){ return ''; }
     return "${formula_perl} = ${result}", 'dice:calc';
