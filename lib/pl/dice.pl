@@ -31,11 +31,15 @@ sub diceCheck {
     ( [(⌈⌊]? \-? [0-9.]+ [\+\-\/*\^]
       [0-9.\+\-\/*\^()⌈⌉⌊⌋]*
       [0-9.] [)⌉⌋]? )
+    (ceil|floor)?
     \s*[=＝](?:\s|$)
     /ix){
     my $formula = $1;
+    my $round = $2;
     if($formula !~ /[\+\-\/\*\^]/) { return ''; }
     if($formula =~ m|//|) { return ''; }
+    $formula = "⌈${formula}⌉" if $round =~ /^ceil$/i;
+    $formula = "⌊${formula}⌋" if $round =~ /^floor$/i;
     my $formula_perl = $formula;
     $formula =~ s#\^#\*\*#g;
     $formula_perl =~ s#\*\*#\^#g;
