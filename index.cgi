@@ -192,7 +192,7 @@ sub quoteConvert_Core {
     if ($sourceLine =~ /\A&gt;\s*(.+?)\s*\Z/) {
       push(@currentQuoted, $1);
     } else {
-      if ($#currentQuoted > 0) {
+      if ($#currentQuoted >= 0) {
         push(@destinationLines, "&lt;quoted&gt;\n" . join("\n", @currentQuoted) . "\n&lt;/quoted&gt;");
         @currentQuoted = ();
       } elsif ($#destinationLines > 0) {
@@ -202,7 +202,7 @@ sub quoteConvert_Core {
     }
   }
 
-  if ($#currentQuoted > 0) {
+  if ($#currentQuoted >= 0) {
     push(@destinationLines, "&lt;quoted&gt;\n" . join("\n", @currentQuoted) . "\n&lt;/quoted&gt;");
   }
 
