@@ -2,6 +2,7 @@
     position: relative;
     padding-top: 2em;
     overflow-x: hidden;
+    overflow-y: auto;
 
     > .ranges {
         display: block;
@@ -98,6 +99,8 @@
     }
 
     > .point {
+        height: max-content;
+
         &:not(:last-child) {
             padding-right: 1em;
         }
