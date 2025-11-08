@@ -420,7 +420,7 @@ else {
       (
         (?:$stt_commands|\*:[HM]P|メモ|memo|url)
         (?:
-          (?:[\+＋\-－\*＊\/／=＝] [\+＋\-－\*＊\/／=＝0-9０-９dｄDＤ（）()]*?)
+          (?:[\+＋\-－\*＊\/／=＝] [\+＋\-－\*＊\/／=＝0-9０-９dｄDＤ（）()minmax,]*?)
           |
           (?:[:：] (?:"(?:.*?)"|(?:.*?)))
         )
@@ -1066,9 +1066,47 @@ sub unitCalcEdit {
     else {
       if($num eq '' && $text){ $num = $text; }
       my $rolledText;
-      if($op =~ /^[+\-\*\/=]$/ && $num =~ /^[+\-\*\/0-9\.d()]+$/i){
-        $num = parenthesisCalc($num);
-        ($num, $rolledText) = diceInStatusCommand($num);
+      if($op =~ /^[+\-\*\/=]$/ && $num =~ /^[+\-\*\/0-9\.d()minmax,]+$/i){
+        if ($num =~ /^(min|max)\((.+?),(.+)\)$/) {
+          my $functionName = $1;
+          my $arg1 = $2;
+          my $arg2 = $3;
+
+          my $num1 = parenthesisCalc($arg1);
+          ($num1, my $rolledText1) = diceInStatusCommand($num1);
+
+          my $num2 = parenthesisCalc($arg2);
+          ($num2, my $rolledText2) = diceInStatusCommand($num2);
+
+          if ($rolledText1 ne '') {
+            if ($rolledText2 ne '') {
+              $rolledText = $rolledText1 . ', ' . $rolledText2;
+            }
+            else {
+              $rolledText = $rolledText1;
+            }
+          }
+          elsif ($rolledText2 ne '') {
+            $rolledText = $rolledText2;
+          }
+          else {
+            $rolledText = '';
+          }
+
+          if ($functionName =~ /^min$/i) {
+            $num = _min(calc($num1), calc($num2));
+          }
+          elsif ($functionName =~ /^max$/i) {
+            $num = _max(calc($num1), calc($num2));
+          }
+          else {
+            return;
+          }
+        }
+        else {
+          $num = parenthesisCalc($num);
+          ($num, $rolledText) = diceInStatusCommand($num);
+        }
         my ($result, $diff, $over) = sttCalc($type,$num,$op,$data{'unit'}{$set_name}{'status'}{$type});
         $data{'unit'}{$set_name}{'status'}{$type} = $result;
         $diff .= "(over${over})" if $over;
