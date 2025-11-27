@@ -68,7 +68,7 @@ sub rateRoll {
   while($form =~ s/(?:PA|威力確実化)(\d+)?//gi)       { $powerAccurate = $1 || 4; }         #威力確実化
   while($form =~ s/(?:[<]|難)([0-9]+)//gi)            { $curse    = $1 if !$curse; }        #Aカース「難しい」
   
-  $rate = $unique || calc($rate);
+  $rate = $unique || floor(calc($rate));
   $crit = calc($crit);
   if($rate > 200){ $rate = 200; } elsif($rate < 0){ $rate = 0; }
   if($crit <= 0){ $crit = 0; } elsif($crit < 3){ $crit = 3; }
