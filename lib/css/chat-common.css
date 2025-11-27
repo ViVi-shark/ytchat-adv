@@ -447,6 +447,52 @@ body.rom #status #status-body > dl > dt {
     }
   }
 }
+#status #status-body > dl[data-name] > dd.details > ul.details > li.group {
+  width: 100%;
+  position: relative;
+
+  > .group-name {
+    font-size: 80%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  > .group-items {
+    font-size: 80%;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: right;
+
+    > .separator,
+    > .group-item {
+      display: inline-block;
+    }
+
+    > .separator {
+      pointer-events: none;
+      margin-left: 0.375em;
+      margin-right: 0.375em;
+
+      &::before {
+        content: "/";
+      }
+    }
+
+    > .group-item {
+      > .item-name {
+        &&:after {
+          content: ":";
+          margin-right: 0.125em;
+        }
+      }
+    }
+  }
+}
 [data-layout="row"] #status #status-body > dl[data-name] {
   width: 21.5rem;
   flex-shrink: 0;
