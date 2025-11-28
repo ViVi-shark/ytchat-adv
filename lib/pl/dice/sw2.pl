@@ -95,6 +95,8 @@ sub rateRoll {
   my $count;
   my $summation = 0;
   foreach my $repeatLabel (@repeatLabels ? @repeatLabels : ('')) {
+    my $modifier = $repeatLabel =~ /.\[(.*?)\]/ ? $1 : '';
+
     foreach my $i (1 .. ($repeatCount || 1)){
       my $resultRow = '';
 
@@ -102,7 +104,7 @@ sub rateRoll {
         (my $currentResultRow, my $criticalCount, my $lastNumber, my $damage) = rateCalc(
             $rate    ,
             $crit    ,
-            $form    ,
+            ($form . $modifier),
             $rate_up ,
             $crit_atk,
             $crit_ray,
