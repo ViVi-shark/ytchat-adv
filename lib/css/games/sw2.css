@@ -13,9 +13,12 @@
         --range-layer-3-height: 0rem;
         --map-height: calc(20rem + var(--range-layer-0-height) + var(--range-layer-1-height) + var(--range-layer-2-height) + var(--range-layer-3-height));
         --layer-height: calc((1.5 + 0.75) * 16px);
-        height: var(--map-height);
 
-        .map-container {
+        &:has([data-combat-rule="上級戦闘"]) {
+            height: var(--map-height);
+        }
+
+        .map-container[data-combat-rule="上級戦闘"] {
             height: var(--map-height);
         }
 
@@ -35,8 +38,21 @@
             --range-layer-3-height: var(--layer-height);
         }
     }
+
+    &:has([data-combat-rule="基本戦闘"]) {
+        height: max-content;
+
+        &::before {
+            content: none;
+        }
+
+        > .map-wrapper-inner {
+            position: static;
+        }
+    }
 }
 
+#map-window:has(.basic-combat-map),
 #map-window:has(.advanced-combat-map) {
     .window-content-area {
         flex-flow: column;
@@ -55,6 +71,51 @@
 
         .to-add-all-units {
             display: none;
+        }
+    }
+}
+
+#topic ul.entity-list {
+    list-style-type: none;
+    padding-left: 0.3em;
+}
+
+.box .basic-combat-map {
+    .entity {
+        text-shadow: none;
+    }
+}
+
+.map.sw25.basic-combat-map {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.logs {
+    .map.sw25.basic-combat-map {
+        padding-top: 1em;
+        padding-bottom: 1em;
+
+        > .areas {
+            border: none;
+            background: none;
+            grid-template-rows: repeat(2, max-content);
+            height: max-content;
+
+            &::before {
+                content: none;
+            }
+
+            > dt {
+                border-radius: 0;
+                max-width: initial;
+            }
+
+            > dd {
+                &:hover {
+                    box-shadow: none;
+                }
+            }
         }
     }
 }

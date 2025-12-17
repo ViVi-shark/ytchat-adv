@@ -1,7 +1,7 @@
-import {SW25_AdvancedCombatMap} from "../advanced-combat/SW25_AdvancedCombatMap.mjs";
 import {SW2_MapTextParser} from "../SW2_MapTextParser.mjs";
+import {SW25_CombatMapHub} from "../combat-map-hub/SW25_CombatMapHub.mjs";
 
-export class SW25_AdvancedCombatMapForLog extends SW25_AdvancedCombatMap {
+export class SW25_CombatMapHubForLog extends SW25_CombatMapHub {
     constructor() {
         super(new TextParser());
     }
