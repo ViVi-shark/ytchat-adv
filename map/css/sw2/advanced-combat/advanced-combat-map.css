@@ -1,3 +1,5 @@
+@import "../sw2-map.css";
+
 .map.sw25.advanced-combat-map {
     position: relative;
     padding-top: 2em;
@@ -141,34 +143,6 @@
                 width: 100%;
                 cursor: default;
                 opacity: 0.95;
-
-                &:not([data-color]) {
-                    color: #ffffff;
-                }
-
-                &[data-color="blue"] {
-                    color: #b0b0ff;
-                }
-
-                &[data-color="red"] {
-                    color: #ffb0b0;
-                }
-
-                &[data-color="orange"] {
-                    color: #ffd0b0;
-                }
-
-                &[data-color="yellow"] {
-                    color: #ffffb0;
-                }
-
-                > .name {
-                    display: block;
-                    width: 100%;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                }
             }
         }
 
