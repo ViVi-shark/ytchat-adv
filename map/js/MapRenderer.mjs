@@ -33,7 +33,7 @@ export class MapRenderer {
             () => this.resize()
         );
 
-        this.resize();
+        setTimeout(() => this.resize(), 0);
     }
 
     /**

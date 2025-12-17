@@ -1,0 +1,31 @@
+.map.sw25 {
+    .entity {
+        &:not([data-color]) {
+            color: #ffffff;
+        }
+
+        &[data-color="blue"] {
+            color: #b0b0ff;
+        }
+
+        &[data-color="red"] {
+            color: #ffb0b0;
+        }
+
+        &[data-color="orange"] {
+            color: #ffd0b0;
+        }
+
+        &[data-color="yellow"] {
+            color: #ffffb0;
+        }
+
+        > .name {
+            display: block;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}

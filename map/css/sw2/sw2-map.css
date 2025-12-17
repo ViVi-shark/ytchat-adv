@@ -1,31 +1,25 @@
-.map.sw25 {
-    .entity {
-        &:not([data-color]) {
-            color: #ffffff;
-        }
+@import "basic-combat/basic-combat-map.css";
+@import "advanced-combat/advanced-combat-map.css";
 
-        &[data-color="blue"] {
-            color: #b0b0ff;
-        }
+.map-hub {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 100%;
 
-        &[data-color="red"] {
-            color: #ffb0b0;
-        }
+    > .map {
+        grid-column: 1 / -1;
+        grid-row: 1 / -1;
+    }
 
-        &[data-color="orange"] {
-            color: #ffd0b0;
+    &:not([data-combat-rule="基本戦闘"]) {
+        > .basic-combat-map {
+            display: none;
         }
+    }
 
-        &[data-color="yellow"] {
-            color: #ffffb0;
-        }
-
-        > .name {
-            display: block;
-            width: 100%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+    &:not([data-combat-rule="上級戦闘"]) {
+        > .advanced-combat-map {
+            display: none;
         }
     }
 }
