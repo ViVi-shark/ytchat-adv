@@ -553,8 +553,18 @@ sub setDeck {
   /ix){
     return;
   }
-  if($set::random_table{$+{list}}) {
-    open(my $FH, '<', "${set::rtable_dir}/$set::random_table{$+{list}}{'data'}") or error($set::random_table{$+{list}}{'data'}.'が開けません');
+
+  my $fileName, my $faces;
+  if ($set::random_table{$+{list}}) {
+    $fileName = $set::random_table{$+{list}}{'data'};
+    $faces = $set::random_table{$+{list}}{'faces'};
+  }
+  elsif (-f "${set::rtable_dir}/$+{list}") {
+    $fileName //= $+{list};
+  }
+
+  if(defined($fileName)) {
+    open(my $FH, '<', "${set::rtable_dir}/${fileName}") or error($fileName.'が開けません');
     my @list = <$FH>;
     close($FH);
     if($list[0] =~ /^[0-9]+D[0-9]+$/i){ error("$+{deckName}は山札にできない表です"); }
@@ -567,7 +577,7 @@ sub setDeck {
     %deck = %{ decode_json(encode('utf8', (join '', @lines))) } if @lines;
     seek($FH, 0, 0);
     
-    $deck{$+{deckName}} = { 'cards' => [ @list ], 'faces' => $set::random_table{$+{list}}{'faces'} };
+    $deck{$+{deckName}} = { 'cards' => [ @list ], 'faces' => $faces };
     
     print $FH decode('utf8', encode_json \%deck);
     truncate($FH, tell($FH));
