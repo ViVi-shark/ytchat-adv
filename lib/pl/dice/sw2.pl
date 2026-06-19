@@ -33,7 +33,7 @@ sub rateRoll {
   if($comm !~ /^
     (?: (?:[kr]|威力) ( [0-9]+ | \([0-9\+\-]+\) | $unique_reg ) )
     (?:\[([0-9\+\-]+)\])?
-    ([0-9a-z\+\-\*\/\@\$~()><\#!値必殺首切出目難半減]*)
+    ([0-9a-z\+\-\*\/\@\$~()><\#!PA値必殺首切出目難半減威力確実化]*)
     (?:\:([0-9]+|.+,.+))?
     (?:\s|$)
   /ix){
@@ -49,6 +49,7 @@ sub rateRoll {
   my $crit_ray;
   my $witch_blaze;
   my $fixed;
+  my $powerAccurate;
   my $curse;
   my $gf;
   while($form =~ s/gf//gi)                            { $gf = ' GF'; }                      #Gフォーチュン
@@ -58,6 +59,7 @@ sub rateRoll {
   while($form =~ s/(?:[\$]|出目)(n?[0-9]+)//gi)       { $fixed    = $1 if !$fixed; }        #出目固定
   while($form =~ s/(?:[\$]|出目)\+?([\+\-][0-9]+)//gi){ $crit_ray = $1 if !$crit_ray; }     #出目修正【クリティカルレイ】
   while($form =~ s/(?:[\$]|出目)~\+?([\+\-][0-9]+)//gi){ $witch_blaze = $1 if !$witch_blaze; } #出目修正［魔女の火］
+  while($form =~ s/(?:PA|威力確実化)(\d+)?//gi)       { $powerAccurate = $1 || 4; }         #威力確実化
   while($form =~ s/(?:[<]|難)([0-9]+)//gi)            { $curse    = $1 if !$curse; }        #Aカース「難しい」
   
   $rate = $unique || calc($rate);
@@ -81,8 +83,10 @@ sub rateRoll {
 
   my @result;
   foreach my $i (1 .. ($repeat || 1)){
-    push(@result,
-      rateCalc(
+    my $resultRow = '';
+
+    foreach my $j (1 .. ($powerAccurate ? 2 : 1)) {
+      (my $currentResultRow, my $criticalCount, my $lastNumber) = rateCalc(
         $rate    ,
         $crit    ,
         $form    ,
@@ -95,8 +99,19 @@ sub rateRoll {
         $gf      ,
         $repeat > 1 ? $repeatLabels[$i - 1] : undef,
         $repeat ? $i : undef
-      )
-    );
+      );
+
+      # 威力確実化
+      if ($j == 1 && $powerAccurate && !$criticalCount && $lastNumber <= $powerAccurate) {
+        $resultRow = "$currentResultRow | 振り直し: ";
+        next;
+      } else {
+        $resultRow .= $currentResultRow;
+        last;
+      }
+    }
+
+    push(@result, $resultRow);
   }
   return join('<br>',@result);
 }
@@ -120,6 +135,7 @@ sub rateCalc {
   my $code = (defined($label) ? $label . ' ' : '') . ($unique || "威力${rate}");
   my @results;
   my $crits_max = 20;
+  my $lastNumber;
   foreach my $crits (0 .. $crits_max) {
     my $number;
     my $inside_code;
@@ -132,12 +148,12 @@ sub rateCalc {
         $number = $dice + $demifixed;
         $inside_code = "($demifixed)+${dice}";
         #出目最低値がC値以下だと∞
-        if($crit && $demifixed > 1 && $demifixed+1 >= $crit){ return $code." C値${crit} → \[${inside_code}:クリティカル!!!\]... = ∞"; }
+        if($crit && $demifixed > 1 && $demifixed+1 >= $crit){ return ($code." C値${crit} → \[${inside_code}:クリティカル!!!\]... = ∞", undef, $number); }
       }
       #両方固定
       else {
         $number = ($fixed > 12) ? 12 : ($fixed < 2) ? 2 : $fixed;
-        if($number <= 2 && !$unique){ return $code." → \[${number}:1ゾロ..\] = 0"; }
+        if($number <= 2 && !$unique){ return ($code." → \[${number}:1ゾロ..\] = 0", 0, $number); }
         $fixed = 0; # 1回処理したらなくなる
       }
     }
@@ -158,7 +174,7 @@ sub rateCalc {
     
     # 1ゾロ
     if(!$crits && $number <= 2 && !$unique){
-      return $code." → \[${inside_code}=${number}:1ゾロ..\] = 0";
+      return ($code." → \[${inside_code}=${number}:1ゾロ..\] = 0", 0, $number);
       last;
     }
     $inside_code .= $inside_code ? '=' : '';
@@ -191,6 +207,8 @@ sub rateCalc {
       $number_result .=">×";
     }
     
+    $lastNumber = $number;
+    
     # 威力結果算出
     my $power;
     if($unique){
@@ -222,6 +240,7 @@ sub rateCalc {
     last;
   }
   my $result = join('+', @results);
+  my $criticalCount = $#results; # クリティカルした回数
   
   ## 修正値処理
   $form =~ s|半減|//|;
@@ -250,7 +269,7 @@ sub rateCalc {
   
   $result .= ' = ';
   $code .= " C値${crit}" if $crit;
-  return $code . $gf. ' → '. $result . $total;
+  return ($code . $gf. ' → '. $result . $total, $criticalCount, $lastNumber);
 }
 
 sub growRoll {
